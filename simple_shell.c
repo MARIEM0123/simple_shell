@@ -4,7 +4,8 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
-#include "simple_shell.h"
+#include "shell.h"
+
 
 /**
 * get_full_path - return full path of command
@@ -86,7 +87,12 @@ return (list_cmd);
 }
 
 /**
+<<<<<<< HEAD
 * Simple shell 0.2 : Emulate simple terminale with handling arguments
+=======
+* Simple shell 0.2 : Emulate simple terminale
+* with handling arguments
+>>>>>>> edb666034bed513d3d62ccdb7bf37ebe675df06c
 */
 int main(int ac, char **av, char **env)
 {
