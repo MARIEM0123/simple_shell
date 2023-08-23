@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
-#include "simple_shell.h"
+#include "shell.h"
 
 /**
 * get_full_path - return full path of command

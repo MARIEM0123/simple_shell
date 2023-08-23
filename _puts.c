@@ -1,4 +1,4 @@
-#include "simple_shell.h"
+#include "shell.h"
 /**
  * _puts - the function to print a string
  * @str: the string to print
