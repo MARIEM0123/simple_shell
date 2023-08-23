@@ -95,7 +95,10 @@ void rm_ct(char *array);
 #define MAX_ARRAY_NUM 1024
 #define ZERO_NUM	0
 #define MIINUSONE -1
+#define NUM_TWO	2
+#define NUM_TREE 3
 #define CONVERT_UNSIGNED	2
+#define NUM_UN	1
 #define CONVERT_LOWERCASE	1
 #define MAXIMUM_BYTE_NUM 1024
 

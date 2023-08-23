@@ -1,3 +1,4 @@
+#include "shell.h"
 /**
  * VERIFIC – the function
  * @DATA: the parameter
@@ -28,6 +29,6 @@ void VERIFIC(DATA_t *DATA, char *array, size_t*x, size_t c, size_t ll)
 		}
 	}
 
-	*x = j;
+	*x = k;
 }
 
