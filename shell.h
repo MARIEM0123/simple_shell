@@ -80,6 +80,8 @@ void VERIFIC(DATA_t *DATA, char *array, size_t*p, size_t i, size_t ll);
 int VRFC(DATA_t *, char *, size_t*);
 char *abd(const char *search, const char *find);
 void _entry(char *c);
+char *_memset(char *c, char a, unsigned int m);
+char *_strd(const char *c);
 int p_dtt(int input, int ffile);
 int _pprtchar(char sh);
 void error_output(DATA_t *DATA, char *c);
@@ -92,6 +94,7 @@ char *_strncat(char *par1, char *par2, int count);
 STRRUCT_L *add_nds_end(STRRUCT_L **head, const char *str, int num);
 int _line_parm(DATA_t *DATA, char **pp, size_t *l);
 void rm_ct(char *array);
+STRRUCT_L *add_nds_end(STRRUCT_L **h, const char *ch, int num);
 #define MAX_ARRAY_NUM 1024
 #define ZERO_NUM	0
 #define MIINUSONE -1

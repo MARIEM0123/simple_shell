@@ -1,5 +1,6 @@
 #include "shell.h"
 #include <stddef.h>
+STRRUCT_L *add_nds_end(STRRUCT_L **h, const char *ch, int num);
 /**
  * h_his – the function
  * @DATA: the parameter
