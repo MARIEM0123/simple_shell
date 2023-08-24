@@ -150,6 +150,7 @@ char *env_name(DATA_t *DATA, const char *l);
 int rm_env(DATA_t *DATA);
 int init_new_env(DATA_t *DATA, char *b, char *a);
 int ch_cur_dir(DATA_t *DATA);
+void err_output(DATA_t *DATA, char *x);
 #define MAX_ARRAY_NUM 1024
 #define DATA_0 \
 {NULL, NULL, 0, NULL, 0, 0, 0, NULL, NULL, NULL, 0, 0, 0, NULL, 0, \

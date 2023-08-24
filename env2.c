@@ -92,14 +92,14 @@ _putchar('\n');
 			return (1);
 		}
 		_puts(env_name(DATA, "OLDPWD=")), _putchar('\n');
-		xx = chdir((x = env_name(DATA, "OLDPWD=")) ? dir : "/");
+		xx = chdir((x = env_name(DATA, "OLDPWD=")) ? x : "/");
 	}
 	else
 		xx = chdir(DATA->argv[1]);
 	if (xx == -1)
 	{
-		print_error(DATA, "Error message ");
-		_eputs(DATA->argv[1]), _eputchar('\n');
+		err_output(DATA, "Error message ");
+		_pputs(DATA->argv[1]), _eputchar('\n');
 	}
 	else
 	{
@@ -107,5 +107,21 @@ _putchar('\n');
 		init_new_env(DATA, "PWD", getcwd(array, 1024));
 	}
 	return (0);
+}
+/**
+ * err_output- the function
+ * @DATA: the parameter
+ * @x: parameter
+ * Return: equal to 0 or 1
+ */
+void err_output(DATA_t *DATA, char *x)
+{
+	_pputs(DATA->fpnn);
+	_pputs(": ");
+	print_d(DATA-> num_lines, STDERR_FILENO);
+	_pputs(": ");
+	_pputs(DATA->argv[0]);
+	_pputs(": ");
+	_pputs(x);
 }
 
