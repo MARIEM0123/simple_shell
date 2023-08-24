@@ -56,8 +56,8 @@ typedef struct DATA_listing
 	char *arg;
 	char **argv;
 	int argc;
-char *path;
-int linekk_flag;
+	char *path;
+	int linekk_flag;
 	unsigned int num_lines;
 	int increm;
 	char *fpnn;
@@ -65,14 +65,14 @@ int linekk_flag;
 	STRRUCT_L *alias;
 	int env_mod;
 	int etat;
-int histkk;
+	int histkk;
 	char **L_array;
 	int L_array_type;
 	int rddfile;
 	char **par_envv;
-STRRUCT_L *p_story;
+	STRRUCT_L *p_story;
 } DATA_t;
-
+int pp_stry(DATA_t *DATA);
 int h_his(DATA_t *DATA, char *array, int linekk);
 void handle_var(__attribute__((unused))int c);
 int amoi(char *c);
@@ -95,6 +95,11 @@ STRRUCT_L *add_nds_end(STRRUCT_L **head, const char *str, int num);
 int _line_parm(DATA_t *DATA, char **pp, size_t *l);
 void rm_ct(char *array);
 STRRUCT_L *add_nds_end(STRRUCT_L **h, const char *ch, int num);
+char *ret_story_fd(DATA_t *DATA);
+int del_ndss(STRRUCT_L **h, unsigned int k);
+char *_memset(char *c, char a, unsigned int m);
+int don_p_story(DATA_t *DATA);
+char *ev_value(DATA_t *DATA, const char *pnn);
 #define MAX_ARRAY_NUM 1024
 #define ZERO_NUM	0
 #define MIINUSONE -1
@@ -102,9 +107,10 @@ STRRUCT_L *add_nds_end(STRRUCT_L **h, const char *ch, int num);
 #define NUM_TREE 3
 #define CONVERT_UNSIGNED	2
 #define NUM_UN	1
+#define MESS_STORY	"the history"
 #define CONVERT_LOWERCASE	1
 #define MAXIMUM_BYTE_NUM 1024
-
+#define HIST_MAX	4096
 #endif
 
 
