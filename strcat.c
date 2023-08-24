@@ -15,4 +15,4 @@ char *_strcat(char *par1, char *par2)
 		*par1++ = *par2++;
 	*par1 = *par2;
 	return (x);
-
+}
