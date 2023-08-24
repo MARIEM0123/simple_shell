@@ -115,6 +115,7 @@ int alias_subt(DATA_t *DATA);
 int varias_subt(DATA_t *DATA);
 int the_delimiter(char s, char *l);
 char *convert_number(long int L, int sprt, int parmt);
+int str_chg(char **par1, char *par2);
 #define MAX_ARRAY_NUM 1024
 #define DATA_0 \
 {NULL, NULL, 0, NULL, 0, 0, 0, NULL, NULL, NULL, 0, 0, 0, NULL, 0, \

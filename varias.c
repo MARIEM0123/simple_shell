@@ -73,4 +73,16 @@ char *convert_number(long int L, int sprt, int parmt)
 		*--ptr = mm;
 	return (ptr);
 }
+/**
+ * str_chg – the function
+ * @par1: parameter one
+ * @par2: parameter two
+ * Return: there is a return
+ */
+int str_chg(char **par1, char *par2)
+{
+	free(*par1);
+	*par1 = par2;
+	return (1);
+}
 
