@@ -26,10 +26,10 @@ int hloop(DATA_t *DATA, char **b)
 		}
 		else if (mode_intr(DATA))
 			_putchar('\n');
-		free_DATA(DATA, 0);
+		lib_DATA(DATA, 0);
 	}
 	rw_p_story(DATA);
-	free_DATA(DATA, 1);
+	lib_DATA(DATA, 1);
 	if (!mode_intr(DATA) && DATA->etat)
 		exit(DATA->etat);
 	if (a == -2)

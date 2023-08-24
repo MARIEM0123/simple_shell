@@ -12,3 +12,33 @@ char *abd(const char *search, const char *find)
 			return (NULL);
 	return ((char *)search);
 }
+/**
+ * srch_tab – the function
+ * @DATA: the parametre
+ * Return: depends on the case
+ */
+int srch_tab(DATA_t *DATA)
+{
+	int i, sch= -1;
+	sch_table fnd[] = {
+		{"exit", EXIT_FUNCT},
+		{"evn", NW_ennv},
+		{"help", _myhelp},
+		{"p_story", _myp_story},
+		{"setevn", _mysetevn},
+		{"unsetevn", _myunsetevn},
+		{"cd", _mycd},
+		{"alias", _myalias},
+		{NULL, NULL}
+	};
+
+	for (i = 0; fnd[i].yht; i++)
+		if (_strcompare (DATA->argv[0], fnd[i].yht) == 0)
+		{
+			DATA->num_lines++;
+			sch = fnd[i].gct(DATA);
+			break;
+		}
+	return (sch);
+}
+

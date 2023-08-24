@@ -96,4 +96,32 @@ void DATA_star(DATA_t *DATA, char **b)
 		varias_subt(DATA);
 	}
 }
+/**
+ * lib_DATA – the function
+ * @DATA: parameter
+ * @fld: the parameter
+ */
+void lib_DATA(DATA_t *DATA, int fld)
+{
+	str_free(DATA->argv);
+	DATA->argv = NULL;
+	DATA->path = NULL;
+	if (fld)
+	{
+		if (!DATA->L_array)
+			free(DATA->arg);
+		if (DATA->evn)
+			lib_data(&(DATA->evn));
+		if (DATA->p_story)
+			lib_data(&(DATA->p_story));
+		if (DATA->alias)
+			lib_data(&(DATA->alias));
+		str_free(DATA->par_envv);
+			DATA->par_envv = NULL;
+		lib_pointer((void **)DATA->L_array);
+		if (DATA->rddfile > 2)
+			close(DATA->rddfile);
+		_putchar(MIINUSONE);
+	}
+}
 

@@ -72,6 +72,18 @@ typedef struct DATA_listing
 	char **par_envv;
 	STRRUCT_L *p_story;
 } DATA_t;
+/**
+ * struct ssch - contains a builtin string and related function
+ * @type: the builtin command flag
+ * @func: the function
+ */
+typedef struct ssch
+{
+	char *yht;
+	int (*gct)(DATA_t *);
+
+} sch_table;
+
 extern char **par_envv;
 int pp_stry(DATA_t *DATA);
 int h_his(DATA_t *DATA, char *array, int linekk);
@@ -119,6 +131,12 @@ int str_chg(char **par1, char *par2);
 int _strcompare (char *c1, char *c2);
 int rw_p_story(DATA_t *DATA);
 void DATA_star(DATA_t *DATA, char **b);
+void lib_DATA(DATA_t *DATA, int fld);
+void str_free(char **str);
+void lib_data(STRRUCT_L **x);
+int lib_pointer(void **x);
+int srch_tab(DATA_t *DATA);
+int EXIT_FUNCT(DATA_t *DATA);
 #define MAX_ARRAY_NUM 1024
 #define DATA_0 \
 {NULL, NULL, 0, NULL, 0, 0, 0, NULL, NULL, NULL, 0, 0, 0, NULL, 0, \
