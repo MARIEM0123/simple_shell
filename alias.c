@@ -27,3 +27,96 @@ int alias_subt(DATA_t *DATA)
 	return (1);
 }
 
+/**
+ * alias_input – the function
+ * @nds: the parameter
+ * Return: there is a return
+ */
+int alias_input(STRRUCT_L *nds)
+{
+	char *x = NULL;
+char *b = NULL;
+
+	if (nds)
+	{
+		x = _strchr(nds->str, '=');
+		for (b = nds->str; b <= x; b++)
+		_putchar(*b);
+		_putchar('\'');
+		_puts(x + 1);
+		_puts("'\n");
+		return (0);
+	}
+	return (1);
+}
+/**
+ *  _alias_ - the function
+ * @DATA: parameter
+ *  Return: equal to 0
+ */
+int  _alias_(DATA_t *DATA)
+{
+	int k = 0;
+	char *p = NULL;
+	STRRUCT_L *nds = NULL;
+
+	if (DATA->argc == 1)
+	{
+		nds = DATA->alias;
+		while (nds)
+		{
+			alias_input(nds);
+			nds = nds->too;
+		}
+		return (0);
+	}
+	for (k = 1; DATA->argv[k]; k++)
+	{
+		p = _strchr(DATA->argv[k], '=');
+		if (p)
+			alias_init(DATA, DATA->argv[k]);
+		else
+			alias_input(str_nds(DATA->alias, DATA->argv[k], '='));
+	}
+
+	return (0);
+}
+/**
+ * alias_init- the function
+ * @DATA: parameter
+ * @c: the parameter
+ * Return: ther is a return
+ */
+int alias_init (DATA_t *DATA, char *c)
+{
+	char *x;
+
+	x = _strchr(c, '=');
+	if (!x)
+		return (1);
+	if (!*++x)
+		return (alias_c(DATA, c));
+
+	alias_c(DATA, c);
+	return (add_nds_z(&(DATA->alias), c, 0) == NULL);
+}
+/**
+ * nds_count – the function 
+ * @par1: parameter
+ * @nds: poarameter
+ * Return: there is a return
+ */
+ssize_t nds_count(STRRUCT_L *par1, STRRUCT_L *nds)
+{
+	size_t k = 0;
+
+	while (par1)
+	{
+		if (par1 == nds)
+			return (k);
+		par1 = par1->too;
+		k++;
+	}
+	return (-1);
+}
+

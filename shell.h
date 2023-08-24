@@ -151,6 +151,11 @@ int rm_env(DATA_t *DATA);
 int init_new_env(DATA_t *DATA, char *b, char *a);
 int ch_cur_dir(DATA_t *DATA);
 void err_output(DATA_t *DATA, char *x);
+int alias_input(STRRUCT_L *nds);
+int alias_init (DATA_t *DATA, char *c);
+ssize_t nds_count(STRRUCT_L *par1, STRRUCT_L *nds);
+int alias_c (DATA_t *DATA, char *ch);
+int  _alias_(DATA_t *DATA);
 #define MAX_ARRAY_NUM 1024
 #define DATA_0 \
 {NULL, NULL, 0, NULL, 0, 0, 0, NULL, NULL, NULL, 0, 0, 0, NULL, 0, \
