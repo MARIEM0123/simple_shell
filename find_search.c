@@ -23,7 +23,7 @@ int srch_tab(DATA_t *DATA)
 	sch_table fnd[] = {
 		{"exit", EXIT_FUNCT},
 		{"evn", NW_ennv},
-		{"help", _myhelp},
+		{"help", ch_dir},
 		{"p_story", _myp_story},
 		{"setevn", _mysetevn},
 		{"unsetevn", _myunsetevn},

@@ -137,6 +137,9 @@ void lib_data(STRRUCT_L **x);
 int lib_pointer(void **x);
 int srch_tab(DATA_t *DATA);
 int EXIT_FUNCT(DATA_t *DATA);
+size_t p_strings(const STRRUCT_L *h);
+int NW_ennv(DATA_t *DATA);
+int ch_dir(DATA_t *DATA);
 #define MAX_ARRAY_NUM 1024
 #define DATA_0 \
 {NULL, NULL, 0, NULL, 0, 0, 0, NULL, NULL, NULL, 0, 0, 0, NULL, 0, \
