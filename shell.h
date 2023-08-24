@@ -113,6 +113,8 @@ char *_strdup(const char *c);
 STRRUCT_L *str_nds(STRRUCT_L *nds, char *l, char c);
 int alias_subt(DATA_t *DATA);
 int varias_subt(DATA_t *DATA);
+int the_delimiter(char s, char *l);
+char *convert_number(long int L, int sprt, int parmt);
 #define MAX_ARRAY_NUM 1024
 #define DATA_0 \
 {NULL, NULL, 0, NULL, 0, 0, 0, NULL, NULL, NULL, 0, 0, 0, NULL, 0, \

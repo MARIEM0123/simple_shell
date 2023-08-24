@@ -27,10 +27,10 @@ char **word_str(char *c, char *d)
 		return (NULL);
 	for (i = 0, j = 0; j < count; j++)
 	{
-		while (the_delimiter(str[i], d))
+		while (the_delimiter(c[i], d))
 			i++;
 		k = 0;
-		while (!the_delimiter(str[i + k], d) && str[i + k])
+		while (!the_delimiter(c[i + k], d) && c[i + k])
 			k++;
 		s[j] = malloc((k + 1) * sizeof(char));
 		if (!s[j])
@@ -46,5 +46,18 @@ char **word_str(char *c, char *d)
 	}
 	s[j] = NULL;
 	return (s);
+}
+/**
+ * the_delimiter – the function
+ * @s: the parameter
+ * @l: the parameter
+ * Return: there is a erturn
+ */
+int the_delimiter(char s, char *l)
+{
+	while (*l)
+		if (*l++ == s)
+			return (1);
+	return (0);
 }
 
