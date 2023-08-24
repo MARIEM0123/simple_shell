@@ -19,7 +19,7 @@ int hloop(DATA_t *DATA, char **b)
 		x = p_input_line(DATA);
 		if (x != -1)
 		{
-			set_DATA(DATA, b);
+			DATA_star(DATA, b);
 			a = find_builtin(DATA);
 			if (a == -1)
 				find_cmd(DATA);
