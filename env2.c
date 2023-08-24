@@ -99,11 +99,11 @@ _putchar('\n');
 	if (xx == -1)
 	{
 		err_output(DATA, "Error message ");
-		_pputs(DATA->argv[1]), _eputchar('\n');
+		_pputs(DATA->argv[1]), _pputchar('\n');
 	}
 	else
 	{
-		init_new_env(info, "OLDPWD", env_name(DATA, "PWD="));
+		init_new_env(DATA, "OLDPWD", env_name(DATA, "PWD="));
 		init_new_env(DATA, "PWD", getcwd(array, 1024));
 	}
 	return (0);
@@ -118,7 +118,7 @@ void err_output(DATA_t *DATA, char *x)
 {
 	_pputs(DATA->fpnn);
 	_pputs(": ");
-	print_d(DATA-> num_lines, STDERR_FILENO);
+	p_dtt(DATA-> num_lines, STDERR_FILENO);
 	_pputs(": ");
 	_pputs(DATA->argv[0]);
 	_pputs(": ");

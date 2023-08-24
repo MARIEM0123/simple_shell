@@ -25,7 +25,7 @@ void _pputs(char *c)
 		return;
 	while (c[k] != '\0')
 	{
-		_pputchar(c[i]);
+		_pputchar(c[k]);
 		k++;
 	}
 }
