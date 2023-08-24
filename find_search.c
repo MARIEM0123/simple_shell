@@ -27,7 +27,7 @@ int srch_tab(DATA_t *DATA)
 		{"p_story", _myp_story},
 		{"setevn", env_sitting},
 		{"unsetevn", rm_env},
-		{"cd", _mycd},
+		{"cd", ch_cur_dir},
 		{"alias", _myalias},
 		{NULL, NULL}
 	};

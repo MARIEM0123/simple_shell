@@ -146,7 +146,10 @@ int _len_string(char *c);
 int env_sitting(DATA_t *DATA);
 void _pputs(char *c);
 int _pputchar(char c);
+char *env_name(DATA_t *DATA, const char *l);
 int rm_env(DATA_t *DATA);
+int init_new_env(DATA_t *DATA, char *b, char *a);
+int ch_cur_dir(DATA_t *DATA);
 #define MAX_ARRAY_NUM 1024
 #define DATA_0 \
 {NULL, NULL, 0, NULL, 0, 0, 0, NULL, NULL, NULL, 0, 0, 0, NULL, 0, \
