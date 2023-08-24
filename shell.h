@@ -116,6 +116,8 @@ int varias_subt(DATA_t *DATA);
 int the_delimiter(char s, char *l);
 char *convert_number(long int L, int sprt, int parmt);
 int str_chg(char **par1, char *par2);
+int _strcompare (char *c1, char *c2);
+int rw_p_story(DATA_t *DATA);
 #define MAX_ARRAY_NUM 1024
 #define DATA_0 \
 {NULL, NULL, 0, NULL, 0, 0, 0, NULL, NULL, NULL, 0, 0, 0, NULL, 0, \

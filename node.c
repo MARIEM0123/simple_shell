@@ -12,10 +12,10 @@ STRRUCT_L *str_nds(STRRUCT_L *nds, char *l, char c)
 
 	while (nds)
 	{
-		x = starts_with(nds->str, l);
+		x = abd(nds->str, l);
 		if (x && ((c == -1) || (*x == c)))
 			return (nds);
-		nds = nds->next;
+		nds = nds->too;
 	}
 	return (NULL);
 }

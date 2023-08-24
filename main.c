@@ -39,7 +39,7 @@ int main(int a, char **b)
 	}
 	listing_env(DATA);
 	pp_stry(DATA);
-	hloop(DATA, a);
+	hloop(DATA, b);
 	return (EXIT_SUCCESS);
 }
 

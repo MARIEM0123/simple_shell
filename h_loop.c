@@ -40,4 +40,31 @@ int hloop(DATA_t *DATA, char **b)
 	}
 	return (a);
 }
+/**
+ * rw_p_story – the function
+ * @DATA: the parameter
+ * Return: there is a return
+ */
+int rw_p_story(DATA_t *DATA)
+{
+	ssize_t ffile;
+	char *filepnn = ret_story_fd(DATA);
+	STRRUCT_L *nds = NULL;
+
+	if (!filepnn)
+		return (-1);
+
+	ffile = open(filepnn, O_CREAT | O_TRUNC | O_RDWR, 0644);
+	free(filepnn);
+	if (ffile == -1)
+		return (-1);
+	for (nds = DATA->p_story; nds; nds = nds->too)
+	{
+		_putsffile(nds->str, ffile);
+		_putffile('\n', ffile);
+	}
+	_putffile(MIINUSONE, ffile);
+	close(ffile);
+	return (1);
+}
 

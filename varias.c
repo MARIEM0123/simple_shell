@@ -18,19 +18,19 @@ int varias_subt(DATA_t *DATA)
 		if (!_strcompare(DATA->argv[i], "$?"))
 		{
 			str_chg(&(DATA->argv[i]),
-					_strdup(convert_number(info->status, 10, 0)));
+					_strdup(convert_number(DATA->etat, 10, 0)));
 			continue;
 		}
-		if (!_strcmp(info->argv[i], "$$"))
+		if (!_strcompare(DATA->argv[i], "$$"))
 		{
-			str_chg(&(info->argv[i]),
+			str_chg(&(DATA->argv[i]),
 					_strdup(convert_number(getpid(), 10, 0)));
 			continue;
 		}
-		nds = str_nds(info->env, &info->argv[i][1], '=');
+		nds = str_nds(DATA->evn, &DATA->argv[i][1], '=');
 		if (nds)
 		{
-			str_chg(&(info->argv[i]),
+			str_chg(&(DATA->argv[i]),
 					_strdup(_strchr(nds->str, '=') + 1));
 			continue;
 		}
