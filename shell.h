@@ -156,6 +156,9 @@ int alias_init (DATA_t *DATA, char *c);
 ssize_t nds_count(STRRUCT_L *par1, STRRUCT_L *nds);
 int alias_c (DATA_t *DATA, char *ch);
 int  _alias_(DATA_t *DATA);
+char **get_par_envv(DATA_t *DATA);
+char **STRRUCT_Lo_strings(STRRUCT_L *x);
+size_t linked_lgnt(const STRRUCT_L *x);
 #define MAX_ARRAY_NUM 1024
 #define DATA_0 \
 {NULL, NULL, 0, NULL, 0, 0, 0, NULL, NULL, NULL, 0, 0, 0, NULL, 0, \

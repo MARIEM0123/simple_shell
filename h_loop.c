@@ -20,9 +20,9 @@ int hloop(DATA_t *DATA, char **b)
 		if (x != -1)
 		{
 			DATA_star(DATA, b);
-			a = find_builtin(DATA);
+			a = srch_tab(DATA);
 			if (a == -1)
-				find_cmd(DATA);
+			ex_comm(DATA);
 		}
 		else if (mode_intr(DATA))
 			_putchar('\n');
