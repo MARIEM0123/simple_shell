@@ -20,4 +20,14 @@ int h_his(DATA_t *DATA, char *array, int linekk)
 		DATA->p_story = nds;
 	return (0);
 }
+/**
+ * _ myp_story – the function
+ * @DATA: parametr
+ *  Return: equal to 0
+ */
+int _myp_story(DATA_t *DATA)
+{
+	p_strings(DATA-> p_story);
+	return (0);
+}
 

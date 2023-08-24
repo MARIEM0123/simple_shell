@@ -140,6 +140,8 @@ int EXIT_FUNCT(DATA_t *DATA);
 size_t p_strings(const STRRUCT_L *h);
 int NW_ennv(DATA_t *DATA);
 int ch_dir(DATA_t *DATA);
+int _myp_story(DATA_t *DATA);
+int _init_env(DATA_t *DATA, char *a, char *b);
 #define MAX_ARRAY_NUM 1024
 #define DATA_0 \
 {NULL, NULL, 0, NULL, 0, 0, 0, NULL, NULL, NULL, 0, 0, 0, NULL, 0, \
