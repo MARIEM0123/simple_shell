@@ -15,9 +15,9 @@ int varias_subt(DATA_t *DATA)
 		if (DATA->argv[i][0] != '$' || !DATA->argv[i][1])
 			continue;
 
-		if (!_strcmp(DATA->argv[i], "$?"))
+		if (!_strcompare(DATA->argv[i], "$?"))
 		{
-			str_chg(&(info->argv[i]),
+			str_chg(&(DATA->argv[i]),
 					_strdup(convert_number(info->status, 10, 0)));
 			continue;
 		}

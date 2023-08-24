@@ -29,4 +29,25 @@ char *_strncpy(char *par1, char *par2, int count)
 	}
 	return (str);
 }
+/**
+ * _strcompare  - the function
+ * @c1: the parameter one
+ * @c2: the parameter two
+ *
+ * Return: != 0
+ */
+int _strcompare (char *c1, char *c2)
+{
+	while (*c1 && *c2)
+	{
+		if (*c1 != *c2)
+			return (*c1 - *c2);
+		c1++;
+		c2++;
+	}
+	if (*c1 == *c2)
+		return (0);
+	else
+		return (*c1 < *c2 ? -1 : 1);
+}
 
