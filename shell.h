@@ -142,6 +142,11 @@ int NW_ennv(DATA_t *DATA);
 int ch_dir(DATA_t *DATA);
 int _myp_story(DATA_t *DATA);
 int _init_env(DATA_t *DATA, char *a, char *b);
+int _len_string(char *c);
+int env_sitting(DATA_t *DATA);
+void _pputs(char *c);
+int _pputchar(char c);
+int rm_env(DATA_t *DATA);
 #define MAX_ARRAY_NUM 1024
 #define DATA_0 \
 {NULL, NULL, 0, NULL, 0, 0, 0, NULL, NULL, NULL, 0, 0, 0, NULL, 0, \

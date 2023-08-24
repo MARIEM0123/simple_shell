@@ -51,3 +51,22 @@ int _strcompare (char *c1, char *c2)
 		return (*c1 < *c2 ? -1 : 1);
 }
 
+#include "shell.h"
+
+/**
+ * _len_string – the function
+ * @c: the parameter
+ * Return: there is a return
+ */
+int _len_string(char *c)
+{
+	int k = 0;
+
+	if (!c)
+		return (0);
+
+	while (*c++)
+		k++;
+	return (k);
+}
+

@@ -11,3 +11,23 @@ int _putchar(char c)
 {
 	return (write(1, &c, 1));
 }
+/**
+ * _pputchar – the function
+ * @c: The parameter
+ * Return: there is a return
+ */
+int _pputchar(char c)
+{
+	static int k;
+	static char array[MAXIMUM_BYTE_NUM];
+
+	if (c == ZERO_NUM || k >= MAXIMUM_BYTE_NUM)
+	{
+		write(2, array, i);
+		i = 0;
+	}
+	if (c != ZERO_NUM)
+		array[k++] = c;
+	return (1);
+}
+

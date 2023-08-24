@@ -58,8 +58,8 @@ int _init_env(DATA_t *DATA, char *a, char *b)
 	if (!a || !b)
 		return (0);
 
-	array = malloc(_strlen(a) + _strlen(b) + 2);
-	if (!buf)
+	array = malloc(_len_string(a) + _len_string(b) + 2);
+	if (!array)
 		return (1);
 	_strcpy(array, a);
 	_strcat(array, "=");
@@ -67,7 +67,7 @@ int _init_env(DATA_t *DATA, char *a, char *b)
 	nds = DATA->evn;
 	while (nds)
 	{
-		p = starts_with(node->str, a);
+		p = abd(nds->str, a);
 		if (p && *p == '=')
 		{
 			free(nds->str);
@@ -81,6 +81,22 @@ int _init_env(DATA_t *DATA, char *a, char *b)
 	free(array);
 	DATA->env_mod = 1;
 	return (0);
+}
+/**
+ * env_sitting – the function
+ * @DATA: the parameter
+ *  Return: equal to 0
+ */
+int env_sitting(DATA_t *DATA)
+{
+	if (DATA->argc != 3)
+	{
+		_pputs("ERROR MESSAGE\n");
+		return (1);
+	}
+	if (_init_env(DATA, DATA->argv[1], DATA->argv[2]))
+		return (0);
+	return (1);
 }
 
 

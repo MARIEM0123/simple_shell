@@ -12,3 +12,21 @@ void _puts(char *str)
 	}
 	_putchar ('\n');
 }
+/**
+ * _pputs – the funchion
+ * @c: the parameter
+ * Return: No return
+ */
+void _pputs(char *c)
+{
+	int k = 0;
+
+	if (!c)
+		return;
+	while (c[k] != '\0')
+	{
+		_pputchar(c[i]);
+		k++;
+	}
+}
+
