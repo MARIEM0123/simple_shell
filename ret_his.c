@@ -17,7 +17,7 @@ char *ret_story_fd(DATA_t *DATA)
 		return (NULL);
 	array[0] = 0;
 	_strcpy(array, x);
-	_strncat(array, "/");
-	_strncat(array, MESS_STORY);
+	_strcat(array, "/");
+	_strcat(array, MESS_STORY);
 	return (array);
 }
