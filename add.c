@@ -1,12 +1,12 @@
 #include "shell.h"
 /**
- * add_nds_end – the function
+ * add_nds_z – the function
  * @h: tha parameter
  * @ch: the parameter
  * @num: parameyer
  * Return: there is a return
  */
-STRRUCT_L *add_nds_end(STRRUCT_L **h, const char *ch, int num)
+STRRUCT_L *add_nds_z(STRRUCT_L **h, const char *ch, int num)
 {
 	STRRUCT_L *new_nds, *nds;
 

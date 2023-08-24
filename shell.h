@@ -72,6 +72,7 @@ typedef struct DATA_listing
 	char **par_envv;
 	STRRUCT_L *p_story;
 } DATA_t;
+extern char **par_envv;
 int pp_stry(DATA_t *DATA);
 int h_his(DATA_t *DATA, char *array, int linekk);
 void handle_var(__attribute__((unused))int c);
@@ -91,7 +92,7 @@ void *_realloc(void *x, unsigned int par1, unsigned int par2);
 char *_strchr(char *str, char x);
 char *_strncpy(char *par1, char *par2, int count);
 char *_strncat(char *par1, char *par2, int count);
-STRRUCT_L *add_nds_end(STRRUCT_L **head, const char *str, int num);
+STRRUCT_L *add_nds_z(STRRUCT_L **head, const char *str, int num);
 int _line_parm(DATA_t *DATA, char **pp, size_t *l);
 void rm_ct(char *array);
 STRRUCT_L *add_nds_end(STRRUCT_L **h, const char *ch, int num);
@@ -102,7 +103,21 @@ int don_p_story(DATA_t *DATA);
 char *ev_value(DATA_t *DATA, const char *pnn);
 char *_strcpy(char *par1, char *par2);
 char *_strcat(char *par1, char *par2);
+int listing_env(DATA_t *DATA);
+int hloop(DATA_t *DATA, char **av);
+void data_net(DATA_t *DATA);
+int mode_intr(DATA_t *DATA);
+ssize_t p_input_line(DATA_t *DATA);
+char **word_str(char *c, char *d);
+char *_strdup(const char *c);
+STRRUCT_L *str_nds(STRRUCT_L *nds, char *l, char c);
+int alias_subt(DATA_t *DATA);
+int varias_subt(DATA_t *DATA);
 #define MAX_ARRAY_NUM 1024
+#define DATA_0 \
+{NULL, NULL, 0, NULL, 0, 0, 0, NULL, NULL, NULL, 0, 0, 0, NULL, 0, \
+		0, NULL, NULL}
+
 #define ZERO_NUM	0
 #define MIINUSONE -1
 #define NUM_TWO	2
