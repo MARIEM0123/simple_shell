@@ -100,6 +100,7 @@ int del_ndss(STRRUCT_L **h, unsigned int k);
 char *_memset(char *c, char a, unsigned int m);
 int don_p_story(DATA_t *DATA);
 char *ev_value(DATA_t *DATA, const char *pnn);
+char *_strcpy(char *par1, char *par2);
 #define MAX_ARRAY_NUM 1024
 #define ZERO_NUM	0
 #define MIINUSONE -1
