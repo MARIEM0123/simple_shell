@@ -159,7 +159,10 @@ int  _alias_(DATA_t *DATA);
 char **get_par_envv(DATA_t *DATA);
 char **STRRUCT_Lo_strings(STRRUCT_L *x);
 size_t linked_lgnt(const STRRUCT_L *x);
-#define MAX_ARRAY_NUM 1024
+void ex_comm(DATA_t *DATA);
+int _putffile(char a, int file);
+int _putffile(char a, int file);
+int _putsffile(char *c, int file);
 #define DATA_0 \
 {NULL, NULL, 0, NULL, 0, 0, 0, NULL, NULL, NULL, 0, 0, 0, NULL, 0, \
 		0, NULL, NULL}
@@ -173,6 +176,7 @@ size_t linked_lgnt(const STRRUCT_L *x);
 #define MESS_STORY	"the history"
 #define CONVERT_LOWERCASE	1
 #define MAXIMUM_BYTE_NUM 1024
+#define MAX_ARRAY_NUM 1024
 #define HIST_MAX	4096
 #endif
 

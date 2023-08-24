@@ -49,38 +49,7 @@ char *b = NULL;
 	}
 	return (1);
 }
-/**
- *  _alias_ - the function
- * @DATA: parameter
- *  Return: equal to 0
- */
-int  _alias_(DATA_t *DATA)
-{
-	int k = 0;
-	char *p = NULL;
-	STRRUCT_L *nds = NULL;
 
-	if (DATA->argc == 1)
-	{
-		nds = DATA->alias;
-		while (nds)
-		{
-			alias_input(nds);
-			nds = nds->too;
-		}
-		return (0);
-	}
-	for (k = 1; DATA->argv[k]; k++)
-	{
-		p = _strchr(DATA->argv[k], '=');
-		if (p)
-			alias_init(DATA, DATA->argv[k]);
-		else
-			alias_input(str_nds(DATA->alias, DATA->argv[k], '='));
-	}
-
-	return (0);
-}
 /**
  * alias_init- the function
  * @DATA: parameter

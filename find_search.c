@@ -41,6 +41,57 @@ int srch_tab(DATA_t *DATA)
 		}
 	return (sch);
 }
+
+/**
+ * get_par_envv – the function
+ * @DATA: parameter
+ * Return: equal to 0
+ */
+char **get_par_envv(DATA_t *DATA)
+{
+	if (!DATA->par_envv || DATA->env_mod)
+	{
+		DATA->par_envv = STRRUCT_Lo_strings(DATA->evn);
+		DATA->env_mod = 0;
+	}
+
+	return (DATA->par_envv);
+}
+
+/**
+ * STRRUCT_Lo_strings – the function
+ * @x: parameter
+ * Return: !=0
+ */
+char **STRRUCT_Lo_strings(STRRUCT_L *x)
+{
+	STRRUCT_L *nds = x;
+	size_t i = linked_lgnt(x), j;
+	char **cc;
+	char *c;
+
+	if (!x || !i)
+		return (NULL);
+	cc = malloc(sizeof(char *) * (i + 1));
+	if (!cc)
+		return (NULL);
+	for (i = 0; nds; nds = nds->too, i++)
+	{
+		c = malloc(_len_string(nds->str) + 1);
+		if (!c)
+		{
+			for (j = 0; j < i; j++)
+				free(cc[j]);
+			free(cc);
+			return (NULL);
+		}
+
+		c = _strcpy(c, nds->str);
+		cc[i] = c;
+	}
+	cc[i] = NULL;
+	return (cc);
+}
 /**
  * ex_comm – the function
  * @DATA: the parameter
@@ -77,54 +128,5 @@ void ex_comm(DATA_t *DATA)
 				error_output(DATA, "Error message\n");
 		}
 	}
-}
-/**
- * get_par_envv – the function
- * @DATA: parameter
- * Return: equal to 0
- */
-char **get_par_envv(DATA_t *DATA)
-{
-	if (!DATA->par_envv || DATA->env_mod)
-	{
-		DATA->par_envv = STRRUCT_Lo_strings(DATA->evn);
-		DATA->env_mod = 0;
-	}
-
-	return (DATA->par_envv);
-}
-/**
- * STRRUCT_Lo_strings – the function
- * @x: parameter
- * Return: !=0
- */
-char **STRRUCT_Lo_strings(STRRUCT_L *x)
-{
-	STRRUCT_L *nds = x;
-	size_t i = linked_lgnt(x), j;
-	char **cc;
-	char *c;
-
-	if (!x || !i)
-		return (NULL);
-	cc = malloc(sizeof(char *) * (i + 1));
-	if (!cc)
-		return (NULL);
-	for (i = 0; nds; nds = nds->too, i++)
-	{
-		c = malloc(stline(nds->c) + 1);
-		if (!c)
-		{
-			for (j = 0; j < i; j++)
-				free(c[j]);
-			free(cc);
-			return (NULL);
-		}
-
-		c = _strcpy(c, nds->str);
-		cc[i] = c;
-	}
-	cc[i] = NULL;
-	return (cc);
 }
 
