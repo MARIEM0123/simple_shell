@@ -2,138 +2,137 @@
 
 /**
  * get_history_file - the defined function
- * @info: parameter defined
+ * @data: parameter defined
  * Return: there is a retur,n
  */
 
-char *get_history_file(info_t *info)
+char *get_history_file(info_t *data)
 {
-	char *buf, *dir;
+	char *arr, *x;
 
-	dir = _getenv(info, "HOME=");
-	if (!dir)
+	x = _getenv(data, "HOME=");
+	if (!x)
 		return (NULL);
-	buf = malloc(sizeof(char) * (_strlen(dir) + _strlen(MESS_DEF) + 2));
-	if (!buf)
+	arr = malloc(sizeof(char) * (_strlen(x) + _strlen(MESS_DEF) + 2));
+	if (!arr)
 		return (NULL);
-	buf[0] = 0;
-	_strcpy(buf, dir);
-	_strcat(buf, "/");
-	_strcat(buf, MESS_DEF);
-	return (buf);
+	arr[0] = 0;
+	_strcpy(arr, x);
+	_strcat(arr, "/");
+	_strcat(arr, MESS_DEF);
+	return (arr);
 }
 
 /**
  * write_history - this is the defined function
- * @info: the parameter defined in her
+ * @data: the parameter defined in her
  * Return: the return is different than  0
  */
-int write_history(info_t *info)
+int write_history(info_t *data)
 {
-	ssize_t fd;
-	char *filename = get_history_file(info);
-	data_l *node = NULL;
+	ssize_t file;
+	char *n = get_history_file(data);
+	data_l *nds = NULL;
 
-	if (!filename)
+	if (!n)
 		return (-1);
 
-	fd = open(filename, O_CREAT | O_TRUNC | O_RDWR, 0644);
-	free(filename);
-	if (fd == -1)
+	file = open(n, O_CREAT | O_TRUNC | O_RDWR, 0644);
+	free(n);
+	if (file == -1)
 		return (-1);
-	for (node = info->sth; node; node = node->next)
+	for (nds = data->sth; nds; nds = nds->next)
 	{
-		_fileputs(node->rst, fd);
-		_fileput('\n', fd);
+		_fileputs(nds->rst, file);
+		_fileput('\n', file);
 	}
-	_fileput(BUF_FLUSH, fd);
-	close(fd);
+	_fileput(BUF_FLUSH, file);
+	close(file);
 	return (1);
 }
-
-/**
- * read_history - The function is defined hree
- * @info: the parameteros defined here
- * Return: there is a return is deifferent that 0
- */
-int read_history(info_t *info)
-{
-	int i, last = 0, linecount = 0;
-	ssize_t fd, rdlen, fsize = 0;
-	struct stat st;
-	char *buf = NULL, *filename = get_history_file(info);
-
-	if (!filename)
-		return (0);
-
-	fd = open(filename, O_RDONLY);
-	free(filename);
-	if (fd == -1)
-		return (0);
-	if (!fstat(fd, &st))
-		fsize = st.st_size;
-	if (fsize < 2)
-		return (0);
-	buf = malloc(sizeof(char) * (fsize + 1));
-	if (!buf)
-		return (0);
-	rdlen = read(fd, buf, fsize);
-	buf[fsize] = 0;
-	if (rdlen <= 0)
-		return (free(buf), 0);
-	close(fd);
-	for (i = 0; i < fsize; i++)
-		if (buf[i] == '\n')
-		{
-			buf[i] = 0;
-			build_history_list(info, buf + last, linecount++);
-			last = i + 1;
-		}
-	if (last != i)
-		build_history_list(info, buf + last, linecount++);
-	free(buf);
-	info->num_stc = linecount;
-	while (info->num_stc-- >= NUM_MAXIMUM)
-		delete_node_at_index(&(info->sth), 0);
-	renumber_history(info);
-	return (info->num_stc);
-}
-
 /**
  * build_history_list - the function is defined here
- * @info: the parameter is definedd hhere
- * @buf: the parameter is defined here
- * @linecount: the parameter is defined here
+ * @data: the parameter is definedd hhere
+ * @arr: the parameter is defined here
+ * @m: the parameter is defined here
  * Return: the return is equal to 0
  */
-int build_history_list(info_t *info, char *buf, int linecount)
+int build_history_list(info_t *data, char *arr, int m)
 {
-	data_l *node = NULL;
+        data_l *nds = NULL;
 
-	if (info->sth)
-		node = info->sth;
-	add_node_end(&node, buf, linecount);
+        if (data->sth)
+                nds = data->sth;
+        add_node_end(&nds, arr, m);
 
-	if (!info->sth)
-		info->sth = node;
-	return (0);
+        if (!data->sth)
+                data->sth = nds;
+        return (0);
 }
+/**
+ * read_history - The function is defined hree
+ * @data: the parameteros defined here
+ * Return: there is a return is deifferent that 0
+ */
+int read_history(info_t *data)
+{
+	int i, z = 0, m = 0;
+	ssize_t file, rdlen, fz = 0;
+	struct stat st;
+	char *arr = NULL, *fl = get_history_file(data);
+
+	if (!fl)
+		return (0);
+
+	file = open(fl, O_RDONLY);
+	free(fl);
+	if (file == -1)
+		return (0);
+	if (!fstat(file, &st))
+		fz = st.st_size;
+	if (fz < 2)
+		return (0);
+	arr = malloc(sizeof(char) * (fz + 1));
+	if (!arr)
+		return (0);
+	rdlen = read(file, arr, fz);
+	arr[fz] = 0;
+	if (rdlen <= 0)
+		return (free(arr), 0);
+	close(file);
+	for (i = 0; i < fz; i++)
+		if (arr[i] == '\n')
+		{
+			arr[i] = 0;
+			build_history_list(data, arr + z, m++);
+			z = i + 1;
+		}
+	if (z != i)
+		build_history_list(data, arr + z, m++);
+	free(arr);
+	data->num_stc = m;
+	while (data->num_stc-- >= NUM_MAXIMUM)
+		delete_node_at_index(&(data->sth), 0);
+	renumber_history(data);
+	return (data->num_stc);
+}
+
 
 /**
  * renumber_history - THE functioni is defined here
- * @info: the parameter is defined here
+ * @data: the parameter is defined here
  * Return: the return is diffrent that null
  */
-int renumber_history(info_t *info)
+int renumber_history(info_t *data)
 {
-	data_l *node = info->sth;
+	data_l *nds = data->sth;
 	int i = 0;
 
-	while (node)
+	while (nds)
 	{
-		node->runem = i++;
-		node = node->next;
+		nds->runem = i++;
+		nds = nds->next;
 	}
-	return (info->num_stc = i);
+	return (data->num_stc = i);
 }
 

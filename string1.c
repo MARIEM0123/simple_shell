@@ -1,63 +1,62 @@
 #include "shell.h"
 
-/**
- * _strcpy - the function
- * @dest: the parameter
- * @src: the parameter
- * Return: there is a return
- */
-char *_strcpy(char *dest, char *src)
-{
-	int i = 0;
-
-	if (dest == src || src == 0)
-		return (dest);
-	while (src[i])
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = 0;
-	return (dest);
-}
 
 /**
  * _strdup - the function
- * @str: the parameter
+ * @c: the parameter
  * Return: ther is a return
  */
-char *_strdup(const char *str)
+char *_strdup(const char *c)
 {
-	int length = 0;
-	char *ret;
+	int l = 0;
+	char *x;
 
-	if (str == NULL)
+	if (c == NULL)
 		return (NULL);
-	while (*str++)
-		length++;
-	ret = malloc(sizeof(char) * (length + 1));
-	if (!ret)
+	while (*c++)
+		l++;
+	x = malloc(sizeof(char) * (l + 1));
+	if (!x)
 		return (NULL);
-	for (length++; length--;)
-		ret[length] = *--str;
-	return (ret);
+	for (l++; l--;)
+		x[l] = *--c;
+	return (x);
 }
+/**
+ * _strcpy - the function
+ * @P1: the parameter
+ * @P2: the parameter
+ * Return: there is a return
+ */
+char *_strcpy(char *P1, char *P2)
+{
+        int i = 0;
 
+        if (P1 == P2 || P2 == 0)
+                return (P1);
+        while (P2[i])
+        {
+                P1[i] = P2[i];
+                i++;
+        }
+        P1[i] = 0;
+        return (P1);
+}
 /**
  * _puts - the function
  * @str: theparameter
  * Return: there is no return
  */
-void _puts(char *str)
+void _puts(char *c)
 {
-	int i = 0;
+	int k = 0;
 
-	if (!str)
+	if (!c)
 		return;
-	while (str[i] != '\0')
+	while (c[k] != '\0')
 	{
-		_putchar(str[i]);
-		i++;
+		_putchar(c[k]);
+		k++;
 	}
 }
 
@@ -66,18 +65,18 @@ void _puts(char *str)
  * @c: The parameter
  * Return: there is a return
  */
-int _putchar(char c)
+int _putchar(char str)
 {
 	static int i;
-	static char buf[WRITE_BUF_SIZE];
+	static char array[WRITE_BUF_SIZE];
 
-	if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
+	if (str == BUF_FLUSH || i >= WRITE_BUF_SIZE)
 	{
-		write(1, buf, i);
+		write(1, array, i);
 		i = 0;
 	}
-	if (c != BUF_FLUSH)
-		buf[i++] = c;
+	if (str != BUF_FLUSH)
+		array[i++] = str;
 	return (1);
 }
 

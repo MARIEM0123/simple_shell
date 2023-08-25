@@ -2,73 +2,71 @@
 
 /**
  * clear_info - the function
- * @info: the parameter
+ * @data: the parameter
  */
-void clear_info(info_t *info)
+void clear_info(info_t *data)
 {
-	info->arg = NULL;
-	info->argv = NULL;
-	info->link = NULL;
-	info->argc = 0;
+	data->arg = NULL;
+	data->argv = NULL;
+	data->link = NULL;
+	data->argc = 0;
 }
-
+/**
+ * data_lib - the function
+ * @data:the parameter
+ * @x: there is a return
+ */
+void data_lib(info_t *data, int x)
+{
+        lib_f(data->argv);
+        data->argv = NULL;
+        data->link = NULL;
+        if (x)
+        {
+                if (!data->arr_cmd)
+                        free(data->arg);
+                if (data->dt)
+                        free_list(&(data->dt));
+                if (data->sth)
+                        free_list(&(data->sth));
+                if (data->alias)
+                        free_list(&(data->alias));
+                lib_f(data->prb);
+                        data->prb = NULL;
+                lib_g((void **)data->arr_cmd);
+                if (data->file_rd > 2)
+                        close(data->file_rd);
+                _putchar(BUF_FLUSH);
+        }
+}
 /**
  * set_info - the function
- * @info: the parameter
- * @av: the parameter
+ * @data: the parameter
+ * @b: the parameter
  */
-void set_info(info_t *info, char **av)
+void set_info(info_t *data, char **b)
 {
 	int i = 0;
 
-	info->nfd = av[0];
-	if (info->arg)
+	data->nfd = b[0];
+	if (data->arg)
 	{
-		info->argv = t_str(info->arg, " \t");
-		if (!info->argv)
+		data->argv = t_str(data->arg, " \t");
+		if (!data->argv)
 		{
-			info->argv = malloc(sizeof(char *) * 2);
-			if (info->argv)
+			data->argv = malloc(sizeof(char *) * 2);
+			if (data->argv)
 			{
-				info->argv[0] = _strdup(info->arg);
-				info->argv[1] = NULL;
+				data->argv[0] = _strdup(data->arg);
+				data->argv[1] = NULL;
 			}
 		}
-		for (i = 0; info->argv && info->argv[i]; i++)
+		for (i = 0; data->argv && data->argv[i]; i++)
 			;
-		info->argc = i;
+		data->argc = i;
 
-		replace_alias(info);
-		replace_vars(info);
-	}
-}
-
-/**
- * data_lib - the function
- * @info:the parameter
- * @all: there is a return
- */
-void data_lib(info_t *info, int all)
-{
-	lib_f(info->argv);
-	info->argv = NULL;
-	info->link = NULL;
-	if (all)
-	{
-		if (!info->arr_cmd)
-			free(info->arg);
-		if (info->dt)
-			free_list(&(info->dt));
-		if (info->sth)
-			free_list(&(info->sth));
-		if (info->alias)
-			free_list(&(info->alias));
-		lib_f(info->prb);
-			info->prb = NULL;
-		lib_g((void **)info->arr_cmd);
-		if (info->file_rd > 2)
-			close(info->file_rd);
-		_putchar(BUF_FLUSH);
+		replace_alias(data);
+		replace_vars(data);
 	}
 }
 

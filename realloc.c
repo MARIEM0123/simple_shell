@@ -1,62 +1,61 @@
 #include "shell.h"
 
-/**
- * _memset -the function
- * @s: the parameter
- * @b: the parrameter
- * @n: the parameter
- * Return: there is a return
- */
-char *_memset(char *s, char b, unsigned int n)
-{
-	unsigned int i;
-
-	for (i = 0; i < n; i++)
-		s[i] = b;
-	return (s);
-}
 
 /**
  * lib_f - the function
- * @pp: the parameter
+ * @x: the parameter
  */
-void lib_f(char **pp)
+void lib_f(char **x)
 {
-	char **a = pp;
+	char **i = x;
 
-	if (!pp)
+	if (!x)
 		return;
-	while (*pp)
-		free(*pp++);
-	free(a);
+	while (*x)
+		free(*x++);
+	free(i);
 }
 
 /**
  * _realloc  thefunction
- * @ptr: the parameter
- * @old_size: parameter
- * @new_size:the parameter
+ * @ss: the parameter
+ * @P1: parameter
+ * @P2:the parameter
  * Return: there is a return
  */
-void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
+void *_realloc(void *ss, unsigned int P1, unsigned int P2)
 {
 	char *p;
 
-	if (!ptr)
-		return (malloc(new_size));
-	if (!new_size)
-		return (free(ptr), NULL);
-	if (new_size == old_size)
-		return (ptr);
+	if (!ss)
+		return (malloc(P2));
+	if (!P2)
+		return (free(ss), NULL);
+	if (P2 == P1)
+		return (ss);
 
-	p = malloc(new_size);
+	p = malloc(P2);
 	if (!p)
 		return (NULL);
 
-	old_size = old_size < new_size ? old_size : new_size;
-	while (old_size--)
-		p[old_size] = ((char *)ptr)[old_size];
-	free(ptr);
+	P1 = P1 < P2 ? P1 : P2;
+	while (P1--)
+		p[P1] = ((char *)ss)[P1];
+	free(ss);
 	return (p);
 }
+/**
+ * _memset -the function
+ * @str: the parameter
+ * @a: the parrameter
+ * @n: the parameter
+ * Return: there is a return
+ */
+char *_memset(char *str, char a, unsigned int n)
+{
+        unsigned int i;
 
+        for (i = 0; i < n; i++)
+                str[i] = a;
+        return (str);
+}

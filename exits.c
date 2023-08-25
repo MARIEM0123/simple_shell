@@ -2,74 +2,73 @@
 
 /**
  **_strrcpy - the function
- *@dest: the parameter
- *@src: the parameter
- *@n: the parameter
+ *@P1: the parameter
+ *@P2: the parameter
+ *@M: the parameter
  *Return: there is a return
  */
-char *_strrcpy(char *dest, char *src, int n)
+char *_strrcpy(char *P1, char *P2, int M)
 {
-	int i, j;
-	char *s = dest;
+	int k, l;
+	char *c = P1;
 
-	i = 0;
-	while (src[i] != '\0' && i < n - 1)
+	k = 0;
+	while (P2[k] != '\0' && k < M - 1)
 	{
-		dest[i] = src[i];
-		i++;
+		P1[k] = P2[k];
+		k++;
 	}
-	if (i < n)
+	if (k < M)
 	{
-		j = i;
-		while (j < n)
+		l = k;
+		while (l < M)
 		{
-			dest[j] = '\0';
-			j++;
+			P1[l] = '\0';
+			l++;
 		}
 	}
-	return (s);
-}
-
-/**
- **_strrcat - the function
- *@dest: the parameter
- *@src: the parameter
- *@n: the parameter
- *Return: there is a return
- */
-char *_strrcat(char *dest, char *src, int n)
-{
-	int i, j;
-	char *s = dest;
-
-	i = 0;
-	j = 0;
-	while (dest[i] != '\0')
-		i++;
-	while (src[j] != '\0' && j < n)
-	{
-		dest[i] = src[j];
-		i++;
-		j++;
-	}
-	if (j < n)
-		dest[i] = '\0';
-	return (s);
+	return (c);
 }
 
 /**
  **hr_str - the function
- *@s: the parameter
+ *@str: the parameter
  *@c: the parameter
  *Return: != 0
  */
-char *hr_str(char *s, char c)
+char *hr_str(char *str, char c)
 {
-	do {
-		if (*s == c)
-			return (s);
-	} while (*s++ != '\0');
+        do {
+                if (*str == c)
+                        return (str);
+        } while (*str++ != '\0');
 
-	return (NULL);
+        return (NULL);
+}
+/**
+ **_strrcat - the function
+ *@P1: the parameter
+ *@P2: the parameter
+ *@M: the parameter
+ *Return: there is a return
+ */
+char *_strrcat(char *P1, char *P2, int M)
+{
+	int k, l;
+	char *c = P1;
+
+	k = 0;
+	l = 0;
+	while (P1[k] != '\0')
+		k++;
+	while (P2[l] != '\0' && l < M)
+	{
+		P1[k] = P2[l];
+		k++;
+		l++;
+	}
+	if (l < M)
+		P1[k] = '\0';
+	return (c);
 }
 

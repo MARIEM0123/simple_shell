@@ -1,92 +1,91 @@
 #include "shell.h"
 
 /**
- * exit_func - the function
- * @info: the parameter
- * Return: there is a return
+ * func_hp - the function
+ * @data: the parameter
+ * Return: equal to 0
  */
-int exit_func(info_t *info)
+int func_hp(info_t *data)
 {
-	int exitcheck;
+        char **arr;
 
-	if (info->argv[1])
-	{
-		exitcheck = _atoi2(info->argv[1]);
-		if (exitcheck == -1)
-		{
-			info->etat = 2;
-			err_output(info, "Illegal number: ");
-			_eputs(info->argv[1]);
-			_eputchar('\n');
-			return (1);
-		}
-		info->n_er = _atoi2(info->argv[1]);
-		return (-2);
-	}
-	info->n_er = -1;
-	return (-2);
+        arr = data->argv;
+        _puts("Error message \n");
+        if (0)
+                _puts(*arr);
+        return (0);
 }
+
 
 /**
  * _cd - the function
- * @info: the parameter
+ * @data: the parameter
  * Return:equal to 0
  */
-int _cd(info_t *info)
+int _cd(info_t *data)
 {
-	char *s, *dir, buffer[1024];
-	int chdir_ret;
+	char *c, *x, array[1024];
+	int y;
 
-	s = getcwd(buffer, 1024);
-	if (!s)
-		_puts("Error message<<\n");
-	if (!info->argv[1])
+	c = getcwd(array, 1024);
+	if (!c)
+		_puts("Error\n");
+	if (!data->argv[1])
 	{
-		dir = _getenv(info, "HOME=");
-		if (!dir)
-			chdir_ret = chdir((dir = _getenv(info, "PWD=")) ? dir : "/");
+		x = _getenv(data, "HOME=");
+		if (!x)
+			y = chdir((x = _getenv(data, "PWD=")) ? x : "/");
 		else
-			chdir_ret = chdir(dir);
+			y = chdir(x);
 	}
-	else if (_strcmp(info->argv[1], "-") == 0)
+	else if (_strcmp(data->argv[1], "-") == 0)
 	{
-		if (!_getenv(info, "OLDPWD="))
+		if (!_getenv(data, "OLDPWD="))
 		{
-			_puts(s);
+			_puts(c);
 			_putchar('\n');
 			return (1);
 		}
-		_puts(_getenv(info, "OLDPWD=")), _putchar('\n');
-		chdir_ret = chdir((dir = _getenv(info, "OLDPWD=")) ? dir : "/");
+		_puts(_getenv(data, "OLDPWD=")), _putchar('\n');
+		y = chdir((x = _getenv(data, "OLDPWD=")) ? x : "/");
 	}
 	else
-		chdir_ret = chdir(info->argv[1]);
-	if (chdir_ret == -1)
+		y = chdir(data->argv[1]);
+	if (y == -1)
 	{
-		err_output(info, "can't cd to ");
-		_eputs(info->argv[1]), _eputchar('\n');
+		err_output(data, "Error message no access ");
+		_eputs(data->argv[1]), _eputchar('\n');
 	}
 	else
 	{
-		_setenv(info, "OLDPWD", _getenv(info, "PWD="));
-		_setenv(info, "PWD", getcwd(buffer, 1024));
+		_setenv(data, "OLDPWD", _getenv(data, "PWD="));
+		_setenv(data, "PWD", getcwd(array, 1024));
 	}
 	return (0);
 }
-
 /**
- * func_hp - the function
- * @info: the parameter
- * Return: equal to 0
+ * exit_func - the function
+ * @data: the parameter
+ * Return: there is a return
  */
-int func_hp(info_t *info)
+int exit_func(info_t *data)
 {
-	char **arg_array;
+        int x;
 
-	arg_array = info->argv;
-	_puts("Error message \n");
-	if (0)
-		_puts(*arg_array);
-	return (0);
+        if (data->argv[1])
+        {
+                x = _atoi2(data->argv[1]);
+                if (x == -1)
+                {
+                        data->etat = 2;
+                        err_output(data, "IError message: ");
+                        _eputs(data->argv[1]);
+                        _eputchar('\n');
+                        return (1);
+                }
+                data->n_er = _atoi2(data->argv[1]);
+                return (-2);
+        }
+        data->n_er = -1;
+        return (-2);
 }
-

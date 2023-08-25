@@ -2,55 +2,55 @@
 
 /**
  * hsh - the function
- * @info: the parameter
- * @av: the parameter
+ * @data: the parameter
+ * @b: the parameter
  * Return: there is a return
  */
-int hsh(info_t *info, char **av)
+int hsh(info_t *data, char **b)
 {
 	ssize_t r = 0;
-	int builtin_ret = 0;
+	int x = 0;
 
-	while (r != -1 && builtin_ret != -2)
+	while (r != -1 && x != -2)
 	{
-		clear_info(info);
-		if (interactive(info))
+		clear_info(data);
+		if (interactive(data))
 			_puts("$ ");
 		_eputchar(BUF_FLUSH);
-		r = get_input(info);
+		r = get_input(data);
 		if (r != -1)
 		{
-			set_info(info, av);
-			builtin_ret = find_builtin(info);
-			if (builtin_ret == -1)
-				find_cmd(info);
+			set_info(data, b);
+			x = find_builtin(data);
+			if (x == -1)
+				find_cmd(data);
 		}
-		else if (interactive(info))
+		else if (interactive(data))
 			_putchar('\n');
-		data_lib(info, 0);
+		data_lib(data, 0);
 	}
-	write_history(info);
-	data_lib(info, 1);
-	if (!interactive(info) && info->etat)
-		exit(info->etat);
-	if (builtin_ret == -2)
+	write_history(data);
+	data_lib(data, 1);
+	if (!interactive(data) && data->etat)
+		exit(data->etat);
+	if (x == -2)
 	{
-		if (info->n_er == -1)
-			exit(info->etat);
-		exit(info->n_er);
+		if (data->n_er == -1)
+			exit(data->etat);
+		exit(data->n_er);
 	}
-	return (builtin_ret);
+	return (x);
 }
 
 /**
  * find_builtin - the function
- * @info: the parameter
+ * @data: the parameter
  * Return: there is a return
  */
-int find_builtin(info_t *info)
+int find_builtin(info_t *data)
 {
-	int i, built_in_ret = -1;
-	tab_bnt builtintbl[] = {
+	int i, x = -1;
+	tab_bnt y[] = {
 		{"exit", exit_func},
 		{"env", _myenv},
 		{"help", func_hp},
@@ -62,14 +62,14 @@ int find_builtin(info_t *info)
 		{NULL, NULL}
 	};
 
-	for (i = 0; builtintbl[i].es; i++)
-		if (_strcmp(info->argv[0], builtintbl[i].es) == 0)
+	for (i = 0; y[i].es; i++)
+		if (_strcmp(data->argv[0], y[i].es) == 0)
 		{
-			info->lnumber++;
-			built_in_ret = builtintbl[i].gc(info);
+			data->lnumber++;
+			x = y[i].gc(data);
 			break;
 		}
-	return (built_in_ret);
+	return (x);
 }
 
 /**
@@ -77,62 +77,62 @@ int find_builtin(info_t *info)
  * @info: the parameter
  * Return: void
  */
-void find_cmd(info_t *info)
+void find_cmd(info_t *data)
 {
-	char *path = NULL;
+	char *link = NULL;
 	int i, k;
 
-	info->link = info->argv[0];
-	if (info->numbers == 1)
+	data->link = data->argv[0];
+	if (data->numbers == 1)
 	{
-		info->lnumber++;
-		info->numbers = 0;
+		data->lnumber++;
+		data->numbers = 0;
 	}
-	for (i = 0, k = 0; info->arg[i]; i++)
-		if (!delimiter(info->arg[i], " \t\n"))
+	for (i = 0, k = 0; data->arg[i]; i++)
+		if (!delimiter(data->arg[i], " \t\n"))
 			k++;
 	if (!k)
 		return;
 
-	path = find_path(info, _getenv(info, "PATH="), info->argv[0]);
-	if (path)
+	link = find_path(data, _getenv(data, "PATH="), data->argv[0]);
+	if (link)
 	{
-		info->link = path;
-		fork_cmd(info);
+		data->link = link;
+		fork_cmd(data);
 	}
 	else
 	{
-		if ((interactive(info) || _getenv(info, "PATH=")
-					|| info->argv[0][0] == '/') && is_cmd(info, info->argv[0]))
-			fork_cmd(info);
-		else if (*(info->arg) != '\n')
+		if ((interactive(data) || _getenv(data, "PATH=")
+					|| data->argv[0][0] == '/') && is_cmd(data, data->argv[0]))
+			fork_cmd(data);
+		else if (*(data->arg) != '\n')
 		{
-			info->etat = 127;
-			err_output(info, "not found\n");
+			data->etat = 127;
+			err_output(data, "Error messaor no such path\n");
 		}
 	}
 }
 
 /**
  * fork_cmd - function
- * @info: the parameter
+ * @data: the parameter
  * Return: void
  */
-void fork_cmd(info_t *info)
+void fork_cmd(info_t *data)
 {
-	pid_t child_pid;
+	pid_t cd;
 
-	child_pid = fork();
-	if (child_pid == -1)
+	cd = fork();
+	if (cd == -1)
 	{
-		perror("Error message:");
+		perror("there is an error:");
 		return;
 	}
-	if (child_pid == 0)
+	if (cd == 0)
 	{
-		if (execve(info->link, info->argv, get_environ(info)) == -1)
+		if (execve(data->link, data->argv, get_environ(data)) == -1)
 		{
-			data_lib(info, 1);
+			data_lib(data, 1);
 			if (errno == EACCES)
 				exit(126);
 			exit(1);
@@ -140,12 +140,12 @@ void fork_cmd(info_t *info)
 	}
 	else
 	{
-		wait(&(info->etat));
-		if (WIFEXITED(info->etat))
+		wait(&(data->etat));
+		if (WIFEXITED(data->etat))
 		{
-			info->etat = WEXITSTATUS(info->etat);
-			if (info->etat == 126)
-				err_output(info, "Permission denied\n");
+			data->etat = WEXITSTATUS(data->etat);
+			if (data->etat == 126)
+				err_output(data, "Error message no access\n");
 		}
 	}
 }

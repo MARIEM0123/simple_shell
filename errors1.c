@@ -2,134 +2,134 @@
 
 /**
  *  _atoi2 - the function
- * @s: the parameter
+ * @c: the parameter
  * Return: ther is a return
  */
-int _atoi2(char *s)
+int _atoi2(char *c)
 {
-	int i = 0;
-	unsigned long int result = 0;
+	int k = 0;
+	unsigned long int pt = 0;
 
-	if (*s == '+')
-		s++;
-	for (i = 0;  s[i] != '\0'; i++)
+	if (*c == '+')
+		c++;
+	for (k = 0;  c[k] != '\0'; k++)
 	{
-		if (s[i] >= '0' && s[i] <= '9')
+		if (c[k] >= '0' && c[k] <= '9')
 		{
-			result *= 10;
-			result += (s[i] - '0');
-			if (result > INT_MAX)
+			pt *= 10;
+			pt += (c[k] - '0');
+			if (pt > INT_MAX)
 				return (-1);
 		}
 		else
 			return (-1);
 	}
-	return (result);
+	return (pt);
 }
 
 /**
  * err_output - the function
- * @info: the parameter
- * @estr: parameter
+ * @data: the parameter
+ * @y: parameter
  * Return:thetre is a return
  */
-void err_output(info_t *info, char *estr)
+void err_output(info_t *data, char *y)
 {
-	_eputs(info->nfd);
+	_eputs(data->nfd);
 	_eputs(": ");
-	d_output(info->lnumber, STDERR_FILENO);
+	d_output(data->lnumber, STDERR_FILENO);
 	_eputs(": ");
-	_eputs(info->argv[0]);
+	_eputs(data->argv[0]);
 	_eputs(": ");
-	_eputs(estr);
+	_eputs(y);
 }
 
 /**
  * d_output - the function
- * @input: the parameter
- * @fd: the parameter
+ * @e: the parameter
+ * @file: the parameter
  * Return: there is a return
  */
-int d_output(int input, int fd)
+int d_output(int e, int file)
 {
 	int (*__putchar)(char) = _putchar;
-	int i, count = 0;
-	unsigned int _abs_, current;
+	int k, n = 0;
+	unsigned int _abs_, nw;
 
-	if (fd == STDERR_FILENO)
+	if (file == STDERR_FILENO)
 		__putchar = _eputchar;
-	if (input < 0)
+	if (e < 0)
 	{
-		_abs_ = -input;
+		_abs_ = -e;
 		__putchar('-');
-		count++;
+		n++;
 	}
 	else
-		_abs_ = input;
-	current = _abs_;
-	for (i = 1000000000; i > 1; i /= 10)
+		_abs_ = e;
+	nw = _abs_;
+	for (k = 1000000000; k > 1; k /= 10)
 	{
-		if (_abs_ / i)
+		if (_abs_ / k)
 		{
-			__putchar('0' + current / i);
-			count++;
+			__putchar('0' + nw / k);
+			n++;
 		}
-		current %= i;
+		nw %= k;
 	}
-	__putchar('0' + current);
-	count++;
+	__putchar('0' + nw);
+	n++;
 
-	return (count);
+	return (n);
 }
 
 /**
  * n_conv - the function
- * @num:the parameter
- * @base: the parameter
- * @flags: the parameter
+ * @n:the parameter
+ * @b: the parameter
+ * @a: the parameter
  * Return: thhere is a return
  */
-char *n_conv(long int num, int base, int flags)
+char *n_conv(long int m, int b, int a)
 {
 	static char *array;
-	static char buffer[50];
-	char sign = 0;
-	char *ptr;
-	unsigned long n = num;
+	static char arr[50];
+	char mm = 0;
+	char *ss;
+	unsigned long n = m;
 
-	if (!(flags &CASE_US_CONV) && num < 0)
+	if (!(a &CASE_US_CONV) && m < 0)
 	{
-		n = -num;
-		sign = '-';
+		n = -m;
+		mm = '-';
 
 	}
-	array = flags & CASE_CONV ? "0123456789abcdef" : "0123456789ABCDEF";
-	ptr = &buffer[49];
-	*ptr = '\0';
+	array = a & CASE_CONV ? "0123456789abcdef" : "0123456789ABCDEF";
+	ss = &arr[49];
+	*ss = '\0';
 
 	do	{
-		*--ptr = array[n % base];
-		n /= base;
+		*--ss = array[n % b];
+		n /= b;
 	} while (n != 0);
 
-	if (sign)
-		*--ptr = sign;
-	return (ptr);
+	if (mm)
+		*--ss = mm;
+	return (ss);
 }
 
 /**
  * c_rm - the function
- * @buf: the parameter
+ * @arr: the parameter
  * Return: the return is thetre
  */
-void c_rm(char *buf)
+void c_rm(char *arr)
 {
-	int i;
+	int k;
 
-	for (i = 0; buf[i] != '\0'; i++)
-		if (buf[i] == '#' && (!i || buf[i - 1] == ' '))
+	for (k = 0; arr[k] != '\0'; k++)
+		if (arr[k] == '#' && (!k || arr[k - 1] == ' '))
 		{
-			buf[i] = '\0';
+			arr[k] = '\0';
 			break;
 		}
 }
