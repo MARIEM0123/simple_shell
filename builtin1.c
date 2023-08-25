@@ -1,71 +1,60 @@
 #include "shell.h"
 
 /**
- * _hstr - the function
- * @info: the parameter
- *  Return:equal to 0
- */
-int _hstr(info_t *info)
-{
-	print_list(info->sth);
-	return (0);
-}
-
-/**
- * unset_alias - the function
- * @info: the parameter
- * @str: the sparameter
+ * unset_alias - the function to be defined in here
+ * @data: the parameter indicated
+ * @ch: the sparameter
  * Return: ther is a return
  */
-int unset_alias(info_t *info, char *str)
+int unset_alias(info_t *data, char *ch)
 {
 	char *p, c;
-	int ret;
+	int x;
 
-	p = hr_str(str, '=');
+	p = hr_str(ch, '=');
 	if (!p)
 		return (1);
 	c = *p;
 	*p = 0;
-	ret = delete_node_at_index(&(info->alias),
-		get_node_index(info->alias, node_starts_with(info->alias, str, -1)));
+	x = delete_node_at_index(&(data->alias),
+		get_node_index(data->alias, node_starts_with(data->alias, ch, -1)));
 	*p = c;
-	return (ret);
+	return (x);
 }
 
 /**
- * set_alias - the function
- * @info: the parameter
- * @str: the parameter
+ * set_alias - the function to be defined in her
+ * @data: the parameter to be indicated
+ * @ch: the parameter
  * Return: Always 0 on success, 1 on error
  */
-int set_alias(info_t *info, char *str)
+int set_alias(info_t *data, char *ch)
 {
 	char *p;
 
-	p = hr_str(str, '=');
+	p = hr_str(ch, '=');
 	if (!p)
 		return (1);
 	if (!*++p)
-		return (unset_alias(info, str));
+		return (unset_alias(data, ch));
 
-	unset_alias(info, str);
-	return (add_node_end(&(info->alias), str, 0) == NULL);
+	unset_alias(data, ch);
+	return (add_node_end(&(data->alias), ch, 0) == NULL);
 }
 
 /**
- * print_alias - the function
- * @node: the parameter
+ * print_alias - the function to be defined in here
+ * @nds: the parameter to be indicated
  * Return: equal to 0
  */
-int print_alias(data_l *node)
+int print_alias(data_l *nds)
 {
 	char *p = NULL, *a = NULL;
 
-	if (node)
+	if (nds)
 	{
-		p = hr_str(node->rst, '=');
-		for (a = node->rst; a <= p; a++)
+		p = hr_str(nds->rst, '=');
+		for (a = nds->rst; a <= p; a++)
 		_putchar(*a);
 		_putchar('\'');
 		_puts(p + 1);
@@ -76,35 +65,44 @@ int print_alias(data_l *node)
 }
 
 /**
- * _myalias - The function
- * @info: the parameter
+ * _myalias - The function to be defined in here
+ * @data: the parameter to be indicated
  *  Return: equal to 0
  */
-int _myalias(info_t *info)
+int _myalias(info_t *data)
 {
 	int i = 0;
 	char *p = NULL;
-	data_l *node = NULL;
-
-	if (info->argc == 1)
+	data_l *nds = NULL;
+	
+	if (data->argc == 1)
 	{
-		node = info->alias;
-		while (node)
+		nds = data->alias;
+		while (nds)
 		{
-			print_alias(node);
-			node = node->next;
+			print_alias(nds);
+			nds = nds->next;
 		}
 		return (0);
 	}
-	for (i = 1; info->argv[i]; i++)
+	for (i = 1; data->argv[i]; i++)
 	{
-		p = hr_str(info->argv[i], '=');
+		p = hr_str(data->argv[i], '=');
 		if (p)
-			set_alias(info, info->argv[i]);
+			set_alias(data, data->argv[i]);
 		else
-			print_alias(node_starts_with(info->alias, info->argv[i], '='));
+			print_alias(node_starts_with(data->alias, data->argv[i], '='));
 	}
 
 	return (0);
 }
- 
+/**
+ * _hstr - the function to be defined in here
+ * @data: the parameter to be indicated
+ *  Return:equal to 0
+ */
+int _hstr(info_t *data)
+{
+        print_list(data->sth);
+        return (0);
+} 

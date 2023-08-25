@@ -164,7 +164,7 @@ char *_getenv(info_t *, const char *);
 int _myenv(info_t *);
 int _mysetenv(info_t *);
 int _myunsetenv(info_t *);
-int populate_env_list(info_t *);
+int list_env_p(info_t *);
 int write_history(info_t *info);
 int build_history_list(info_t *info, char *buf, int linecount);
 size_t print_list_str(const data_l *);
