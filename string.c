@@ -59,13 +59,13 @@ int _strcmp(char *str1, char *str2)
  */
 char *_strcat(char *P1, char *P2)
 {
-	char *P2 = P1;
+	char *x = P1;
 
 	while (*P1)
 		P1++;
 	while (*P2)
 		*P1++ = *P2++;
 	*P1 = *P2;
-	return (P2);
+	return (x);
 }
 

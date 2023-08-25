@@ -52,7 +52,7 @@ void check_chain(info_t *data, char *arr, size_t *p, size_t i, size_t en)
 		if (data->etat)
 		{
 			arr[i] = 0;
-			j =len;
+			j =en;
 		}
 	}
 	if (data->arr_cmdt == NUM_ONE)
@@ -90,17 +90,17 @@ int replace_alias(info_t *data)
 		p = _strdup(p + 1);
 		if (!p)
 			return (0);
-		info->argv[0] = p;
+		data->argv[0] = p;
 	}
 	return (1);
 }
 
 /**
  * replace_vars - the function
- * @info: the parameter
+ * @data: the parameter
  * Return: there is a return
  */
-int replace_vars(info_t *info)
+int replace_vars(info_t *data)
 {
 	int i = 0;
 	data_l *nds;
@@ -112,7 +112,7 @@ int replace_vars(info_t *info)
 
 		if (!_strcmp(data->argv[i], "$?"))
 		{
-			replace_string(&(dta->argv[i]),
+			replace_string(&(data->argv[i]),
 					_strdup(n_conv(data->etat, 10, 0)));
 			continue;
 		}
@@ -144,7 +144,7 @@ int replace_vars(info_t *info)
 int replace_string(char **P1, char *P2)
 {
 	free(*P1);
-	*old = P2;
+	*P1 = P2;
 	return (1);
 }
 
