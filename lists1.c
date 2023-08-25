@@ -36,7 +36,7 @@ char **list_to_strings(list_t *head)
 		return (NULL);
 	for (i = 0; node; node = node->next, i++)
 	{
-		str = malloc(_strlen(node->str) + 1);
+		str = malloc(_strlen(node->rst) + 1);
 		if (!str)
 		{
 			for (j = 0; j < i; j++)
@@ -45,7 +45,7 @@ char **list_to_strings(list_t *head)
 			return (NULL);
 		}
 
-		str = _strcpy(str, node->str);
+		str = _strcpy(str, node->rst);
 		strs[i] = str;
 	}
 	strs[i] = NULL;
@@ -63,10 +63,10 @@ size_t print_list(const list_t *h)
 
 	while (h)
 	{
-		_puts(convert_number(h->num, 10, 0));
+		_puts(convert_number(h->runem, 10, 0));
 		_putchar(':');
 		_putchar(' ');
-		_puts(h->str ? h->str : "(nil)");
+		_puts(h->rst ? h->rst : "(nil)");
 		_puts("\n");
 		h = h->next;
 		i++;
@@ -87,7 +87,7 @@ list_t *node_starts_with(list_t *node, char *prefix, char c)
 
 	while (node)
 	{
-		p = starts_with(node->str, prefix);
+		p = starts_with(node->rst, prefix);
 		if (p && ((c == -1) || (*p == c)))
 			return (node);
 		node = node->next;

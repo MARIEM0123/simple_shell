@@ -37,16 +37,16 @@
 extern char **environ;
 
 /**
- * struct liststr - singly linked list
- * @num: the number field
- * @str: a string
+ * struct str0 - the structure is defined here
+ * @runem: the paramerter is defined here
+ * @rst: the string is defined here
  * @next: points to the next node
  */
-typedef struct liststr
+typedef struct str0
 {
-	int num;
-	char *str;
-	struct liststr *next;
+	int runem;
+	char *rst;
+	struct str0 *next;
 } list_t;
 
 /**
