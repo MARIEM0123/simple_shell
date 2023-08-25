@@ -53,22 +53,21 @@ typedef struct str0
  * struct Data_tab - the structure to be defined in here
  * @arg:the parameter numero one to be defined in here
  * @argv:the parameter numero one to be defined in here
- * @path:the parameter numero one to be defined in here
+ * @link:the parameter numero one to be defined in here
  * @argc:the parameter numero one to be defined in here
- * @line_count:the parameter numero one to be defined in here
- * @err_num:the parameter numero one to be defined in here
- * @linecount_flag: the parameter numero one to be defined in here
- * @fname: the parameter numero one to be defined in here
- * @env: the parameter numero one to be defined in here
- * @environ: the parameter numero one to be defined in here
- * @history: the parameter numero one to be defined in here
+ * @lnumber:the parameter numero one to be defined in here
+ * @n_er:the parameter numero one to be defined in here
+ * @numbers: the parameter numero one to be defined in here
+ * nfd: the parameter numero one to be defined in here
+ * @dt: the parameter numero one to be defined in here
+ * @sth: the parameter numero one to be defined in here
  * @alias: the parameter numero one to be defined in here
- * @env_changed: the parameter numero one to be defined in here
- * @status: the parameter numero one to be defined in here
- * @cmd_buf: the parameter numero one to be defined in here
- * @cmd_buf_type:the parameter numero one to be defined in here
- * @readfd: the parameter numero one to be defined in here
- * @histcount: the parameter numero one to be defined in here
+ * @prb: the parameter numero one to be defined in here
+ * @mod: the parameter numero one to be defined in here
+ * @etat: the parameter numero one to be defined in here
+ * @arr_cmd: the parameter numero one to be defined in here
+ * @file_rd: the parameter numero one to be defined in here
+ * @stc: the parameter numero one to be defined in here
  */
 typedef struct Data_tab
 {
@@ -103,77 +102,61 @@ typedef struct Data_tab
  */
 typedef struct bnt
 {
-	char *type;
-	int (*func)(info_t *);
+	char *es;
+	int (*gc)(info_t *);
 } tab_bnt;
 
 
+int blt_fnd(info_t *);
+void cmd_fnd(info_t *);
+void cmd_K(info_t *);
 int hsh(info_t *, char **);
-int find_builtin(info_t *);
-void find_cmd(info_t *);
-void fork_cmd(info_t *);
-
-
-int is_cmd(info_t *, char *);
-char *dup_chars(char *, int, int);
-char *find_path(info_t *, char *, char *);
-
-
-int loophsh(char **);
-
-
 void _eputs(char *);
+int cmd_check(info_t *, char *);
+char *path_fnd(info_t *, char *, char *);
+int turn_hsh(char **);
+char *string_duplic(char *, int, int);
 int _eputchar(char);
-int _putfd(char c, int fd);
-int _putsfd(char *str, int fd);
-
+int _fileput(char c, int fd);
+int _fileputs(char *str, int fd);
+char *_strdup(const char *);
 
 int _strlen(char *);
 int _strcmp(char *, char *);
-char *starts_with(const char *, const char *);
+char *init_func(const char *, const char *);
 char *_strcat(char *, char *);
-
-
+char *_strrcpy(char *, char *, int);
+char *_memset(char *, char, unsigned int);
 char *_strcpy(char *, char *);
-char *_strdup(const char *);
 void _puts(char *);
 int _putchar(char);
-
-
-char *_strncpy(char *, char *, int);
-char *_strncat(char *, char *, int);
-char *_strchr(char *, char);
-
-
-char **strtow(char *, char *);
-char **strtow2(char *, char);
-
-
-char *_memset(char *, char, unsigned int);
-void ffree(char **);
+char **t_str(char *, char *);
 void *_realloc(void *, unsigned int, unsigned int);
-
-
-int bfree(void **);
-
-
-int interactive(info_t *);
-int is_delim(char, char *);
-int _isalpha(int);
+char *_strrcat(char *, char *, int);
+char *hr_str(char *, char);
+char **t2_str(char *, char);
 int _atoi(char *);
 
+void lib_f(char **);
+int lib_g(void **);
+int _atoi2(char *);
 
-int _erratoi(char *);
+int interactive(info_t *);
+int delimiter(char, char *);
+int _isalpha(int);
+int _myexit(info_t *);
+
+
 void print_error(info_t *, char *);
 int print_d(int, int);
 char *convert_number(long int, int, int);
 void remove_comments(char *);
 
 
-int _myexit(info_t *);
+
 int _mycd(info_t *);
 int _myhelp(info_t *);
-
+void free_info(info_t *, int);
 
 int _myhistory(info_t *);
 int _myalias(info_t *);
@@ -182,48 +165,38 @@ int _myalias(info_t *);
 ssize_t get_input(info_t *);
 int _getline(info_t *, char **, size_t *);
 void sigintHandler(int);
-
-
+int _unsetenv(info_t *, char *);
 void clear_info(info_t *);
 void set_info(info_t *, char **);
-void free_info(info_t *, int);
-
+char **get_environ(info_t *);
 char *_getenv(info_t *, const char *);
 int _myenv(info_t *);
 int _mysetenv(info_t *);
 int _myunsetenv(info_t *);
 int populate_env_list(info_t *);
-
-
-char **get_environ(info_t *);
-int _unsetenv(info_t *, char *);
-int _setenv(info_t *, char *, char *);
-
-
-char *get_history_file(info_t *info);
 int write_history(info_t *info);
-int read_history(info_t *info);
 int build_history_list(info_t *info, char *buf, int linecount);
+size_t print_list_str(const data_l *);
+int _setenv(info_t *, char *, char *);
+void free_list(data_l **);
+int read_history(info_t *info);
+char *get_history_file(info_t *info);
 int renumber_history(info_t *info);
-
+data_l *node_starts_with(data_l *, char *, char);
 
 data_l *add_node(data_l **, const char *, int);
 data_l *add_node_end(data_l **, const char *, int);
-size_t print_list_str(const data_l *);
-int delete_node_at_index(data_l **, unsigned int);
-void free_list(data_l **);
 
+int delete_node_at_index(data_l **, unsigned int);
+void check_chain(info_t *, char *, size_t *, size_t, size_t);
+int replace_string(char **, char *);
 size_t list_len(const data_l *);
 char **list_to_strings(data_l *);
 size_t print_list(const data_l *);
-data_l *node_starts_with(data_l *, char *, char);
 ssize_t get_node_index(data_l *, data_l *);
-
-int is_chain(info_t *, char *, size_t *);
-void check_chain(info_t *, char *, size_t *, size_t, size_t);
-int replace_alias(info_t *);
 int replace_vars(info_t *);
-int replace_string(char **, char *);
+int is_chain(info_t *, char *, size_t *);
+int replace_alias(info_t *);
 
 #endif
 

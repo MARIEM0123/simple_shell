@@ -33,7 +33,7 @@ int _unsetenv(info_t *info, char *var)
 
 	while (node)
 	{
-		p = starts_with(node->rst, var);
+		p = init_func(node->rst, var);
 		if (p && *p == '=')
 		{
 			info->mod= delete_node_at_index(&(info->dt), i);
@@ -72,7 +72,7 @@ int _setenv(info_t *info, char *var, char *value)
 	node = info->dt;
 	while (node)
 	{
-		p = starts_with(node->rst, var);
+		p = init_func(node->rst, var);
 		if (p && *p == '=')
 		{
 			free(node->rst);

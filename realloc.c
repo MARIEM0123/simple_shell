@@ -17,10 +17,10 @@ char *_memset(char *s, char b, unsigned int n)
 }
 
 /**
- * ffree - the function
+ * lib_f - the function
  * @pp: the parameter
  */
-void ffree(char **pp)
+void lib_f(char **pp)
 {
 	char **a = pp;
 

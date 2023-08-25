@@ -43,10 +43,10 @@ int write_history(info_t *info)
 		return (-1);
 	for (node = info->sth; node; node = node->next)
 	{
-		_putsfd(node->rst, fd);
-		_putfd('\n', fd);
+		_fileputs(node->rst, fd);
+		_fileput('\n', fd);
 	}
-	_putfd(BUF_FLUSH, fd);
+	_fileput(BUF_FLUSH, fd);
 	close(fd);
 	return (1);
 }

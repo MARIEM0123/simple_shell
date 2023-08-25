@@ -1,12 +1,12 @@
 #include "shell.h"
 
 /**
- * is_cmd - the function
+ * cmd_check - the function
  * @info: the parameter
  * @path: the parameter
  * Return: there is a return
  */
-int is_cmd(info_t *info, char *path)
+int cmd_check(info_t *info, char *path)
 {
 	struct stat st;
 
@@ -22,13 +22,13 @@ int is_cmd(info_t *info, char *path)
 }
 
 /**
- * dup_chars - the function
+ * string_duplic - the function
  * @pathstr: the parameter
  * @start: the parameter
  * @stop: the parameter
  * Return: there is a return
  */
-char *dup_chars(char *pathstr, int start, int stop)
+char *string_duplic(char *pathstr, int start, int stop)
 {
 	static char buf[1024];
 	int i = 0, k = 0;
@@ -41,29 +41,29 @@ char *dup_chars(char *pathstr, int start, int stop)
 }
 
 /**
- * find_path - the function
+ * path_fnd - the function
  * @info: the parameter
  * @pathstr: the parameter
  * @cmd: theparameter
  * Return: there is a return
  */
-char *find_path(info_t *info, char *pathstr, char *cmd)
+char *path_fnd(info_t *info, char *pathstr, char *cmd)
 {
 	int i = 0, curr_pos = 0;
 	char *path;
 
 	if (!pathstr)
 		return (NULL);
-	if ((_strlen(cmd) > 2) && starts_with(cmd, "./"))
+	if ((_strlen(cmd) > 2) && init_func(cmd, "./"))
 	{
-		if (is_cmd(info, cmd))
+		if (cmd_check(info, cmd))
 			return (cmd);
 	}
 	while (1)
 	{
 		if (!pathstr[i] || pathstr[i] == ':')
 		{
-			path = dup_chars(pathstr, curr_pos, i);
+			path = string_duplic(pathstr, curr_pos, i);
 			if (!*path)
 				_strcat(path, cmd);
 			else
@@ -71,7 +71,7 @@ char *find_path(info_t *info, char *pathstr, char *cmd)
 				_strcat(path, "/");
 				_strcat(path, cmd);
 			}
-			if (is_cmd(info, path))
+			if (cmd_check(info, path))
 				return (path);
 			if (!pathstr[i])
 				break;
@@ -83,11 +83,11 @@ char *find_path(info_t *info, char *pathstr, char *cmd)
 }
 
 /**
- * bfree - the function
+ * lib_g - the function
  * @ptr: the parameter
  * Return:vthere is a return
  */
-int bfree(void **ptr)
+int lib_g(void **ptr)
 {
         if (ptr && *ptr)
         {

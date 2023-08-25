@@ -7,7 +7,7 @@
  * Return: the parameter
  */
 
-char **strtow(char *str, char *d)
+char **t_str(char *str, char *d)
 {
 	int i, j, k, m, numwords = 0;
 	char **s;
@@ -17,7 +17,7 @@ char **strtow(char *str, char *d)
 	if (!d)
 		d = " ";
 	for (i = 0; str[i] != '\0'; i++)
-		if (!is_delim(str[i], d) && (is_delim(str[i + 1], d) || !str[i + 1]))
+		if (!delimiter(str[i], d) && (delimiter(str[i + 1], d) || !str[i + 1]))
 			numwords++;
 
 	if (numwords == 0)
@@ -27,10 +27,10 @@ char **strtow(char *str, char *d)
 		return (NULL);
 	for (i = 0, j = 0; j < numwords; j++)
 	{
-		while (is_delim(str[i], d))
+		while (delimiter(str[i], d))
 			i++;
 		k = 0;
-		while (!is_delim(str[i + k], d) && str[i + k])
+		while (!delimiter(str[i + k], d) && str[i + k])
 			k++;
 		s[j] = malloc((k + 1) * sizeof(char));
 		if (!s[j])
@@ -49,12 +49,12 @@ char **strtow(char *str, char *d)
 }
 
 /**
- * **strtow2 - the function
+ * **t2_str - the function
  * @str: the parameter
  * @d: the parameter
  * Return: there is a return
  */
-char **strtow2(char *str, char d)
+char **t2_str(char *str, char d)
 {
 	int i, j, k, m, numwords = 0;
 	char **s;

@@ -87,7 +87,7 @@ data_l *node_starts_with(data_l *node, char *prefix, char c)
 
 	while (node)
 	{
-		p = starts_with(node->rst, prefix);
+		p = init_func(node->rst, prefix);
 		if (p && ((c == -1) || (*p == c)))
 			return (node);
 		node = node->next;

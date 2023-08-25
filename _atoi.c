@@ -12,12 +12,12 @@ int interactive(info_t *info)
 }
 
 /**
- * is_delim - the fun ction
+ * delimiter - the fun ction
  * @c: the parameter
  * @delim: the parameter
  * Return: there is a erturn
  */
-int is_delim(char c, char *delim)
+int delimiter(char c, char *delim)
 {
 	while (*delim)
 		if (*delim++ == c)

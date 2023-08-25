@@ -24,7 +24,7 @@ void set_info(info_t *info, char **av)
 	info->nfd = av[0];
 	if (info->arg)
 	{
-		info->argv = strtow(info->arg, " \t");
+		info->argv = t_str(info->arg, " \t");
 		if (!info->argv)
 		{
 			info->argv = malloc(sizeof(char *) * 2);
@@ -50,7 +50,7 @@ void set_info(info_t *info, char **av)
  */
 void free_info(info_t *info, int all)
 {
-	ffree(info->argv);
+	lib_f(info->argv);
 	info->argv = NULL;
 	info->link = NULL;
 	if (all)
@@ -63,9 +63,9 @@ void free_info(info_t *info, int all)
 			free_list(&(info->sth));
 		if (info->alias)
 			free_list(&(info->alias));
-		ffree(info->prb);
+		lib_f(info->prb);
 			info->prb = NULL;
-		bfree((void **)info->arr_cmd);
+		lib_g((void **)info->arr_cmd);
 		if (info->file_rd > 2)
 			close(info->file_rd);
 		_putchar(BUF_FLUSH);

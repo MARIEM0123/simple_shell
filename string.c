@@ -39,12 +39,12 @@ int _strcmp(char *s1, char *s2)
 }
 
 /**
- * starts_with - the function
+ * init_func - the function
  * @haystack: the parameter
  * @needle: the parameter
  * Return: there is a return
  */
-char *starts_with(const char *haystack, const char *needle)
+char *init_func(const char *haystack, const char *needle)
 {
 	while (*needle)
 		if (*needle++ != *haystack++)

@@ -40,12 +40,12 @@ int _eputchar(char c)
 }
 
 /**
- * _putfd - The function
+ * _fileput - The function
  * @c: The parameter
  * @fd: Theparameter
  * Return: ther is a return depends on the case
  */
-int _putfd(char c, int fd)
+int _fileput(char c, int fd)
 {
 	static int i;
 	static char buf[WRITE_BUF_SIZE];
@@ -61,12 +61,12 @@ int _putfd(char c, int fd)
 }
 
 /**
- * _putsfd -the function
+ * _fileputs -the function
  * @str: the parameter
  * @fd: the parameter
  * Return: ther is a return
  */
-int _putsfd(char *str, int fd)
+int _fileputs(char *str, int fd)
 {
 	int i = 0;
 
@@ -74,7 +74,7 @@ int _putsfd(char *str, int fd)
 		return (0);
 	while (*str)
 	{
-		i += _putfd(*str++, fd);
+		i += _fileput(*str++, fd);
 	}
 	return (i);
 }

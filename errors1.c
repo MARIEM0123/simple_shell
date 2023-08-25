@@ -1,11 +1,11 @@
 #include "shell.h"
 
 /**
- *  _erratoi - the function
+ *  _atoi2 - the function
  * @s: the parameter
  * Return: ther is a return
  */
-int _erratoi(char *s)
+int _atoi2(char *s)
 {
 	int i = 0;
 	unsigned long int result = 0;

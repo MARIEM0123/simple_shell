@@ -11,7 +11,7 @@ int _myexit(info_t *info)
 
 	if (info->argv[1])
 	{
-		exitcheck = _erratoi(info->argv[1]);
+		exitcheck = _atoi2(info->argv[1]);
 		if (exitcheck == -1)
 		{
 			info->etat = 2;
@@ -20,7 +20,7 @@ int _myexit(info_t *info)
 			_eputchar('\n');
 			return (1);
 		}
-		info->n_er = _erratoi(info->argv[1]);
+		info->n_er = _atoi2(info->argv[1]);
 		return (-2);
 	}
 	info->n_er = -1;

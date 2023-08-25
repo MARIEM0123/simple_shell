@@ -21,9 +21,9 @@ int hsh(info_t *info, char **av)
 		if (r != -1)
 		{
 			set_info(info, av);
-			builtin_ret = find_builtin(info);
+			builtin_ret = blt_fnd(info);
 			if (builtin_ret == -1)
-				find_cmd(info);
+				cmd_fnd(info);
 		}
 		else if (interactive(info))
 			_putchar('\n');
@@ -43,11 +43,11 @@ int hsh(info_t *info, char **av)
 }
 
 /**
- * find_builtin _ the function
+ * blt_fnd - the function
  * @info: the parameter
  * Return: there is a return
  */
-int find_builtin(info_t *info)
+int blt_fnd(info_t *info)
 {
 	int i, built_in_ret = -1;
 	tab_bnt builtintbl[] = {
@@ -62,22 +62,22 @@ int find_builtin(info_t *info)
 		{NULL, NULL}
 	};
 
-	for (i = 0; builtintbl[i].type; i++)
-		if (_strcmp(info->argv[0], builtintbl[i].type) == 0)
+	for (i = 0; builtintbl[i].es; i++)
+		if (_strcmp(info->argv[0], builtintbl[i].es) == 0)
 		{
 			info->lnumber++;
-			built_in_ret = builtintbl[i].func(info);
+			built_in_ret = builtintbl[i].gc(info);
 			break;
 		}
 	return (built_in_ret);
 }
 
 /**
- * find_cmd - the function
+ * cmd_fnd - the function
  * @info: the parameter
  * Return: void
  */
-void find_cmd(info_t *info)
+void cmd_fnd(info_t *info)
 {
 	char *path = NULL;
 	int i, k;
@@ -89,22 +89,22 @@ void find_cmd(info_t *info)
 		info->numbers = 0;
 	}
 	for (i = 0, k = 0; info->arg[i]; i++)
-		if (!is_delim(info->arg[i], " \t\n"))
+		if (!delimiter(info->arg[i], " \t\n"))
 			k++;
 	if (!k)
 		return;
 
-	path = find_path(info, _getenv(info, "PATH="), info->argv[0]);
+	path = path_fnd(info, _getenv(info, "PATH="), info->argv[0]);
 	if (path)
 	{
 		info->link = path;
-		fork_cmd(info);
+		cmd_K(info);
 	}
 	else
 	{
 		if ((interactive(info) || _getenv(info, "PATH=")
-					|| info->argv[0][0] == '/') && is_cmd(info, info->argv[0]))
-			fork_cmd(info);
+					|| info->argv[0][0] == '/') && cmd_check(info, info->argv[0]))
+			cmd_K(info);
 		else if (*(info->arg) != '\n')
 		{
 			info->etat = 127;
@@ -114,11 +114,11 @@ void find_cmd(info_t *info)
 }
 
 /**
- * fork_cmd - function
+ * cmd_K - function
  * @info: the parameter
  * Return: void
  */
-void fork_cmd(info_t *info)
+void cmd_K(info_t *info)
 {
 	pid_t child_pid;
 

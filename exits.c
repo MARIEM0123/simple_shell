@@ -1,13 +1,13 @@
 #include "shell.h"
 
 /**
- **_strncpy - the function
+ **_strrcpy - the function
  *@dest: the parameter
  *@src: the parameter
  *@n: the parameter
  *Return: there is a return
  */
-char *_strncpy(char *dest, char *src, int n)
+char *_strrcpy(char *dest, char *src, int n)
 {
 	int i, j;
 	char *s = dest;
@@ -31,13 +31,13 @@ char *_strncpy(char *dest, char *src, int n)
 }
 
 /**
- **_strncat - the function
+ **_strrcat - the function
  *@dest: the parameter
  *@src: the parameter
  *@n: the parameter
  *Return: there is a return
  */
-char *_strncat(char *dest, char *src, int n)
+char *_strrcat(char *dest, char *src, int n)
 {
 	int i, j;
 	char *s = dest;
@@ -58,12 +58,12 @@ char *_strncat(char *dest, char *src, int n)
 }
 
 /**
- **_strchr - the function
+ **hr_str - the function
  *@s: the parameter
  *@c: the parameter
  *Return: != 0
  */
-char *_strchr(char *s, char c)
+char *hr_str(char *s, char c)
 {
 	do {
 		if (*s == c)
