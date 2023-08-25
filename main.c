@@ -26,11 +26,11 @@ int main(int a, char **b)
 				exit(126);
 			if (errno == ENOENT)
 			{
-				_entry(b[0]);
-				_entry(": 0: Error: Can't open ");
-				_entry(b[1]);
-				_pprtchar('\n');
-				_pprtchar(MIINUSONE);
+				_pputs(b[0]);
+				_pputs(": 0: Error: Can't open ");
+				_pputs(b[1]);
+				_pputchar('\n');
+				_pputchar(MIINUSONE);
 				exit(127);
 			}
 			return (EXIT_FAILURE);
