@@ -1,90 +1,98 @@
 #include "shell.h"
-/**
- * EXIT_FUNCT – THE FUNCTION TO MAKE THE EXIT
- * @DATA: THE ARGUMENTS
- * Return: the function to exit
- */
-int EXIT_FUNCT(DATA_t *DATA)
-{
-        int quit;
 
-        if (DATA->argv[1])
-        {
-                quit = amoi(DATA->argv[1]);
-                if (quit == -1)
-                {
-                        DATA->etat = 2;
-                        err_output(DATA, "Error message: ");
-                        _pputs(DATA->argv[1]);
-                        _pputchar('\n');
-                        return (1);
-                }
-                DATA->increm = amoi(DATA->argv[1]);
-                return (-2);
-        }
-        DATA->increm = -1;
-        return (-2);
+/**
+ * _myexit - exits the shell
+ * @info: Structure containing potential arguments. Used to maintain
+ * constant function prototype.
+ * Return: exits with a given exit status
+ * (0) if info.argv[0] != "exit"
+ */
+int _myexit(info_t *info)
+{
+	int exitcheck;
+
+	if (info->argv[1]) /* If there is an exit arguement */
+	{
+		exitcheck = _erratoi(info->argv[1]);
+		if (exitcheck == -1)
+		{
+			info->status = 2;
+			print_error(info, "Illegal number: ");
+			_eputs(info->argv[1]);
+			_eputchar('\n');
+			return (1);
+		}
+		info->err_num = _erratoi(info->argv[1]);
+		return (-2);
+	}
+	info->err_num = -1;
+	return (-2);
 }
+
 /**
- * ch_cur_dir – the function
- * @DATA: parameter 
- * Return: equal to 0
+ * _mycd - changes the current directory of the process
+ * @info: Structure containing potential arguments. Used to maintain
+ * constant function prototype.
+ * Return: Always 0
  */
-int ch_cur_dir(DATA_t *DATA)
+int _mycd(info_t *info)
 {
-        char *s, *x, array[1024];
-        int xx;
+	char *s, *dir, buffer[1024];
+	int chdir_ret;
 
-        s = getcwd(array, 1024);
-        if (!s)
-                _puts("TODO: >>Error message <<\n");
-        if (!DATA->argv[1])
-        {
-                x = env_name(DATA, "HOME=");
-                if (!x)
-                        xx = chdir((x = env_name(DATA, "PWD=")) ? x : "/");
-                else
-                        xx = chdir(x);
-        }
-        else if (_strcompare(DATA->argv[1], "-") == 0)
-        {
-                if (!env_name(DATA, "OLDPWD="))
-                {
-                        _puts(s);
-
-_putchar('\n');
-                        return (1);
-                }
-                _puts(env_name(DATA, "OLDPWD=")), _putchar('\n');
-                xx = chdir((x = env_name(DATA, "OLDPWD=")) ? x : "/");
-        }
-        else
-                xx = chdir(DATA->argv[1]);
-        if (xx == -1)
-        {
-                err_output(DATA, "Error message ");
-                _pputs(DATA->argv[1]), _pputchar('\n');
-        }
-        else
-        {
-                init_new_env(DATA, "OLDPWD", env_name(DATA, "PWD="));
-                init_new_env(DATA, "PWD", getcwd(array, 1024));
-        }
-        return (0);
+	s = getcwd(buffer, 1024);
+	if (!s)
+		_puts("TODO: >>getcwd failure emsg here<<\n");
+	if (!info->argv[1])
+	{
+		dir = _getenv(info, "HOME=");
+		if (!dir)
+			chdir_ret = /* TODO: what should this be? */
+				chdir((dir = _getenv(info, "PWD=")) ? dir : "/");
+		else
+			chdir_ret = chdir(dir);
+	}
+	else if (_strcmp(info->argv[1], "-") == 0)
+	{
+		if (!_getenv(info, "OLDPWD="))
+		{
+			_puts(s);
+			_putchar('\n');
+			return (1);
+		}
+		_puts(_getenv(info, "OLDPWD=")), _putchar('\n');
+		chdir_ret = /* TODO: what should this be? */
+			chdir((dir = _getenv(info, "OLDPWD=")) ? dir : "/");
+	}
+	else
+		chdir_ret = chdir(info->argv[1]);
+	if (chdir_ret == -1)
+	{
+		print_error(info, "can't cd to ");
+		_eputs(info->argv[1]), _eputchar('\n');
+	}
+	else
+	{
+		_setenv(info, "OLDPWD", _getenv(info, "PWD="));
+		_setenv(info, "PWD", getcwd(buffer, 1024));
+	}
+	return (0);
 }
-/**
- * ch_dir – the function
- * @DATA: the parameter
- * Return: equal to 0
- */
-int ch_dir(DATA_t *DATA)
-{
-        char **array;
 
-        array = DATA->argv;
-        _puts("Error message \n");
-        if (0)
-                _puts(*array);
-        return (0);
+/**
+ * _myhelp - changes the current directory of the process
+ * @info: Structure containing potential arguments. Used to maintain
+ * constant function prototype.
+ * Return: Always 0
+ */
+int _myhelp(info_t *info)
+{
+	char **arg_array;
+
+	arg_array = info->argv;
+	_puts("help call works. Function not yet implemented \n");
+	if (0)
+		_puts(*arg_array); /* temp att_unused workaround */
+	return (0);
 }
 

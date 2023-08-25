@@ -1,126 +1,94 @@
 #include "shell.h"
+
 /**
- * get_par_envv – the function
- * @DATA: parameter
- * Return: equal to 0
+ * get_environ - returns the string array copy of our environ
+ * @info: Structure containing potential arguments. Used to maintain
+ *          constant function prototype.
+ * Return: Always 0
  */
-char **get_par_envv(DATA_t *DATA)
+char **get_environ(info_t *info)
 {
-        if (!DATA->par_envv || DATA->env_mod)
-        {
-                DATA->par_envv = STRRUCT_Lo_strings(DATA->evn);
-                DATA->env_mod = 0;
-        }
-        return (DATA->par_envv);
+	if (!info->environ || info->env_changed)
+	{
+		info->environ = list_to_strings(info->env);
+		info->env_changed = 0;
+	}
+
+	return (info->environ);
 }
+
 /**
- * rmp_env – the function
- * @DATA: parameter
- *  Return: there is a return
- * @var: the string evn var property
+ * _unsetenv - Remove an environment variable
+ * @info: Structure containing potential arguments. Used to maintain
+ *        constant function prototype.
+ *  Return: 1 on delete, 0 otherwise
+ * @var: the string env var property
  */
-int rmp_env(DATA_t *DATA, char *x)
+int _unsetenv(info_t *info, char *var)
 {
-        STRRUCT_L *nds = DATA->evn;
-        size_t k = 0;
-        char *p;
+	list_t *node = info->env;
+	size_t i = 0;
+	char *p;
 
-        if (!nds || !x)
-                return (0);
+	if (!node || !var)
+		return (0);
 
-        while (nds)
-        {
-                p = abd(nds->str, x);
-                if (p && *p == '=')
-                {
-                        DATA->env_mod = del_ndss(&(DATA->evn), k);
-                        k = 0;
-                        nds = DATA->evn;
-                        continue;
-                }
-                nds = nds->too;
-                k++;
-        }
-        return (DATA->env_mod);
+	while (node)
+	{
+		p = starts_with(node->str, var);
+		if (p && *p == '=')
+		{
+			info->env_changed = delete_node_at_index(&(info->env), i);
+			i = 0;
+			node = info->env;
+			continue;
+		}
+		node = node->next;
+		i++;
+	}
+	return (info->env_changed);
 }
+
 /**
- * _init_env – the function
- * @DATA: Parameter
- * @a: the parameter
- * @b: the parameter
- *  Return: there isb a return
+ * _setenv - Initialize a new environment variable,
+ *             or modify an existing one
+ * @info: Structure containing potential arguments. Used to maintain
+ *        constant function prototype.
+ * @var: the string env var property
+ * @value: the string env var value
+ *  Return: Always 0
  */
-int _init_env(DATA_t *DATA, char *a, char *b)
+int _setenv(info_t *info, char *var, char *value)
 {
-        char *array = NULL;
-        STRRUCT_L *nds;
-        char *p;
+	char *buf = NULL;
+	list_t *node;
+	char *p;
 
-        if (!a || !b)
-                return (0);
+	if (!var || !value)
+		return (0);
 
-        array = malloc(_len_string(a) + _len_string(b) + 2);
-        if (!array)
-                return (1);
-        _strcpy(array, a);
-        _strcat(array, "=");
-        _strcat(array, b);
-        nds = DATA->evn;
-        while (nds)
-        {
-                p = abd(nds->str, a);
-                if (p && *p == '=')
-                {
-                        free(nds->str);
-                        nds->str = array;
-                        DATA-> env_mod = 1;
-                        return (0);
-                }
-                nds = nds->too;
-        }
-        add_nds_z(&(DATA->evn), array, 0);
-        free(array);
-        DATA->env_mod = 1;
-        return (0);
-}
-/**
- * init_new_env – the function
- * @DATA: parameter
- * @b: the parameter
- * @a: the parameter
- *  Return: equal to 0
- */
-int init_new_env(DATA_t *DATA, char *b, char *a)
-{
-        char *array = NULL;
-        STRRUCT_L *nds;
-        char *p;
-
-        if (!b || !a)
-                return (0);
-
-        array = malloc(stline(b) + stline(a) + 2);
-        if (!array)
-                return (1);
-        _strcpy(array, b);
-        _strcat(array, "=");
-        _strcat(array, a);
-        nds = DATA->evn;
-        while (nds)
-        {
-                p = abd(nds->str, b);
-                if (p && *p == '=')
-                {
-                        free(nds->str);
-                        nds->str = array;
-                        DATA->env_mod = 1;
-                        return (0);
-                }
-                nds = nds->too;
-        }
-        add_nds_z(&(DATA->evn), array, 0);
-        free(array);
-        DATA->env_mod = 1;
-        return (0);
+	buf = malloc(_strlen(var) + _strlen(value) + 2);
+	if (!buf)
+		return (1);
+	_strcpy(buf, var);
+	_strcat(buf, "=");
+	_strcat(buf, value);
+	node = info->env;
+	while (node)
+	{
+		p = starts_with(node->str, var);
+		if (p && *p == '=')
+		{
+			free(node->str);
+			node->str = buf;
+			info->env_changed = 1;
+			return (0);
+		}
+		node = node->next;
+	}
+	add_node_end(&(info->env), buf, 0);
+	free(buf);
+	info->env_changed = 1;
+	return (0);
 }
 

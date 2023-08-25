@@ -1,59 +1,69 @@
 #include "shell.h"
-/**
- * _strcpy – the function
- * @par1: the parameter
- * @par2: the parameter
- * Return: there is a return
- */
-char *_strcpy(char *par1, char *par2)
-{
-        int i = 0;
 
-        if (par1 == par2 || par2 == 0)
-                return (par1);
-        while (par2[i])
-        {
-                par1[i] = par2[i];
-                i++;
-        }
-        par1[i] = 0;
-        return (par1);
-}
 /**
- * _strdup – the function
- * @c: paraeter
+ * _strcpy - copies a string
+ * @dest: the destination
+ * @src: the source
  *
- * Return: there is a return
+ * Return: pointer to destination
  */
-char *_strdup(const char *c)
+char *_strcpy(char *dest, char *src)
 {
-        int x = 0;
-        char *y;
+	int i = 0;
 
-        if (c == NULL)
-                return (NULL);
-        while (*c++)
-                x++;
-        y = malloc(sizeof(char) * (x + 1));
-        if (!y)
-                return (NULL);
-        for (x++; x--;)
-                y[x] = *--c;
-        return (y);
+	if (dest == src || src == 0)
+		return (dest);
+	while (src[i])
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = 0;
+	return (dest);
 }
+
 /**
- * _puts - the function to print a string
- * @str: the string to print
+ * _strdup - duplicates a string
+ * @str: the string to duplicate
+ *
+ * Return: pointer to the duplicated string
+ */
+char *_strdup(const char *str)
+{
+	int length = 0;
+	char *ret;
+
+	if (str == NULL)
+		return (NULL);
+	while (*str++)
+		length++;
+	ret = malloc(sizeof(char) * (length + 1));
+	if (!ret)
+		return (NULL);
+	for (length++; length--;)
+		ret[length] = *--str;
+	return (ret);
+}
+
+/**
+ * _puts - prints an input string
+ * @str: the string to be printed
+ *
+ * Return: Nothing
  */
 void _puts(char *str)
 {
-        while (*str != '\0')
-        {
-                _putchar(*str);
-                str++;
-        }
-        _putchar ('\n');
+	int i = 0;
+
+	if (!str)
+		return;
+	while (str[i] != '\0')
+	{
+		_putchar(str[i]);
+		i++;
+	}
 }
+
 /**
  * _putchar - writes the character c to stdout
  * @c: The character to print
@@ -63,53 +73,16 @@ void _puts(char *str)
  */
 int _putchar(char c)
 {
-        return (write(1, &c, 1));
-}
-/**
- * **word_str – the function
- * @c: the parameter
- * @d: the parameter
- * Return: there is a return != null
- */
+	static int i;
+	static char buf[WRITE_BUF_SIZE];
 
-char **word_str(char *c, char *d)
-{
-        int i, j, k, l, count= 0;
-        char **s;
-
-        if (c == NULL || c[0] == 0)
-                return (NULL);
-        if (!d)
-                d = " ";
-        for (i = 0; c[i] != '\0'; i++)
-                if (!the_delimiter(c[i], d) && (the_delimiter(c[i + 1], d) || !c[i + 1]))
-                        count++;
-
-        if (count == 0)
-                return (NULL);
-        s = malloc((1 + count) * sizeof(char *));
-        if (!s)
-                return (NULL);
-        for (i = 0, j = 0; j < count; j++)
-        {
-                while (the_delimiter(c[i], d))
-                        i++;
-                k = 0;
-                while (!the_delimiter(c[i + k], d) && c[i + k])
-                        k++;
-                s[j] = malloc((k + 1) * sizeof(char));
-                if (!s[j])
-                {
-                        for (k = 0; k < j; k++)
-                                free(s[k]);
-                        free(s);
-                        return (NULL);
-                }
-                for (l = 0; l < k; l++)
-                        s[j][l] = c[i++];
-                s[j][l] = 0;
-        }
-        s[j] = NULL;
-        return (s);
+	if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
+	{
+		write(1, buf, i);
+		i = 0;
+	}
+	if (c != BUF_FLUSH)
+		buf[i++] = c;
+	return (1);
 }
 

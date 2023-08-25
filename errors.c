@@ -1,76 +1,86 @@
 #include "shell.h"
-/**
- * _pputs – the funchion
- * @c: the parameter
- * Return: No return
- */
-void _pputs(char *c)
-{
-        int k = 0;
 
-        if (!c)
-                return;
-        while (c[k] != '\0')
-        {
-                _pputchar(c[k]);
-                k++;
-        }
+/**
+ * _eputs - prints an input string
+ * @str: the string to be printed
+ *
+ * Return: Nothing
+ */
+void _eputs(char *str)
+{
+	int i = 0;
+
+	if (!str)
+		return;
+	while (str[i] != '\0')
+	{
+		_eputchar(str[i]);
+		i++;
+	}
 }
-/**
- * _pputchar – the function
- * @c: The parameter
- * Return: there is a return
- */
-int _pputchar(char c)
-{
-        static int k;
-        static char array[MAXIMUM_BYTE_NUM];
 
-        if (c == ZERO_NUM || k >= MAXIMUM_BYTE_NUM)
-        {
-                write(2, array, k);
-                k = 0;
-        }
-        if (c != ZERO_NUM)
-                array[k++] = c;
-        return (1);
+/**
+ * _eputchar - writes the character c to stderr
+ * @c: The character to print
+ *
+ * Return: On success 1.
+ * On error, -1 is returned, and errno is set appropriately.
+ */
+int _eputchar(char c)
+{
+	static int i;
+	static char buf[WRITE_BUF_SIZE];
+
+	if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
+	{
+		write(2, buf, i);
+		i = 0;
+	}
+	if (c != BUF_FLUSH)
+		buf[i++] = c;
+	return (1);
 }
-/**
- * _putffile – the function
- * @a: The parameter
- * @file: The parameter
- * Return: != 0
- */
-int _putffile(char a, int file)
-{
-        static int i;
-        static char array[MAXIMUM_BYTE_NUM];
 
-        if (a == ZERO_NUM || i >= MAXIMUM_BYTE_NUM)
-        {
-                write(file, array, i);
-                i = 0;
-        }
-        if (a != ZERO_NUM)
-                array[i++] = a;
-        return (1);
+/**
+ * _putfd - writes the character c to given fd
+ * @c: The character to print
+ * @fd: The filedescriptor to write to
+ *
+ * Return: On success 1.
+ * On error, -1 is returned, and errno is set appropriately.
+ */
+int _putfd(char c, int fd)
+{
+	static int i;
+	static char buf[WRITE_BUF_SIZE];
+
+	if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
+	{
+		write(fd, buf, i);
+		i = 0;
+	}
+	if (c != BUF_FLUSH)
+		buf[i++] = c;
+	return (1);
 }
-/**
- * _putsffile – the function
- * @c: the parameter
- * @file: the parameter
- * Return: != 0
- */
-int _putsffile(char *c, int file)
-{
-        int k = 0;
 
-        if (!c)
-                return (0);
-        while (*c)
-        {
-                k += _putffile(*c++, file);
-        }
-        return (k);
+/**
+ * _putsfd - prints an input string
+ * @str: the string to be printed
+ * @fd: the filedescriptor to write to
+ *
+ * Return: the number of chars put
+ */
+int _putsfd(char *str, int fd)
+{
+	int i = 0;
+
+	if (!str)
+		return (0);
+	while (*str)
+	{
+		i += _putfd(*str++, fd);
+	}
+	return (i);
 }
 

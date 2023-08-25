@@ -1,159 +1,171 @@
 #include "shell.h"
-/**
- * input_array – the function
- * @DATA: the input data
- * @array: the array 
- * @l: the parameter
- * Return: the is a return different th 0
- */
-ssize_t input_array(DATA_t *DATA, char **array, size_t*l)
-{
-        ssize_t x = 0;
-        size_t hau = 0;
 
-        if (!*l)
-        {
-                free(*array);
-                *array = NULL;
-                signal(SIGINT, handle_var);
-#if USE_LINE_PARM
-                x = line_parm(array, &hau, stdin);
+/**
+ * input_buf - buffers chained commands
+ * @info: parameter struct
+ * @buf: address of buffer
+ * @len: address of len var
+ *
+ * Return: bytes read
+ */
+ssize_t input_buf(info_t *info, char **buf, size_t *len)
+{
+	ssize_t r = 0;
+	size_t len_p = 0;
+
+	if (!*len) /* if nothing left in the buffer, fill it */
+	{
+		/*bfree((void **)info->cmd_buf);*/
+		free(*buf);
+		*buf = NULL;
+		signal(SIGINT, sigintHandler);
+#if USE_GETLINE
+		r = getline(buf, &len_p, stdin);
 #else
-                x = _line_parm(DATA, array, &hau);
+		r = _getline(info, buf, &len_p);
 #endif
-                if (x > 0)
-                {
-                        if ((*array)[x - 1] == '\n')
-                        {
-                                (*array)[x - 1] = '\0';
-                                x--;
-                        }
-                        DATA->linekk_flag = 1;
-                        rm_ct(*array);
-                        h_his(DATA, *array, DATA->histkk++);
-                        {
-                                *l = x;
-                                DATA->L_array = array;
-                        }
-                }
-        }
-        return (x);
+		if (r > 0)
+		{
+			if ((*buf)[r - 1] == '\n')
+			{
+				(*buf)[r - 1] = '\0'; /* remove trailing newline */
+				r--;
+			}
+			info->linecount_flag = 1;
+			remove_comments(*buf);
+			build_history_list(info, *buf, info->histcount++);
+			/* if (_strchr(*buf, ';')) is this a command chain? */
+			{
+				*len = r;
+				info->cmd_buf = buf;
+			}
+		}
+	}
+	return (r);
 }
+
 /**
- * p_input_line – operation on the lines
- * @DATA: the structure given
- * Return: is different that NULL
+ * get_input - gets a line minus the newline
+ * @info: parameter struct
+ *
+ * Return: bytes read
  */
-ssize_t p_input_line(DATA_t *DATA)
+ssize_t get_input(info_t *info)
 {
-        static char *array;
-        static size_t j, i, l;
-        ssize_t x = 0;
-        char **array_p = &(DATA->arg), *p;
+	static char *buf; /* the ';' command chain buffer */
+	static size_t i, j, len;
+	ssize_t r = 0;
+	char **buf_p = &(info->arg), *p;
 
-        _putchar(MIINUSONE);
-        x = input_array(DATA, &array, &l);
-        if (x == -1)
-                return (-1);
-        if (l)
-        {
-                j = i;
-                p = array + i;
+	_putchar(BUF_FLUSH);
+	r = input_buf(info, &buf, &len);
+	if (r == -1) /* EOF */
+		return (-1);
+	if (len) /* we have commands left in the chain buffer */
+	{
+		j = i; /* init new iterator to current buf position */
+		p = buf + i; /* get pointer for return */
 
-                VERIFIC(DATA, array, &j, i, l);
-                while (j < l) 
-                {
-                        if (VRFC(DATA, array, &j))
-                                break;
-                        j++;
-                }
+		check_chain(info, buf, &j, i, len);
+		while (j < len) /* iterate to semicolon or end */
+		{
+			if (is_chain(info, buf, &j))
+				break;
+			j++;
+		}
 
-                i = j + 1;
-                if (i >= l)
-                {
-                        i = l = 0;
-                        DATA->L_array_type = ZERO_NUM;
-                }
+		i = j + 1; /* increment past nulled ';'' */
+		if (i >= len) /* reached end of buffer? */
+		{
+			i = len = 0; /* reset position and length */
+			info->cmd_buf_type = CMD_NORM;
+		}
 
-                *array_p = p;
-                return (stline(p));
-        }
+		*buf_p = p; /* pass back pointer to current command position */
+		return (_strlen(p)); /* return length of current command */
+	}
 
-        *array_p = array;
-        return (x);
+	*buf_p = buf; /* else not a chain, pass back buffer from _getline() */
+	return (r); /* return length of buffer from _getline() */
 }
-/**
- * d_array- the function
- * @DATA: the paraleter
- * @array: the parameter
- * @i: the parameter
- * Return: the is a return
- */
-ssize_t d_array(DATA_t *DATA, char *array, size_t *i)
-{
-        ssize_t x = 0;
 
-        if (*i)
-                return (0);
-        x = read(DATA->rddfile, array, MAX_ARRAY_NUM);
-        if (x >= 0)
-                *i = x;
-        return (x);
+/**
+ * read_buf - reads a buffer
+ * @info: parameter struct
+ * @buf: buffer
+ * @i: size
+ *
+ * Return: r
+ */
+ssize_t read_buf(info_t *info, char *buf, size_t *i)
+{
+	ssize_t r = 0;
+
+	if (*i)
+		return (0);
+	r = read(info->readfd, buf, READ_BUF_SIZE);
+	if (r >= 0)
+		*i = r;
+	return (r);
 }
+
 /**
- * _line_parm – operation on the lines
- * @DATA: tha parameter
- * @ptr: the parameter pointer
- * @l: the length of the parameter
- * Return: the is a return
+ * _getline - gets the next line of input from STDIN
+ * @info: parameter struct
+ * @ptr: address of pointer to buffer, preallocated or NULL
+ * @length: size of preallocated ptr buffer if not NULL
+ *
+ * Return: s
  */
-int _line_parm(DATA_t *DATA, char **pp, size_t *l)
+int _getline(info_t *info, char **ptr, size_t *length)
 {
-        static char array[MAX_ARRAY_NUM];
-        static size_t i, g;
-        size_t k;
-        ssize_t r = 0, str = 0;
-        char *a = NULL, *new_p = NULL, *c;
+	static char buf[READ_BUF_SIZE];
+	static size_t i, len;
+	size_t k;
+	ssize_t r = 0, s = 0;
+	char *p = NULL, *new_p = NULL, *c;
 
-        a = *pp;
-        if (a && l)
-                str = *l;
-        if (i == g)
-                i = g = 0;
+	p = *ptr;
+	if (p && length)
+		s = *length;
+	if (i == len)
+		i = len = 0;
 
-        r = d_array(DATA, array, &g);
-        if (r == -1 || (r == 0 && g == 0))
-                return (-1);
+	r = read_buf(info, buf, &len);
+	if (r == -1 || (r == 0 && len == 0))
+		return (-1);
 
-        c = _strchr(array + i, '\n');
-        k = c ? 1 + (unsigned int)(c - array) : g;
-        new_p = _realloc(a, str, str ? str + k : k + 1);
-        if (!new_p) 
-                return (a ? free(a), -1 : -1);
+	c = _strchr(buf + i, '\n');
+	k = c ? 1 + (unsigned int)(c - buf) : len;
+	new_p = _realloc(p, s, s ? s + k : k + 1);
+	if (!new_p) /* MALLOC FAILURE! */
+		return (p ? free(p), -1 : -1);
 
-        if (str)
-                _strncat(new_p, array + i, k - i);
-        else
-                _strncpy(new_p, array + i, k - i + 1);
+	if (s)
+		_strncat(new_p, buf + i, k - i);
+	else
+		_strncpy(new_p, buf + i, k - i + 1);
 
-        str += k - i;
-        i = k;
-        a = new_p;
+	s += k - i;
+	i = k;
+	p = new_p;
 
-        if (l)
-                *l = str;
-        *pp = a;
-        return (str);
+	if (length)
+		*length = s;
+	*ptr = p;
+	return (s);
 }
+
 /**
- * handle_var - he function
- * @c: parameter
- * Return: there is a return
+ * sigintHandler - blocks ctrl-C
+ * @sig_num: the signal number
+ *
+ * Return: void
  */
-void handle_var(__attribute__((unused))int c)
+void sigintHandler(__attribute__((unused))int sig_num)
 {
-        _puts("\n");
-        _puts("$ ");
-        _putchar(MIINUSONE);
+	_puts("\n");
+	_puts("$ ");
+	_putchar(BUF_FLUSH);
 }
 

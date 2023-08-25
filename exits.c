@@ -1,71 +1,75 @@
 #include "shell.h"
+
 /**
- **_strncpy – the function
- *@par1: the parameter 1
- *@par2: theparameter 2
- *@count: number of characters
- *Return: the new parameter
- */
-char *_strncpy(char *par1, char *par2, int count)
-{
-        int a, b;
-        char *str = par1;
-        a = 0;
-        while (par2[a] != '\0' && a < count - 1)
-        {
-                par1[a] = par2[a];
-                a++;
-        }
-        if (a < count)
-        {
-                b = a;
-                while (b < count)
-                {
-                        par1[b] = '\0';
-                        b++;
-                }
-        }
-        return (str);
-}
-/**
- **_strncat – the function
- *@par1: the parameter1
- *@par2: the parameter2
- *@count: the parameter
+ **_strncpy - copies a string
+ *@dest: the destination string to be copied to
+ *@src: the source string
+ *@n: the amount of characters to be copied
  *Return: the concatenated string
  */
-char *_strncat(char *par1, char *par2, int count)
+char *_strncpy(char *dest, char *src, int n)
 {
-        int a, b;
-        char *str = par1;
+	int i, j;
+	char *s = dest;
 
-        a = 0;
-        b = 0;
-        while (par1[a] != '\0')
-                a++;
-        while (par2[b] != '\0' && b < count)
-        {
-                par1[a] = par2[b];
-                a++;
-                b++;
-        }
-        if (b < count)
-                par1[a] = '\0';
-        return (str);
+	i = 0;
+	while (src[i] != '\0' && i < n - 1)
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	if (i < n)
+	{
+		j = i;
+		while (j < n)
+		{
+			dest[j] = '\0';
+			j++;
+		}
+	}
+	return (s);
 }
-/**
- **_strchr – the function,
- *@str: the sparameter
- *@x: theparameter
- *Return: there is a return !=NULL
- */
-char *_strchr(char *str, char x)
-{
-        do {
-                if (*str == x)
-                        return (str);
-        } while (*str++ != '\0');
 
-        return (NULL);
+/**
+ **_strncat - concatenates two strings
+ *@dest: the first string
+ *@src: the second string
+ *@n: the amount of bytes to be maximally used
+ *Return: the concatenated string
+ */
+char *_strncat(char *dest, char *src, int n)
+{
+	int i, j;
+	char *s = dest;
+
+	i = 0;
+	j = 0;
+	while (dest[i] != '\0')
+		i++;
+	while (src[j] != '\0' && j < n)
+	{
+		dest[i] = src[j];
+		i++;
+		j++;
+	}
+	if (j < n)
+		dest[i] = '\0';
+	return (s);
+}
+
+/**
+ **_strchr - locates a character in a string
+ *@s: the string to be parsed
+ *@c: the character to look for
+ *Return: (s) a pointer to the memory area s
+ */
+char *_strchr(char *s, char c)
+{
+	do {
+		if (*s == c)
+			return (s);
+	} while (*s++ != '\0');
+
+	return (NULL);
 }
 

@@ -1,68 +1,76 @@
 #include "shell.h"
-/**
- * _len_string – the function
- * @c: the parameter
- * Return: there is a return
- */
-int _len_string(char *c)
-{
-        int k = 0;
-        if (!c)
-                return (0);
 
-        while (*c++)
-                k++;
-        return (k);
-}
 /**
- * _strcompare  - the function
- * @c1: the parameter one
- * @c2: the parameter two
+ * _strlen - returns the length of a string
+ * @s: the string whose length to check
  *
- * Return: != 0
+ * Return: integer length of string
  */
-int _strcompare (char *c1, char *c2)
+int _strlen(char *s)
 {
-        while (*c1 && *c2)
-        {
-                if (*c1 != *c2)
-                        return (*c1 - *c2);
-                c1++;
-                c2++;
-        }
-        if (*c1 == *c2)
-                return (0);
-        else
-                return (*c1 < *c2 ? -1 : 1);
-}
-/**
- * abd – the function
- * @search: the parameter
- * @find: the parameter
- * Return: there is a return
- */
-char *abd(const char *search, const char *find)
-{
-        while (*find)
-                if (*find++ != *search++)
-                        return (NULL);
-        return ((char *)search);
-}
-/**
- * _strcat -  the function
- * @par1: the parameter
- * @par2: the parameter
- * Return: !=0
- */
-char *_strcat(char *par1, char *par2)
-{
-        char *x = par1;
+	int i = 0;
 
-        while (*par1)
-                par1++;
-        while (*par2)
-                *par1++ = *par2++;
-        *par1 = *par2;
-        return (x);
+	if (!s)
+		return (0);
+
+	while (*s++)
+		i++;
+	return (i);
+}
+
+/**
+ * _strcmp - performs lexicogarphic comparison of two strangs.
+ * @s1: the first strang
+ * @s2: the second strang
+ *
+ * Return: negative if s1 < s2, positive if s1 > s2, zero if s1 == s2
+ */
+int _strcmp(char *s1, char *s2)
+{
+	while (*s1 && *s2)
+	{
+		if (*s1 != *s2)
+			return (*s1 - *s2);
+		s1++;
+		s2++;
+	}
+	if (*s1 == *s2)
+		return (0);
+	else
+		return (*s1 < *s2 ? -1 : 1);
+}
+
+/**
+ * starts_with - checks if needle starts with haystack
+ * @haystack: string to search
+ * @needle: the substring to find
+ *
+ * Return: address of next char of haystack or NULL
+ */
+char *starts_with(const char *haystack, const char *needle)
+{
+	while (*needle)
+		if (*needle++ != *haystack++)
+			return (NULL);
+	return ((char *)haystack);
+}
+
+/**
+ * _strcat - concatenates two strings
+ * @dest: the destination buffer
+ * @src: the source buffer
+ *
+ * Return: pointer to destination buffer
+ */
+char *_strcat(char *dest, char *src)
+{
+	char *ret = dest;
+
+	while (*dest)
+		dest++;
+	while (*src)
+		*dest++ = *src++;
+	*dest = *src;
+	return (ret);
 }
 

@@ -1,186 +1,234 @@
-#ifndef _SHELL
-#define _SHELL
+#ifndef _SHELL_H_
+#define _SHELL_H_
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <sys/types.h>
 #include <sys/wait.h>
+#include <sys/stat.h>
 #include <limits.h>
 #include <fcntl.h>
 #include <errno.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 
-#define DATA_0 \
-{NULL, NULL, 0, NULL, 0, 0, 0, NULL, NULL, NULL, 0, 0, 0, NULL, 0, \
-                0, NULL, NULL}
+/* for read/write buffers */
+#define READ_BUF_SIZE 1024
+#define WRITE_BUF_SIZE 1024
+#define BUF_FLUSH -1
 
-#define ZERO_NUM        0
-#define MIINUSONE -1
-#define NUM_TWO 2
-#define NUM_TREE 3
-#define CONVERT_UNSIGNED        2
-#define NUM_UN  1
-#define MESS_STORY      "the history"
-#define CONVERT_LOWERCASE       1
-#define MAXIMUM_BYTE_NUM 1024
-#define MAX_ARRAY_NUM 1024
-#define HIST_MAX        4096
+/* for command chaining */
+#define CMD_NORM	0
+#define CMD_OR		1
+#define CMD_AND		2
+#define CMD_CHAIN	3
 
-extern char **par_envv;
+/* for convert_number() */
+#define CONVERT_LOWERCASE	1
+#define CONVERT_UNSIGNED	2
+
+/* 1 if using system getline() */
+#define USE_GETLINE 0
+#define USE_STRTOK 0
+
+#define HIST_FILE	".simple_shell_history"
+#define HIST_MAX	4096
+
+extern char **environ;
+
 /**
- * struct liststr – the list to be defined
- * @num: the parameter 1
- * @str: THE parameter 2
- * @too: THE PARAMETER 3
+ * struct liststr - singly linked list
+ * @num: the number field
+ * @str: a string
+ * @next: points to the next node
  */
 typedef struct liststr
 {
-        int num;
-        char *str;
-        struct liststr *too;
-}STRRUCT_L;
+	int num;
+	char *str;
+	struct liststr *next;
+} list_t;
+
 /**
- * struct DATA_list – the structure name
- * @arg: parameter 1
- * @argv: parameter
- * @argc: parameter
- * @path: parameter
- * @linekk_flag: parameter
- * @num_lines: parameter
- * @increm: parameter
- * @fpnn: parameter
- * @evn: parameter
-* @alias: parameter
-* @env_mod: parameter
-* @etat: parameter
-* @histkk: parameter
-* @L_array: parameter
-* @L_array_type: parameter
-* @rddfile: parameter
- * @par_envv: parameter
- * @p_story: parameter
+ * struct passinfo - contains pseudo-arguements to pass into a function,
+ * allowing uniform prototype for function pointer struct
+ * @arg: a string generated from getline containing arguements
+ * @argv:an array of strings generated from arg
+ * @path: a string path for the current command
+ * @argc: the argument count
+ * @line_count: the error count
+ * @err_num: the error code for exit()s
+ * @linecount_flag: if on count this line of input
+ * @fname: the program filename
+ * @env: linked list local copy of environ
+ * @environ: custom modified copy of environ from LL env
+ * @history: the history node
+ * @alias: the alias node
+ * @env_changed: on if environ was changed
+ * @status: the return status of the last exec'd command
+ * @cmd_buf: address of pointer to cmd_buf, on if chaining
+ * @cmd_buf_type: CMD_type ||, &&, ;
+ * @readfd: the fd from which to read line input
+ * @histcount: the history line number count
  */
-typedef struct DATA_listing
+typedef struct passinfo
 {
 	char *arg;
 	char **argv;
-	int argc;
 	char *path;
-	int linekk_flag;
-	unsigned int num_lines;
-	int increm;
-	char *fpnn;
-	STRRUCT_L *evn;
-	STRRUCT_L *alias;
-	int env_mod;
-	int etat;
-	int histkk;
-	char **L_array;
-	int L_array_type;
-	int rddfile;
-	char **par_envv;
-	STRRUCT_L *p_story;
-} DATA_t;
+	int argc;
+	unsigned int line_count;
+	int err_num;
+	int linecount_flag;
+	char *fname;
+	list_t *env;
+	list_t *history;
+	list_t *alias;
+	char **environ;
+	int env_changed;
+	int status;
+
+	char **cmd_buf; /* pointer to cmd ; chain buffer, for memory mangement */
+	int cmd_buf_type; /* CMD_type ||, &&, ; */
+	int readfd;
+	int histcount;
+} info_t;
+
+#define INFO_INIT \
+{NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, \
+		0, 0, 0}
+
 /**
- * struct ssch - contains a builtin string and related function
+ * struct builtin - contains a builtin string and related function
  * @type: the builtin command flag
  * @func: the function
  */
-typedef struct ssch
+typedef struct builtin
 {
-	char *yht;
-	int (*gct)(DATA_t *);
+	char *type;
+	int (*func)(info_t *);
+} builtin_table;
 
-} sch_table;
-int _putchar(char c);
-void _puts(char *str);
-int _isb(int s);
-char *_getenv(const char *name, char **environ);
-void print_env(char **env);
-int stline(char *h);
-int pp_stry(DATA_t *DATA);
-int h_his(DATA_t *DATA, char *array, int linekk);
-void handle_var(__attribute__((unused))int c);
-int amoi(char *c);
-void VERIFIC(DATA_t *DATA, char *array, size_t*p, size_t i, size_t ll);
-int VRFC(DATA_t *, char *, size_t*);
-char *abd(const char *search, const char *find);
-void _entry(char *c);
-char *_memset(char *c, char a, unsigned int m);
-char *_strd(const char *c);
-int p_dtt(int input, int ffile);
-int _pprtchar(char sh);
-int rm_env(DATA_t *DATA);
-void error_output(DATA_t *DATA, char *c);
-ssize_t input_array(DATA_t *DATA, char **array, size_t*l);
-ssize_t d_array(DATA_t *DATA, char *array, size_t *i);
-void *_realloc(void *x, unsigned int par1, unsigned int par2);
-char *_strchr(char *str, char x);
-char *_strncpy(char *par1, char *par2, int count);
-char *_strncat(char *par1, char *par2, int count);
-STRRUCT_L *add_nds_z(STRRUCT_L **head, const char *str, int num);
-int _line_parm(DATA_t *DATA, char **pp, size_t *l);
-void rm_ct(char *array);
-STRRUCT_L *add_nds_end(STRRUCT_L **h, const char *ch, int num);
-char *ret_story_fd(DATA_t *DATA);
-int del_ndss(STRRUCT_L **h, unsigned int k);
-char *_memset(char *c, char a, unsigned int m);
-int don_p_story(DATA_t *DATA);
-char *ev_value(DATA_t *DATA, const char *pnn);
-char *_strcpy(char *par1, char *par2);
-char *_strcat(char *par1, char *par2);
-int listing_env(DATA_t *DATA);
-int hsh(DATA_t *DATA, char **av);
-void data_net(DATA_t *DATA);
-int mode_intr(DATA_t *DATA);
-ssize_t p_input_line(DATA_t *DATA);
-char **word_str(char *c, char *d);
-char *_strdup(const char *c);
-STRRUCT_L *str_nds(STRRUCT_L *nds, char *l, char c);
-int alias_subt(DATA_t *DATA);
-int varias_subt(DATA_t *DATA);
-int the_delimiter(char s, char *l);
-char *convert_number(long int L, int sprt, int parmt);
-int str_chg(char **par1, char *par2);
-int _strcompare (char *c1, char *c2);
-int rw_p_story(DATA_t *DATA);
-void DATA_star(DATA_t *DATA, char **b);
-void lib_DATA(DATA_t *DATA, int fld);
-void str_free(char **str);
-void lib_data(STRRUCT_L **x);
-int lib_pointer(void **x);
-int srch_tab(DATA_t *DATA);
-int EXIT_FUNCT(DATA_t *DATA);
-size_t p_strings(const STRRUCT_L *h);
-int NW_ennv(DATA_t *DATA);
-int ch_dir(DATA_t *DATA);
-int _myp_story(DATA_t *DATA);
-int _init_env(DATA_t *DATA, char *a, char *b);
-int _len_string(char *c);
-int env_sitting(DATA_t *DATA);
-void _pputs(char *c);
-int _pputchar(char c);
-char *env_name(DATA_t *DATA, const char *l);
-int rm_env(DATA_t *DATA);
-int init_new_env(DATA_t *DATA, char *b, char *a);
-int ch_cur_dir(DATA_t *DATA);
-void err_output(DATA_t *DATA, char *x);
-int alias_input(STRRUCT_L *nds);
-int alias_init (DATA_t *DATA, char *c);
-ssize_t nds_count(STRRUCT_L *par1, STRRUCT_L *nds);
-int alias_c (DATA_t *DATA, char *ch);
-int  _alias_(DATA_t *DATA);
-char **get_par_envv(DATA_t *DATA);
-char **STRRUCT_Lo_strings(STRRUCT_L *x);
-size_t linked_lgnt(const STRRUCT_L *x);
-void ex_comm(DATA_t *DATA);
-int _putffile(char a, int file);
-int _putffile(char a, int file);
-int rm_env(DATA_t *DATA);
-int rmp_env(DATA_t *DATA, char *x);
-int _putsffile(char *c, int file);
+/* toem_shloop.c */
+int hsh(info_t *, char **);
+int find_builtin(info_t *);
+void find_cmd(info_t *);
+void fork_cmd(info_t *);
+
+/* toem_parser.c */
+int is_cmd(info_t *, char *);
+char *dup_chars(char *, int, int);
+char *find_path(info_t *, char *, char *);
+
+/* loophsh.c */
+int loophsh(char **);
+
+/* toem_errors.c */
+void _eputs(char *);
+int _eputchar(char);
+int _putfd(char c, int fd);
+int _putsfd(char *str, int fd);
+
+/* toem_string.c */
+int _strlen(char *);
+int _strcmp(char *, char *);
+char *starts_with(const char *, const char *);
+char *_strcat(char *, char *);
+
+/* toem_string1.c */
+char *_strcpy(char *, char *);
+char *_strdup(const char *);
+void _puts(char *);
+int _putchar(char);
+
+/* toem_exits.c */
+char *_strncpy(char *, char *, int);
+char *_strncat(char *, char *, int);
+char *_strchr(char *, char);
+
+/* toem_tokenizer.c */
+char **strtow(char *, char *);
+char **strtow2(char *, char);
+
+/* toem_realloc.c */
+char *_memset(char *, char, unsigned int);
+void ffree(char **);
+void *_realloc(void *, unsigned int, unsigned int);
+
+/* toem_memory.c */
+int bfree(void **);
+
+/* toem_atoi.c */
+int interactive(info_t *);
+int is_delim(char, char *);
+int _isalpha(int);
+int _atoi(char *);
+
+/* toem_errors1.c */
+int _erratoi(char *);
+void print_error(info_t *, char *);
+int print_d(int, int);
+char *convert_number(long int, int, int);
+void remove_comments(char *);
+
+/* toem_builtin.c */
+int _myexit(info_t *);
+int _mycd(info_t *);
+int _myhelp(info_t *);
+
+/* toem_builtin1.c */
+int _myhistory(info_t *);
+int _myalias(info_t *);
+
+/*toem_getline.c */
+ssize_t get_input(info_t *);
+int _getline(info_t *, char **, size_t *);
+void sigintHandler(int);
+
+/* toem_getinfo.c */
+void clear_info(info_t *);
+void set_info(info_t *, char **);
+void free_info(info_t *, int);
+
+/* toem_environ.c */
+char *_getenv(info_t *, const char *);
+int _myenv(info_t *);
+int _mysetenv(info_t *);
+int _myunsetenv(info_t *);
+int populate_env_list(info_t *);
+
+/* toem_getenv.c */
+char **get_environ(info_t *);
+int _unsetenv(info_t *, char *);
+int _setenv(info_t *, char *, char *);
+
+/* toem_history.c */
+char *get_history_file(info_t *info);
+int write_history(info_t *info);
+int read_history(info_t *info);
+int build_history_list(info_t *info, char *buf, int linecount);
+int renumber_history(info_t *info);
+
+/* toem_lists.c */
+list_t *add_node(list_t **, const char *, int);
+list_t *add_node_end(list_t **, const char *, int);
+size_t print_list_str(const list_t *);
+int delete_node_at_index(list_t **, unsigned int);
+void free_list(list_t **);
+
+/* toem_lists1.c */
+size_t list_len(const list_t *);
+char **list_to_strings(list_t *);
+size_t print_list(const list_t *);
+list_t *node_starts_with(list_t *, char *, char);
+ssize_t get_node_index(list_t *, list_t *);
+
+/* toem_vars.c */
+int is_chain(info_t *, char *, size_t *);
+void check_chain(info_t *, char *, size_t *, size_t, size_t);
+int replace_alias(info_t *);
+int replace_vars(info_t *);
+int replace_string(char **, char *);
 
 #endif
 

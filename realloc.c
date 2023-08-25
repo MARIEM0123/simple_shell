@@ -1,58 +1,63 @@
 #include "shell.h"
-/**
- * _memset – the function
- * @c: the parameter
- * @a: the parameter
- * @m: the parameter number
- * Return: there is a return
- */
-char *_memset(char *c, char a, unsigned int m)
-{
-        unsigned int k;
 
-        for (k = 0; k < m; k++)
-                c[k] = a;
-        return (c);
+/**
+ * _memset - fills memory with a constant byte
+ * @s: the pointer to the memory area
+ * @b: the byte to fill *s with
+ * @n: the amount of bytes to be filled
+ * Return: (s) a pointer to the memory area s
+ */
+char *_memset(char *s, char b, unsigned int n)
+{
+	unsigned int i;
+
+	for (i = 0; i < n; i++)
+		s[i] = b;
+	return (s);
 }
+
 /**
- * str_free – the function
- * @str: the parametre
+ * ffree - frees a string of strings
+ * @pp: string of strings
  */
-void str_free(char **str)
+void ffree(char **pp)
 {
-        char **c = str;
+	char **a = pp;
 
-        if (!str)
-                return;
-        while (*str)
-                free(*str++);
-        free(c);
-}/**
- * _realloc – the function
- * @x: the pointer
- * @par1: the parameter
- * @par2: the parameter
- * Return: there is a return
+	if (!pp)
+		return;
+	while (*pp)
+		free(*pp++);
+	free(a);
+}
+
+/**
+ * _realloc - reallocates a block of memory
+ * @ptr: pointer to previous malloc'ated block
+ * @old_size: byte size of previous block
+ * @new_size: byte size of new block
+ *
+ * Return: pointer to da ol'block nameen.
  */
-void *_realloc(void *x, unsigned int par1, unsigned int par2)
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 {
-        char *y;
+	char *p;
 
-        if (!x)
-                return (malloc(par2));
-        if (!par2)
-                return (free(x), NULL);
-        if (par2 == par1)
-                return (x);
+	if (!ptr)
+		return (malloc(new_size));
+	if (!new_size)
+		return (free(ptr), NULL);
+	if (new_size == old_size)
+		return (ptr);
 
-        y = malloc(par2);
-        if (!y)
-                return (NULL);
+	p = malloc(new_size);
+	if (!p)
+		return (NULL);
 
-        par1 = par1 < par2 ? par1 : par2;
-        while (par1--)
-                y[par1] = ((char *)x)[par1];
-        free(x);
-        return (y);
+	old_size = old_size < new_size ? old_size : new_size;
+	while (old_size--)
+		p[old_size] = ((char *)ptr)[old_size];
+	free(ptr);
+	return (p);
 }
 

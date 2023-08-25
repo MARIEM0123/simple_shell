@@ -2,44 +2,44 @@
 
 /**
  * main - entry point
- * @a: arg parameter
- * @b: arg array
+ * @ac: arg count
+ * @av: arg vector
  *
- * Return: there is a return
+ * Return: 0 on success, 1 on error
  */
-int main(int a, char **b)
+int main(int ac, char **av)
 {
-	DATA_t DATA[] = { DATA_0 };
-	int ffile = 2;
+	info_t info[] = { INFO_INIT };
+	int fd = 2;
 
 	asm ("mov %1, %0\n\t"
 			"add $3, %0"
-			: "=r" (ffile)
-			: "r" (ffile));
+			: "=r" (fd)
+			: "r" (fd));
 
-	if (a == 2)
+	if (ac == 2)
 	{
-		ffile = open(b[1], O_RDONLY);
-		if (ffile == -1)
+		fd = open(av[1], O_RDONLY);
+		if (fd == -1)
 		{
 			if (errno == EACCES)
 				exit(126);
 			if (errno == ENOENT)
 			{
-				_pputs(b[0]);
-				_pputs(": 0: Error: Can't open ");
-				_pputs(b[1]);
-				_pputchar('\n');
-				_pputchar(MIINUSONE);
+				_eputs(av[0]);
+				_eputs(": 0: Can't open ");
+				_eputs(av[1]);
+				_eputchar('\n');
+				_eputchar(BUF_FLUSH);
 				exit(127);
 			}
 			return (EXIT_FAILURE);
 		}
-		DATA->rddfile = ffile;
+		info->readfd = fd;
 	}
-	listing_env(DATA);
-	pp_stry(DATA);
-	hsh(DATA, b);
+	populate_env_list(info);
+	read_history(info);
+	hsh(info, av);
 	return (EXIT_SUCCESS);
 }
 

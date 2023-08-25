@@ -1,17 +1,19 @@
 #include "shell.h"
+
 /**
- * lib_pointer – the function
- * @x: parameter
- * Return: ther is a return
+ * bfree - frees a pointer and NULLs the address
+ * @ptr: address of the pointer to free
+ *
+ * Return: 1 if freed, otherwise 0.
  */
-int lib_pointer(void **x)
+int bfree(void **ptr)
 {
-        if (x && *x)
-        {
-                free(*x);
-                *x = NULL;
-                return (1);
-        }
-        return (0);
+	if (ptr && *ptr)
+	{
+		free(*ptr);
+		*ptr = NULL;
+		return (1);
+	}
+	return (0);
 }
 
