@@ -1,62 +1,60 @@
 #include "shell.h"
 
 /**
+ * _eputchar - the function
+ * @c: The paraeter
+ * Return: != 0
+ */
+int _eputchar(char s)
+{
+	static int i;
+	static char buf[WRITE_BUF_SIZE];
+
+	if (s == BUF_FLUSH || i >= WRITE_BUF_SIZE)
+	{
+		write(2, buf, i);
+		i = 0;
+	}
+	if (s != BUF_FLUSH)
+		buf[i++] = s;
+	return (1);
+}
+/**
  * _eputs - the function
  * @str: the parameter
  *
  * Return: there is no return
  */
-void _eputs(char *str)
+void _eputs(char *c)
 {
-	int i = 0;
+        int i = 0;
 
-	if (!str)
-		return;
-	while (str[i] != '\0')
-	{
-		_eputchar(str[i]);
-		i++;
-	}
+        if (!c)
+                return;
+        while (c[i] != '\0')
+        {
+                _eputchar(c[i]);
+                i++;
+        }
 }
-
-/**
- * _eputchar - the function
- * @c: The paraeter
- * Return: != 0
- */
-int _eputchar(char c)
-{
-	static int i;
-	static char buf[WRITE_BUF_SIZE];
-
-	if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
-	{
-		write(2, buf, i);
-		i = 0;
-	}
-	if (c != BUF_FLUSH)
-		buf[i++] = c;
-	return (1);
-}
-
 /**
  * _fileput - The function
  * @c: The parameter
  * @fd: Theparameter
  * Return: ther is a return depends on the case
  */
-int _fileput(char c, int fd)
+int _fileput(char c, int file)
 {
 	static int i;
-	static char buf[WRITE_BUF_SIZE];
+	static char array[WRITE_BUF_SIZE];
 
 	if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
 	{
-		write(fd, buf, i);
+		write(file, array, i);
 		i = 0;
 	}
 	if (c != BUF_FLUSH)
-		buf[i++] = c;
+		array[i++] = c;
 	return (1);
 }
 
@@ -66,15 +64,15 @@ int _fileput(char c, int fd)
  * @fd: the parameter
  * Return: ther is a return
  */
-int _fileputs(char *str, int fd)
+int _fileputs(char *c, int file)
 {
 	int i = 0;
 
-	if (!str)
+	if (!c)
 		return (0);
-	while (*str)
+	while (*c)
 	{
-		i += _fileput(*str++, fd);
+		i += _fileput(*c++, file);
 	}
 	return (i);
 }

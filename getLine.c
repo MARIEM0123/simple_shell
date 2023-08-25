@@ -2,43 +2,43 @@
 
 /**
  * input_buf - the function
- * @info: the parameter
- * @buf: the parameter
- * @len: the parameter
+ * @data: the parameter
+ * @array: the parameter
+ * @l: the parameter
  * Return: thereis a return
  */
-ssize_t input_buf(info_t *info, char **buf, size_t *len)
+ssize_t input_buf(info_t *data, char **array, size_t *l)
 {
-	ssize_t r = 0;
+	ssize_t x = 0;
 	size_t len_p = 0;
 
-	if (!*len)
+	if (!*l)
 	{
-		free(*buf);
-		*buf = NULL;
+		free(*array);
+		*array = NULL;
 		signal(SIGINT, sigintHandler);
 #if CASE_GLN
-		r = getline(buf, &len_p, stdin);
+		x = getline(array, &len_p, stdin);
 #else
-		r = _getline(info, buf, &len_p);
+		x = _getline(data, array, &len_p);
 #endif
-		if (r > 0)
+		if (x > 0)
 		{
-			if ((*buf)[r - 1] == '\n')
+			if ((*array)[x - 1] == '\n')
 			{
-				(*buf)[r - 1] = '\0';
-				r--;
+				(*array)[x - 1] = '\0';
+				x--;
 			}
-			info->numbers = 1;
-			c_rm(*buf);
-			build_history_list(info, *buf, info->num_stc++);
+			data->numbers = 1;
+			c_rm(*array);
+			build_history_list(data, *array, data->num_stc++);
 			{
-				*len = r;
-				info->arr_cmd = buf;
+				*l = x;
+				data->arr_cmd = array;
 			}
 		}
 	}
-	return (r);
+	return (x);
 }
 
 /**
@@ -46,106 +46,106 @@ ssize_t input_buf(info_t *info, char **buf, size_t *len)
  * @info: the parameter
  * Return: there is a return
  */
-ssize_t get_input(info_t *info)
+ssize_t get_input(info_t *data)
 {
-	static char *buf;
-	static size_t i, j, len;
-	ssize_t r = 0;
-	char **buf_p = &(info->arg), *p;
+	static char *array;
+	static size_t i, j, l;
+	ssize_t x = 0;
+	char **buf_p = &(data->arg), *p;
 
 	_putchar(BUF_FLUSH);
-	r = input_buf(info, &buf, &len);
-	if (r == -1)
+	x = input_buf(data, &array, &l);
+	if (x == -1)
 		return (-1);
-	if (len)
+	if (l)
 	{
 		j = i;
-		p = buf + i;
+		p = array + i;
 
-		check_chain(info, buf, &j, i, len);
-		while (j < len)
+		check_chain(data, array, &j, i, l);
+		while (j < l)
 		{
-			if (is_chain(info, buf, &j))
+			if (is_chain(data, array, &j))
 				break;
 			j++;
 		}
 
 		i = j + 1;
-		if (i >= len)		{
-			i = len = 0;
-			info->arr_cmdt = ZERO_NUM;
+		if (i >= l)		{
+			i = l = 0;
+			data->arr_cmdt = ZERO_NUM;
 		}
 
 		*buf_p = p;
 		return (_strlen(p));
 	}
 
-	*buf_p = buf;
-	return (r);
+	*buf_p = array;
+	return (x);
 }
 
 /**
  * read_buf - the function
- * @info:the parameter
- * @buf: the parameter
+ * @data:the parameter
+ * @array: the parameter
  * @i: :!= 0
  * Return: there is a return
  */
-ssize_t read_buf(info_t *info, char *buf, size_t *i)
+ssize_t read_buf(info_t *data, char *array, size_t *i)
 {
-	ssize_t r = 0;
+	ssize_t x = 0;
 
 	if (*i)
 		return (0);
-	r = read(info->file_rd, buf, READ_BUF_SIZE);
-	if (r >= 0)
-		*i = r;
-	return (r);
+	x = read(data->file_rd, array, READ_BUF_SIZE);
+	if (x >= 0)
+		*i = x;
+	return (x);
 }
 
 /**
  * _getline - the function
- * @info: parameter
- * @ptr:the parameter
- * @length: there is a erturn
+ * @data: parameter
+ * @y:the parameter
+ * @l: there is a erturn
  * Return: teher is a return
  */
-int _getline(info_t *info, char **ptr, size_t *length)
+int _getline(info_t *data, char **y, size_t *l)
 {
-	static char buf[READ_BUF_SIZE];
+	static char array[READ_BUF_SIZE];
 	static size_t i, len;
 	size_t k;
-	ssize_t r = 0, s = 0;
-	char *p = NULL, *new_p = NULL, *c;
+	ssize_t x = 0, s = 0;
+	char *p = NULL, *q = NULL, *c;
 
-	p = *ptr;
-	if (p && length)
-		s = *length;
+	p = *y;
+	if (p && l)
+		s = *l;
 	if (i == len)
 		i = len = 0;
 
-	r = read_buf(info, buf, &len);
-	if (r == -1 || (r == 0 && len == 0))
+	x = read_buf(data, array, &len);
+	if (x == -1 || (x == 0 && len == 0))
 		return (-1);
 
-	c = hr_str(buf + i, '\n');
-	k = c ? 1 + (unsigned int)(c - buf) : len;
-	new_p = _realloc(p, s, s ? s + k : k + 1);
-	if (!new_p)
+	c = hr_str(array + i, '\n');
+	k = c ? 1 + (unsigned int)(c - array) : len;
+	q = _realloc(p, s, s ? s + k : k + 1);
+	if (!q)
 		return (p ? free(p), -1 : -1);
 
 	if (s)
-		_strrcat(new_p, buf + i, k - i);
+		_strrcat(q, array + i, k - i);
 	else
-		_strrcpy(new_p, buf + i, k - i + 1);
+		_strrcpy(q, array + i, k - i + 1);
 
 	s += k - i;
 	i = k;
-	p = new_p;
+	p = q;
 
-	if (length)
-		*length = s;
-	*ptr = p;
+	if (l)
+		*l = s;
+	*y = p;
 	return (s);
 }
 
@@ -154,7 +154,7 @@ int _getline(info_t *info, char **ptr, size_t *length)
  * @sig_num: the parameter
  * Return: there is a return
  */
-void sigintHandler(__attribute__((unused))int sig_num)
+void sigintHandler(__attribute__((unused))int sign_num)
 {
 	_puts("\n");
 	_puts("$ ");

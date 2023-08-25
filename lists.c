@@ -2,34 +2,34 @@
 
 /**
  * add_node - THE FUNCTION
- * @head: the parametre
- * @str:the parameter
- * @num: the parameter
+ * @x: the parametre
+ * @c:the parameter
+ * @m: the parameter
  * Return: there is a return
  */
-data_l *add_node(data_l **head, const char *str, int num)
+data_l *add_node(data_l **x, const char *c, int m)
 {
-	data_l *new_head;
+	data_l *y;
 
-	if (!head)
+	if (!x)
 		return (NULL);
-	new_head = malloc(sizeof(data_l));
-	if (!new_head)
+	y = malloc(sizeof(data_l));
+	if (!y)
 		return (NULL);
-	_memset((void *)new_head, 0, sizeof(data_l));
-	new_head->runem = num;
-	if (str)
+	_memset((void *)y, 0, sizeof(data_l));
+	y->runem = m;
+	if (c)
 	{
-		new_head->rst = _strdup(str);
-		if (!new_head->rst)
+		y->rst = _strdup(c);
+		if (!y->rst)
 		{
-			free(new_head);
+			free(y);
 			return (NULL);
 		}
 	}
-	new_head->next = *head;
-	*head = new_head;
-	return (new_head);
+	y->next = *x;
+	*x = y;
+	return (y);
 }
 
 /**
@@ -40,37 +40,37 @@ data_l *add_node(data_l **head, const char *str, int num)
  *
  * Return: != 0
  */
-data_l *add_node_end(data_l **head, const char *str, int num)
+data_l *add_node_end(data_l **x, const char *c, int m)
 {
-	data_l *new_node, *node;
+	data_l *nnds, *nds;
 
-	if (!head)
+	if (!x)
 		return (NULL);
 
-	node = *head;
-	new_node = malloc(sizeof(data_l));
-	if (!new_node)
+	nds = *x;
+	nnds = malloc(sizeof(data_l));
+	if (!nnds)
 		return (NULL);
-	_memset((void *)new_node, 0, sizeof(data_l));
-	new_node->runem = num;
-	if (str)
+	_memset((void *)nnds, 0, sizeof(data_l));
+	nnds->runem = m;
+	if (c)
 	{
-		new_node->rst = _strdup(str);
-		if (!new_node->rst)
+		nnds->rst = _strdup(c);
+		if (!nnds->rst)
 		{
-			free(new_node);
+			free(nnds);
 			return (NULL);
 		}
 	}
-	if (node)
+	if (nds)
 	{
-		while (node->next)
-			node = node->next;
-		node->next = new_node;
+		while (nds->next)
+			nds = nds->next;
+		nds->next = nnds;
 	}
 	else
-		*head = new_node;
-	return (new_node);
+		*x = nnds;
+	return (nnds);
 }
 
 /**
@@ -80,78 +80,77 @@ data_l *add_node_end(data_l **head, const char *str, int num)
  */
 size_t print_list_str(const data_l *h)
 {
-	size_t i = 0;
+	size_t k = 0;
 
 	while (h)
 	{
 		_puts(h->rst ? h->rst : "(nil)");
 		_puts("\n");
 		h = h->next;
-		i++;
+		k++;
 	}
-	return (i);
+	return (k);
 }
 
 /**
  * delete_node_at_index - the function
- * @head: the function
- * @index: the parameter
+ * @x: the function
+ * @l: the parameter
  * Return: there is a return
  */
-int delete_node_at_index(data_l **head, unsigned int index)
+int delete_node_at_index(data_l **x, unsigned int l)
 {
-	data_l *node, *prev_node;
+	data_l *nds, *nnds;
 	unsigned int i = 0;
 
-	if (!head || !*head)
+	if (!x || !*x)
 		return (0);
 
-	if (!index)
+	if (!l)
 	{
-		node = *head;
-		*head = (*head)->next;
-		free(node->rst);
-		free(node);
+		nds = *x;
+		*x = (*x)->next;
+		free(nds->rst);
+		free(nds);
 		return (1);
 	}
-	node = *head;
-	while (node)
+	nds = *x;
+	while (nds)
 	{
-		if (i == index)
+		if (i == l)
 		{
-			prev_node->next = node->next;
-			free(node->rst);
-			free(node);
+			nnds->next = nds->next;
+			free(nds->rst);
+			free(nds);
 			return (1);
 		}
 		i++;
-		prev_node = node;
-		node = node->next;
+		nnds = nds;
+		nds = nds->next;
 	}
 	return (0);
 }
 
 /**
  * free_list - the function
- * @head_ptr: the parameter
- *
+ * @y: the parameter
  * Return:there is a return
  */
-void free_list(data_l **head_ptr)
+void free_list(data_l **y)
 {
-	data_l *node, *next_node, *head;
+	data_l *nds, *nnds, *x;
 
-	if (!head_ptr || !*head_ptr)
+	if (!y || !*y)
 		return;
-	head = *head_ptr;
-	node = head;
-	while (node)
+	x = *y;
+	nds = x;
+	while (nds)
 	{
-		next_node = node->next;
-		free(node->rst);
-		free(node);
-		node = next_node;
+		nnds = nds->next;
+		free(nds->rst);
+		free(nds);
+		nds = nnds;
 	}
-	*head_ptr = NULL;
+	*y = NULL;
 }
 

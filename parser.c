@@ -2,16 +2,16 @@
 
 /**
  * is_cmd - the function
- * @info: the parameter
- * @path: the parameter
+ * @data: the parameter
+ * @link: the parameter
  * Return: there is a return
  */
-int is_cmd(info_t *info, char *path)
+int is_cmd(info_t *data, char *link)
 {
 	struct stat st;
 
-	(void)info;
-	if (!path || stat(path, &st))
+	(void)data;
+	if (!link || stat(link, &st))
 		return (0);
 
 	if (st.st_mode & S_IFREG)
@@ -23,21 +23,21 @@ int is_cmd(info_t *info, char *path)
 
 /**
  * string_duplic - the function
- * @pathstr: the parameter
- * @start: the parameter
- * @stop: the parameter
+ * @link: the parameter
+ * @s1: the parameter
+ * @s2: the parameter
  * Return: there is a return
  */
-char *string_duplic(char *pathstr, int start, int stop)
+char *string_duplic(char *link, int s1, int s2)
 {
-	static char buf[1024];
+	static char array[1024];
 	int i = 0, k = 0;
 
-	for (k = 0, i = start; i < stop; i++)
-		if (pathstr[i] != ':')
-			buf[k++] = pathstr[i];
-	buf[k] = 0;
-	return (buf);
+	for (k = 0, i = s1; i < s2; i++)
+		if (link[i] != ':')
+			array[k++] = link[i];
+	array[k] = 0;
+	return (array);
 }
 
 /**
@@ -47,33 +47,33 @@ char *string_duplic(char *pathstr, int start, int stop)
  * @cmd: theparameter
  * Return: there is a return
  */
-char *find_path(info_t *info, char *pathstr, char *cmd)
+char *find_path(info_t *data, char *link, char *x)
 {
 	int i = 0, curr_pos = 0;
 	char *path;
 
-	if (!pathstr)
+	if (!link)
 		return (NULL);
-	if ((_strlen(cmd) > 2) && init_func(cmd, "./"))
+	if ((_strlen(x) > 2) && init_func(x, "./"))
 	{
-		if (is_cmd(info, cmd))
-			return (cmd);
+		if (is_cmd(data, x))
+			return (x);
 	}
 	while (1)
 	{
-		if (!pathstr[i] || pathstr[i] == ':')
+		if (!link[i] || link[i] == ':')
 		{
-			path = string_duplic(pathstr, curr_pos, i);
+			path = string_duplic(link, curr_pos, i);
 			if (!*path)
-				_strcat(path, cmd);
+				_strcat(path, x);
 			else
 			{
 				_strcat(path, "/");
-				_strcat(path, cmd);
+				_strcat(path, x);
 			}
-			if (is_cmd(info, path))
+			if (is_cmd(data, path))
 				return (path);
-			if (!pathstr[i])
+			if (!link[i])
 				break;
 			curr_pos = i;
 		}
@@ -84,15 +84,15 @@ char *find_path(info_t *info, char *pathstr, char *cmd)
 
 /**
  * lib_g - the function
- * @ptr: the parameter
+ * @ss: the parameter
  * Return:vthere is a return
  */
-int lib_g(void **ptr)
+int lib_g(void **ss)
 {
-        if (ptr && *ptr)
+        if (ss && *ss)
         {
-                free(*ptr);
-                *ptr = NULL;
+                free(*ss);
+                *ss = NULL;
                 return (1);
         }
         return (0);

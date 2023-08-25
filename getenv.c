@@ -5,47 +5,17 @@
  * @info: the parameter
  * Return:equal to 0
  */
-char **get_environ(info_t *info)
+char **get_environ(info_t *data)
 {
-	if (!info->prb || info->mod)
+	if (!data->prb || data->mod)
 	{
-		info->prb = list_to_strings(info->dt);
-		info->mod = 0;
+		data->prb = list_to_strings(data->dt);
+		data->mod = 0;
 	}
 
-	return (info->prb);
+	return (data->prb);
 }
 
-/**
- * _unsetenv - The function
- * @info: the parameter
- *  Return: there is a return
- * @var: the parameter
- */
-int _unsetenv(info_t *info, char *var)
-{
-	data_l *node = info->dt;
-	size_t i = 0;
-	char *p;
-
-	if (!node || !var)
-		return (0);
-
-	while (node)
-	{
-		p = init_func(node->rst, var);
-		if (p && *p == '=')
-		{
-			info->mod= delete_node_at_index(&(info->dt), i);
-			i = 0;
-			node = info->dt;
-			continue;
-		}
-		node = node->next;
-		i++;
-	}
-	return (info->mod);
-}
 
 /**
  * _setenv - the function
@@ -54,37 +24,67 @@ int _unsetenv(info_t *info, char *var)
  * @value: theparameter
  *  Return: Equal to 0
  */
-int _setenv(info_t *info, char *var, char *value)
+int _setenv(info_t *data, char *x, char *y)
 {
-	char *buf = NULL;
-	data_l *node;
+	char *array = NULL;
+	data_l *nds;
 	char *p;
 
-	if (!var || !value)
+	if (!x || !y)
 		return (0);
 
-	buf = malloc(_strlen(var) + _strlen(value) + 2);
-	if (!buf)
+	array = malloc(_strlen(x) + _strlen(y) + 2);
+	if (!array)
 		return (1);
-	_strcpy(buf, var);
-	_strcat(buf, "=");
-	_strcat(buf, value);
-	node = info->dt;
-	while (node)
+	_strcpy(array, x);
+	_strcat(array, "=");
+	_strcat(array, y);
+	nds = data->dt;
+	while (nds)
 	{
-		p = init_func(node->rst, var);
+		p = init_func(nds->rst, x);
 		if (p && *p == '=')
 		{
-			free(node->rst);
-			node->rst = buf;
-			info->mod = 1;
+			free(nds->rst);
+			nds->rst = array;
+			data->mod = 1;
 			return (0);
 		}
-		node = node->next;
+		nds = nds->next;
 	}
-	add_node_end(&(info->dt), buf, 0);
-	free(buf);
-	info->mod = 1;
+	add_node_end(&(data->dt), array, 0);
+	free(array);
+	data->mod = 1;
 	return (0);
 }
 
+/**
+ * _unsetenv - The function
+ * @info: the parameter
+ *  Return: there is a return
+ * @var: the parameter
+ */
+int _unsetenv(info_t *data, char *x)
+{
+        data_l *nds = data->dt;
+        size_t i = 0;
+        char *p;
+
+        if (!nds || !x)
+                return (0);
+
+        while (nds)
+        {
+                p = init_func(nds->rst, x);
+                if (p && *p == '=')
+                {
+                        data->mod= delete_node_at_index(&(data->dt), i);
+                        i = 0;
+                        nds = data->dt;
+                        continue;
+                }
+                nds = nds->next;
+                i++;
+        }
+        return (data->mod);
+}        
