@@ -1,72 +1,71 @@
 #include "shell.h"
+/**
+ * init_func - the function
+ * @s: the parameter
+ * @c: the parameter
+ * Return: there is a return
+ */
+char *init_func(const char *s, const char *c)
+{
+        while (*c)
+                if (*c++ != *s++)
+                        return (NULL);
+        return ((char *)s);
+}
 
 /**
  * _strlen - the function
- * @s: the parameter
+ * @str: the parameter
  * Return: the return is != 0
  */
-int _strlen(char *s)
+int _strlen(char *str)
 {
 	int i = 0;
 
-	if (!s)
+	if (!str)
 		return (0);
 
-	while (*s++)
+	while (*str++)
 		i++;
 	return (i);
 }
 
 /**
  * _strcmp - the function
- * @s1: the parameter one
- * @s2: the parameter
+ * @str1: the parameter one
+ * @str2: the parameter
  * Return: there is a return
  */
-int _strcmp(char *s1, char *s2)
+int _strcmp(char *str1, char *str2)
 {
-	while (*s1 && *s2)
+	while (*str1 && *str2)
 	{
-		if (*s1 != *s2)
-			return (*s1 - *s2);
-		s1++;
-		s2++;
+		if (*str1 != *str2)
+			return (*str1 - *str2);
+		str1++;
+		str2++;
 	}
-	if (*s1 == *s2)
+	if (*str1 == *str2)
 		return (0);
 	else
-		return (*s1 < *s2 ? -1 : 1);
-}
-
-/**
- * init_func - the function
- * @haystack: the parameter
- * @needle: the parameter
- * Return: there is a return
- */
-char *init_func(const char *haystack, const char *needle)
-{
-	while (*needle)
-		if (*needle++ != *haystack++)
-			return (NULL);
-	return ((char *)haystack);
+		return (*str1 < *str2 ? -1 : 1);
 }
 
 /**
  * _strcat - the function
- * @dest: the parameter
- * @src: the parameter
+ * @P1: the parameter
+ * @P2: the parameter
  * Return: there is a return
  */
-char *_strcat(char *dest, char *src)
+char *_strcat(char *P1, char *P2)
 {
-	char *ret = dest;
+	char *P2 = P1;
 
-	while (*dest)
-		dest++;
-	while (*src)
-		*dest++ = *src++;
-	*dest = *src;
-	return (ret);
+	while (*P1)
+		P1++;
+	while (*P2)
+		*P1++ = *P2++;
+	*P1 = *P2;
+	return (P2);
 }
 
