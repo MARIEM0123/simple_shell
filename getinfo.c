@@ -44,11 +44,11 @@ void set_info(info_t *info, char **av)
 }
 
 /**
- * free_info - the function
+ * data_lib - the function
  * @info:the parameter
  * @all: there is a return
  */
-void free_info(info_t *info, int all)
+void data_lib(info_t *info, int all)
 {
 	lib_f(info->argv);
 	info->argv = NULL;

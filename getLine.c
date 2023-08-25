@@ -30,7 +30,7 @@ ssize_t input_buf(info_t *info, char **buf, size_t *len)
 				r--;
 			}
 			info->numbers = 1;
-			remove_comments(*buf);
+			c_rm(*buf);
 			build_history_list(info, *buf, info->num_stc++);
 			{
 				*len = r;

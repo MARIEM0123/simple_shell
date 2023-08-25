@@ -27,10 +27,10 @@ int hsh(info_t *info, char **av)
 		}
 		else if (interactive(info))
 			_putchar('\n');
-		free_info(info, 0);
+		data_lib(info, 0);
 	}
 	write_history(info);
-	free_info(info, 1);
+	data_lib(info, 1);
 	if (!interactive(info) && info->etat)
 		exit(info->etat);
 	if (builtin_ret == -2)
@@ -51,14 +51,14 @@ int blt_fnd(info_t *info)
 {
 	int i, built_in_ret = -1;
 	tab_bnt builtintbl[] = {
-		{"exit", _myexit},
+		{"exit", exit_func},
 		{"env", _myenv},
-		{"help", _myhelp},
-		{"history", _myhistory},
+		{"help", func_hp},
+		{"history", _hstr},
 		{"setenv", _mysetenv},
 		{"unsetenv", _myunsetenv},
-		{"cd", _mycd},
-		{"alias", _myalias},
+		{"cd", _cd},
+		{"alias", _alias},
 		{NULL, NULL}
 	};
 
@@ -108,7 +108,7 @@ void cmd_fnd(info_t *info)
 		else if (*(info->arg) != '\n')
 		{
 			info->etat = 127;
-			print_error(info, "not found\n");
+			err_output(info, "not found\n");
 		}
 	}
 }
@@ -132,7 +132,7 @@ void cmd_K(info_t *info)
 	{
 		if (execve(info->link, info->argv, get_environ(info)) == -1)
 		{
-			free_info(info, 1);
+			data_lib(info, 1);
 			if (errno == EACCES)
 				exit(126);
 			exit(1);
@@ -145,7 +145,7 @@ void cmd_K(info_t *info)
 		{
 			info->etat = WEXITSTATUS(info->etat);
 			if (info->etat == 126)
-				print_error(info, "Permission denied\n");
+				err_output(info, "Permission denied\n");
 		}
 	}
 }

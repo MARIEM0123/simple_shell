@@ -1,11 +1,11 @@
 #include "shell.h"
 
 /**
- * _myhistory - the function
+ * _hstr - the function
  * @info: the parameter
  *  Return:equal to 0
  */
-int _myhistory(info_t *info)
+int _hstr(info_t *info)
 {
 	print_list(info->sth);
 	return (0);

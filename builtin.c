@@ -1,11 +1,11 @@
 #include "shell.h"
 
 /**
- * _myexit - the function
+ * exit_func - the function
  * @info: the parameter
  * Return: there is a return
  */
-int _myexit(info_t *info)
+int exit_func(info_t *info)
 {
 	int exitcheck;
 
@@ -15,7 +15,7 @@ int _myexit(info_t *info)
 		if (exitcheck == -1)
 		{
 			info->etat = 2;
-			print_error(info, "Illegal number: ");
+			err_output(info, "Illegal number: ");
 			_eputs(info->argv[1]);
 			_eputchar('\n');
 			return (1);
@@ -28,11 +28,11 @@ int _myexit(info_t *info)
 }
 
 /**
- * _mycd - the function
+ * _cd - the function
  * @info: the parameter
  * Return:equal to 0
  */
-int _mycd(info_t *info)
+int _cd(info_t *info)
 {
 	char *s, *dir, buffer[1024];
 	int chdir_ret;
@@ -63,7 +63,7 @@ int _mycd(info_t *info)
 		chdir_ret = chdir(info->argv[1]);
 	if (chdir_ret == -1)
 	{
-		print_error(info, "can't cd to ");
+		err_output(info, "can't cd to ");
 		_eputs(info->argv[1]), _eputchar('\n');
 	}
 	else
@@ -75,11 +75,11 @@ int _mycd(info_t *info)
 }
 
 /**
- * _myhelp - the function
+ * func_hp - the function
  * @info: the parameter
  * Return: equal to 0
  */
-int _myhelp(info_t *info)
+int func_hp(info_t *info)
 {
 	char **arg_array;
 

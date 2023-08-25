@@ -11,7 +11,7 @@ int _atoi2(char *s)
 	unsigned long int result = 0;
 
 	if (*s == '+')
-		s++;  /* TODO: why does this make main return 255? */
+		s++;
 	for (i = 0;  s[i] != '\0'; i++)
 	{
 		if (s[i] >= '0' && s[i] <= '9')
@@ -28,16 +28,16 @@ int _atoi2(char *s)
 }
 
 /**
- * print_error - the function
+ * err_output - the function
  * @info: the parameter
  * @estr: parameter
  * Return:thetre is a return
  */
-void print_error(info_t *info, char *estr)
+void err_output(info_t *info, char *estr)
 {
 	_eputs(info->nfd);
 	_eputs(": ");
-	print_d(info->lnumber, STDERR_FILENO);
+	d_output(info->lnumber, STDERR_FILENO);
 	_eputs(": ");
 	_eputs(info->argv[0]);
 	_eputs(": ");
@@ -45,12 +45,12 @@ void print_error(info_t *info, char *estr)
 }
 
 /**
- * print_d - the function
+ * d_output - the function
  * @input: the parameter
  * @fd: the parameter
  * Return: there is a return
  */
-int print_d(int input, int fd)
+int d_output(int input, int fd)
 {
 	int (*__putchar)(char) = _putchar;
 	int i, count = 0;
@@ -83,13 +83,13 @@ int print_d(int input, int fd)
 }
 
 /**
- * convert_number - the function
+ * n_conv - the function
  * @num:the parameter
  * @base: the parameter
  * @flags: the parameter
  * Return: thhere is a return
  */
-char *convert_number(long int num, int base, int flags)
+char *n_conv(long int num, int base, int flags)
 {
 	static char *array;
 	static char buffer[50];
@@ -118,11 +118,11 @@ char *convert_number(long int num, int base, int flags)
 }
 
 /**
- * remove_comments - the function
+ * c_rm - the function
  * @buf: the parameter
  * Return: the return is thetre
  */
-void remove_comments(char *buf)
+void c_rm(char *buf)
 {
 	int i;
 

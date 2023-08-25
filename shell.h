@@ -140,28 +140,19 @@ int _atoi(char *);
 void lib_f(char **);
 int lib_g(void **);
 int _atoi2(char *);
-
 int interactive(info_t *);
 int delimiter(char, char *);
 int _isalpha(int);
-int _myexit(info_t *);
-
-
-void print_error(info_t *, char *);
-int print_d(int, int);
-char *convert_number(long int, int, int);
-void remove_comments(char *);
-
-
-
-int _mycd(info_t *);
-int _myhelp(info_t *);
-void free_info(info_t *, int);
-
-int _myhistory(info_t *);
-int _myalias(info_t *);
-
-
+int exit_func(info_t *);
+void err_output(info_t *, char *);
+int d_output(int, int);
+char *n_conv(long int, int, int);
+void c_rm(char *);
+int _cd(info_t *);
+int func_hp(info_t *);
+void data_lib(info_t *, int);
+int _hstr(info_t *);
+int _alias(info_t *);
 ssize_t get_input(info_t *);
 int _getline(info_t *, char **, size_t *);
 void sigintHandler(int);
@@ -183,10 +174,8 @@ int read_history(info_t *info);
 char *get_history_file(info_t *info);
 int renumber_history(info_t *info);
 data_l *node_starts_with(data_l *, char *, char);
-
 data_l *add_node(data_l **, const char *, int);
 data_l *add_node_end(data_l **, const char *, int);
-
 int delete_node_at_index(data_l **, unsigned int);
 void check_chain(info_t *, char *, size_t *, size_t, size_t);
 int replace_string(char **, char *);

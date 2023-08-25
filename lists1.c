@@ -63,7 +63,7 @@ size_t print_list(const data_l *h)
 
 	while (h)
 	{
-		_puts(convert_number(h->runem, 10, 0));
+		_puts(n_conv(h->runem, 10, 0));
 		_putchar(':');
 		_putchar(' ');
 		_puts(h->rst ? h->rst : "(nil)");
