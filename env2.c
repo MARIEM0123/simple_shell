@@ -35,7 +35,7 @@ int init_new_env(DATA_t *DATA, char *b, char *a)
 		}
 		nds = nds->too;
 	}
-	add_nds_end(&(DATA->evn), array, 0);
+	add_nds_z(&(DATA->evn), array, 0);
 	free(array);
 	DATA->env_mod = 1;
 	return (0);

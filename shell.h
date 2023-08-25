@@ -11,13 +11,24 @@
 #include <errno.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-int _putchar(char c);
-void _puts(char *str);
-int _isb(int s);
-char *_getenv(const char *name, char **environ);
-void print_env(char **env);
-int stline(char *h);
 
+#define DATA_0 \
+{NULL, NULL, 0, NULL, 0, 0, 0, NULL, NULL, NULL, 0, 0, 0, NULL, 0, \
+                0, NULL, NULL}
+
+#define ZERO_NUM        0
+#define MIINUSONE -1
+#define NUM_TWO 2
+#define NUM_TREE 3
+#define CONVERT_UNSIGNED        2
+#define NUM_UN  1
+#define MESS_STORY      "the history"
+#define CONVERT_LOWERCASE       1
+#define MAXIMUM_BYTE_NUM 1024
+#define MAX_ARRAY_NUM 1024
+#define HIST_MAX        4096
+
+extern char **par_envv;
 /**
  * struct liststr – the list to be defined
  * @num: the parameter 1
@@ -83,8 +94,12 @@ typedef struct ssch
 	int (*gct)(DATA_t *);
 
 } sch_table;
-
-extern char **par_envv;
+int _putchar(char c);
+void _puts(char *str);
+int _isb(int s);
+char *_getenv(const char *name, char **environ);
+void print_env(char **env);
+int stline(char *h);
 int pp_stry(DATA_t *DATA);
 int h_his(DATA_t *DATA, char *array, int linekk);
 void handle_var(__attribute__((unused))int c);
@@ -97,6 +112,7 @@ char *_memset(char *c, char a, unsigned int m);
 char *_strd(const char *c);
 int p_dtt(int input, int ffile);
 int _pprtchar(char sh);
+int rm_env(DATA_t *DATA);
 void error_output(DATA_t *DATA, char *c);
 ssize_t input_array(DATA_t *DATA, char **array, size_t*l);
 ssize_t d_array(DATA_t *DATA, char *array, size_t *i);
@@ -162,22 +178,9 @@ size_t linked_lgnt(const STRRUCT_L *x);
 void ex_comm(DATA_t *DATA);
 int _putffile(char a, int file);
 int _putffile(char a, int file);
+int rm_env(DATA_t *DATA);
+int rmp_env(DATA_t *DATA, char *x);
 int _putsffile(char *c, int file);
-#define DATA_0 \
-{NULL, NULL, 0, NULL, 0, 0, 0, NULL, NULL, NULL, 0, 0, 0, NULL, 0, \
-		0, NULL, NULL}
 
-#define ZERO_NUM	0
-#define MIINUSONE -1
-#define NUM_TWO	2
-#define NUM_TREE 3
-#define CONVERT_UNSIGNED	2
-#define NUM_UN	1
-#define MESS_STORY	"the history"
-#define CONVERT_LOWERCASE	1
-#define MAXIMUM_BYTE_NUM 1024
-#define MAX_ARRAY_NUM 1024
-#define HIST_MAX	4096
 #endif
-
 

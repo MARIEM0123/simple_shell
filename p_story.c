@@ -14,7 +14,7 @@ int h_his(DATA_t *DATA, char *array, int linekk)
 
 	if (DATA->p_story)
 		nds = DATA->p_story;
-	add_nds_end(&nds, array, linekk);
+	add_nds_z(&nds, array, linekk);
 
 	if (!DATA->p_story)
 		DATA->p_story = nds;
