@@ -132,7 +132,7 @@ char *ev_value(DATA_t *DATA, const char *pnn);
 char *_strcpy(char *par1, char *par2);
 char *_strcat(char *par1, char *par2);
 int listing_env(DATA_t *DATA);
-int hloop(DATA_t *DATA, char **av);
+int hsh(DATA_t *DATA, char **av);
 void data_net(DATA_t *DATA);
 int mode_intr(DATA_t *DATA);
 ssize_t p_input_line(DATA_t *DATA);

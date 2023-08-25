@@ -1,12 +1,12 @@
 #include "shell.h"
 
 /**
- * hloop - function
+ * hsh - function
  * @DATA: the parameter
  * @b: the parameter
  * Return: there is a return
  */
-int hloop(DATA_t *DATA, char **b)
+int hsh(DATA_t *DATA, char **b)
 {
         ssize_t x = 0;
         int a = 0;
