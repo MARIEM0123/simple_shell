@@ -47,51 +47,49 @@ typedef struct str0
 	int runem;
 	char *rst;
 	struct str0 *next;
-} list_t;
+} data_l;
 
 /**
- * struct passinfo - contains pseudo-arguements to pass into a function,
- * allowing uniform prototype for function pointer struct
- * @arg: a string generated from getline containing arguements
- * @argv:an array of strings generated from arg
- * @path: a string path for the current command
- * @argc: the argument count
- * @line_count: the error count
- * @err_num: the error code for exit()s
- * @linecount_flag: if on count this line of input
- * @fname: the program filename
- * @env: linked list local copy of environ
- * @environ: custom modified copy of environ from LL env
- * @history: the history node
- * @alias: the alias node
- * @env_changed: on if environ was changed
- * @status: the return status of the last exec'd command
- * @cmd_buf: address of pointer to cmd_buf, on if chaining
- * @cmd_buf_type: CMD_type ||, &&, ;
- * @readfd: the fd from which to read line input
- * @histcount: the history line number count
+ * struct Data_tab - the structure to be defined in here
+ * @arg:the parameter numero one to be defined in here
+ * @argv:the parameter numero one to be defined in here
+ * @path:the parameter numero one to be defined in here
+ * @argc:the parameter numero one to be defined in here
+ * @line_count:the parameter numero one to be defined in here
+ * @err_num:the parameter numero one to be defined in here
+ * @linecount_flag: the parameter numero one to be defined in here
+ * @fname: the parameter numero one to be defined in here
+ * @env: the parameter numero one to be defined in here
+ * @environ: the parameter numero one to be defined in here
+ * @history: the parameter numero one to be defined in here
+ * @alias: the parameter numero one to be defined in here
+ * @env_changed: the parameter numero one to be defined in here
+ * @status: the parameter numero one to be defined in here
+ * @cmd_buf: the parameter numero one to be defined in here
+ * @cmd_buf_type:the parameter numero one to be defined in here
+ * @readfd: the parameter numero one to be defined in here
+ * @histcount: the parameter numero one to be defined in here
  */
-typedef struct passinfo
+typedef struct Data_tab
 {
 	char *arg;
 	char **argv;
-	char *path;
+	char *link;
 	int argc;
-	unsigned int line_count;
-	int err_num;
-	int linecount_flag;
-	char *fname;
-	list_t *env;
-	list_t *history;
-	list_t *alias;
-	char **environ;
-	int env_changed;
-	int status;
-
-	char **cmd_buf;
-	int cmd_buf_type;
-	int readfd;
-	int histcount;
+	unsigned int lnumber;
+	int n_er;
+	int numbers;
+	char *nfd;
+	data_l *dt;
+	data_l *sth;
+	data_l *alias;
+	char **prb;
+	int mod;
+	int etat;
+	char **arr_cmd;
+	int arr_cmdt;
+	int file_rd;
+	int num_stc;
 } info_t;
 
 #define INFO_INIT \
@@ -99,15 +97,15 @@ typedef struct passinfo
 		0, 0, 0}
 
 /**
- * struct builtin - contains a builtin string and related function
- * @type: the builtin command flag
- * @func: the function
+ * struct bnt - the straucture to be defined in our case
+ * @type: the parameter of the structure
+ * @func: the function is defined here
  */
-typedef struct builtin
+typedef struct bnt
 {
 	char *type;
 	int (*func)(info_t *);
-} builtin_table;
+} tab_bnt;
 
 
 int hsh(info_t *, char **);
@@ -209,17 +207,17 @@ int build_history_list(info_t *info, char *buf, int linecount);
 int renumber_history(info_t *info);
 
 
-list_t *add_node(list_t **, const char *, int);
-list_t *add_node_end(list_t **, const char *, int);
-size_t print_list_str(const list_t *);
-int delete_node_at_index(list_t **, unsigned int);
-void free_list(list_t **);
+data_l *add_node(data_l **, const char *, int);
+data_l *add_node_end(data_l **, const char *, int);
+size_t print_list_str(const data_l *);
+int delete_node_at_index(data_l **, unsigned int);
+void free_list(data_l **);
 
-size_t list_len(const list_t *);
-char **list_to_strings(list_t *);
-size_t print_list(const list_t *);
-list_t *node_starts_with(list_t *, char *, char);
-ssize_t get_node_index(list_t *, list_t *);
+size_t list_len(const data_l *);
+char **list_to_strings(data_l *);
+size_t print_list(const data_l *);
+data_l *node_starts_with(data_l *, char *, char);
+ssize_t get_node_index(data_l *, data_l *);
 
 int is_chain(info_t *, char *, size_t *);
 void check_chain(info_t *, char *, size_t *, size_t, size_t);

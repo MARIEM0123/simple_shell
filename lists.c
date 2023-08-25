@@ -7,16 +7,16 @@
  * @num: the parameter
  * Return: there is a return
  */
-list_t *add_node(list_t **head, const char *str, int num)
+data_l *add_node(data_l **head, const char *str, int num)
 {
-	list_t *new_head;
+	data_l *new_head;
 
 	if (!head)
 		return (NULL);
-	new_head = malloc(sizeof(list_t));
+	new_head = malloc(sizeof(data_l));
 	if (!new_head)
 		return (NULL);
-	_memset((void *)new_head, 0, sizeof(list_t));
+	_memset((void *)new_head, 0, sizeof(data_l));
 	new_head->runem = num;
 	if (str)
 	{
@@ -40,18 +40,18 @@ list_t *add_node(list_t **head, const char *str, int num)
  *
  * Return: != 0
  */
-list_t *add_node_end(list_t **head, const char *str, int num)
+data_l *add_node_end(data_l **head, const char *str, int num)
 {
-	list_t *new_node, *node;
+	data_l *new_node, *node;
 
 	if (!head)
 		return (NULL);
 
 	node = *head;
-	new_node = malloc(sizeof(list_t));
+	new_node = malloc(sizeof(data_l));
 	if (!new_node)
 		return (NULL);
-	_memset((void *)new_node, 0, sizeof(list_t));
+	_memset((void *)new_node, 0, sizeof(data_l));
 	new_node->runem = num;
 	if (str)
 	{
@@ -78,7 +78,7 @@ list_t *add_node_end(list_t **head, const char *str, int num)
  * @h: the parameter
  * Return: ther is a return
  */
-size_t print_list_str(const list_t *h)
+size_t print_list_str(const data_l *h)
 {
 	size_t i = 0;
 
@@ -98,9 +98,9 @@ size_t print_list_str(const list_t *h)
  * @index: the parameter
  * Return: there is a return
  */
-int delete_node_at_index(list_t **head, unsigned int index)
+int delete_node_at_index(data_l **head, unsigned int index)
 {
-	list_t *node, *prev_node;
+	data_l *node, *prev_node;
 	unsigned int i = 0;
 
 	if (!head || !*head)
@@ -137,9 +137,9 @@ int delete_node_at_index(list_t **head, unsigned int index)
  *
  * Return:there is a return
  */
-void free_list(list_t **head_ptr)
+void free_list(data_l **head_ptr)
 {
-	list_t *node, *next_node, *head;
+	data_l *node, *next_node, *head;
 
 	if (!head_ptr || !*head_ptr)
 		return;

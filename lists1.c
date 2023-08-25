@@ -5,7 +5,7 @@
  * @h: parameter
  * Return: there is a return
  */
-size_t list_len(const list_t *h)
+size_t list_len(const data_l *h)
 {
 	size_t i = 0;
 
@@ -22,9 +22,9 @@ size_t list_len(const list_t *h)
  * @head: the parameter
  * Return: there is a return
  */
-char **list_to_strings(list_t *head)
+char **list_to_strings(data_l *head)
 {
-	list_t *node = head;
+	data_l *node = head;
 	size_t i = list_len(head), j;
 	char **strs;
 	char *str;
@@ -57,7 +57,7 @@ char **list_to_strings(list_t *head)
  * @h: the parameter
  * Return: there is a return
  */
-size_t print_list(const list_t *h)
+size_t print_list(const data_l *h)
 {
 	size_t i = 0;
 
@@ -81,7 +81,7 @@ size_t print_list(const list_t *h)
  * @c: the parameter
  * Return: !=0
  */
-list_t *node_starts_with(list_t *node, char *prefix, char c)
+data_l *node_starts_with(data_l *node, char *prefix, char c)
 {
 	char *p = NULL;
 
@@ -101,7 +101,7 @@ list_t *node_starts_with(list_t *node, char *prefix, char c)
  * @node: the parameter
  * Return: the return is != 0
  */
-ssize_t get_node_index(list_t *head, list_t *node)
+ssize_t get_node_index(data_l *head, data_l *node)
 {
 	size_t i = 0;
 

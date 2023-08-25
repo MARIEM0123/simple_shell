@@ -7,13 +7,13 @@
  */
 char **get_environ(info_t *info)
 {
-	if (!info->environ || info->env_changed)
+	if (!info->prb || info->mod)
 	{
-		info->environ = list_to_strings(info->env);
-		info->env_changed = 0;
+		info->prb = list_to_strings(info->dt);
+		info->mod = 0;
 	}
 
-	return (info->environ);
+	return (info->prb);
 }
 
 /**
@@ -24,7 +24,7 @@ char **get_environ(info_t *info)
  */
 int _unsetenv(info_t *info, char *var)
 {
-	list_t *node = info->env;
+	data_l *node = info->dt;
 	size_t i = 0;
 	char *p;
 
@@ -36,15 +36,15 @@ int _unsetenv(info_t *info, char *var)
 		p = starts_with(node->rst, var);
 		if (p && *p == '=')
 		{
-			info->env_changed = delete_node_at_index(&(info->env), i);
+			info->mod= delete_node_at_index(&(info->dt), i);
 			i = 0;
-			node = info->env;
+			node = info->dt;
 			continue;
 		}
 		node = node->next;
 		i++;
 	}
-	return (info->env_changed);
+	return (info->mod);
 }
 
 /**
@@ -57,7 +57,7 @@ int _unsetenv(info_t *info, char *var)
 int _setenv(info_t *info, char *var, char *value)
 {
 	char *buf = NULL;
-	list_t *node;
+	data_l *node;
 	char *p;
 
 	if (!var || !value)
@@ -69,7 +69,7 @@ int _setenv(info_t *info, char *var, char *value)
 	_strcpy(buf, var);
 	_strcat(buf, "=");
 	_strcat(buf, value);
-	node = info->env;
+	node = info->dt;
 	while (node)
 	{
 		p = starts_with(node->rst, var);
@@ -77,14 +77,14 @@ int _setenv(info_t *info, char *var, char *value)
 		{
 			free(node->rst);
 			node->rst = buf;
-			info->env_changed = 1;
+			info->mod = 1;
 			return (0);
 		}
 		node = node->next;
 	}
-	add_node_end(&(info->env), buf, 0);
+	add_node_end(&(info->dt), buf, 0);
 	free(buf);
-	info->env_changed = 1;
+	info->mod = 1;
 	return (0);
 }
 

@@ -31,13 +31,13 @@ int hsh(info_t *info, char **av)
 	}
 	write_history(info);
 	free_info(info, 1);
-	if (!interactive(info) && info->status)
-		exit(info->status);
+	if (!interactive(info) && info->etat)
+		exit(info->etat);
 	if (builtin_ret == -2)
 	{
-		if (info->err_num == -1)
-			exit(info->status);
-		exit(info->err_num);
+		if (info->n_er == -1)
+			exit(info->etat);
+		exit(info->n_er);
 	}
 	return (builtin_ret);
 }
@@ -50,7 +50,7 @@ int hsh(info_t *info, char **av)
 int find_builtin(info_t *info)
 {
 	int i, built_in_ret = -1;
-	builtin_table builtintbl[] = {
+	tab_bnt builtintbl[] = {
 		{"exit", _myexit},
 		{"env", _myenv},
 		{"help", _myhelp},
@@ -65,7 +65,7 @@ int find_builtin(info_t *info)
 	for (i = 0; builtintbl[i].type; i++)
 		if (_strcmp(info->argv[0], builtintbl[i].type) == 0)
 		{
-			info->line_count++;
+			info->lnumber++;
 			built_in_ret = builtintbl[i].func(info);
 			break;
 		}
@@ -82,11 +82,11 @@ void find_cmd(info_t *info)
 	char *path = NULL;
 	int i, k;
 
-	info->path = info->argv[0];
-	if (info->linecount_flag == 1)
+	info->link = info->argv[0];
+	if (info->numbers == 1)
 	{
-		info->line_count++;
-		info->linecount_flag = 0;
+		info->lnumber++;
+		info->numbers = 0;
 	}
 	for (i = 0, k = 0; info->arg[i]; i++)
 		if (!is_delim(info->arg[i], " \t\n"))
@@ -97,7 +97,7 @@ void find_cmd(info_t *info)
 	path = find_path(info, _getenv(info, "PATH="), info->argv[0]);
 	if (path)
 	{
-		info->path = path;
+		info->link = path;
 		fork_cmd(info);
 	}
 	else
@@ -107,7 +107,7 @@ void find_cmd(info_t *info)
 			fork_cmd(info);
 		else if (*(info->arg) != '\n')
 		{
-			info->status = 127;
+			info->etat = 127;
 			print_error(info, "not found\n");
 		}
 	}
@@ -130,7 +130,7 @@ void fork_cmd(info_t *info)
 	}
 	if (child_pid == 0)
 	{
-		if (execve(info->path, info->argv, get_environ(info)) == -1)
+		if (execve(info->link, info->argv, get_environ(info)) == -1)
 		{
 			free_info(info, 1);
 			if (errno == EACCES)
@@ -140,11 +140,11 @@ void fork_cmd(info_t *info)
 	}
 	else
 	{
-		wait(&(info->status));
-		if (WIFEXITED(info->status))
+		wait(&(info->etat));
+		if (WIFEXITED(info->etat))
 		{
-			info->status = WEXITSTATUS(info->status);
-			if (info->status == 126)
+			info->etat = WEXITSTATUS(info->etat);
+			if (info->etat == 126)
 				print_error(info, "Permission denied\n");
 		}
 	}

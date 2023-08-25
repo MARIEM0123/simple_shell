@@ -7,7 +7,7 @@
  */
 int _myhistory(info_t *info)
 {
-	print_list(info->history);
+	print_list(info->sth);
 	return (0);
 }
 
@@ -58,7 +58,7 @@ int set_alias(info_t *info, char *str)
  * @node: the parameter
  * Return: equal to 0
  */
-int print_alias(list_t *node)
+int print_alias(data_l *node)
 {
 	char *p = NULL, *a = NULL;
 
@@ -84,7 +84,7 @@ int _myalias(info_t *info)
 {
 	int i = 0;
 	char *p = NULL;
-	list_t *node = NULL;
+	data_l *node = NULL;
 
 	if (info->argc == 1)
 	{

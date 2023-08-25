@@ -7,7 +7,7 @@
  */
 int _myenv(info_t *info)
 {
-	print_list_str(info->env);
+	print_list_str(info->dt);
 	return (0);
 }
 
@@ -19,7 +19,7 @@ int _myenv(info_t *info)
  */
 char *_getenv(info_t *info, const char *name)
 {
-	list_t *node = info->env;
+	data_l *node = info->dt;
 	char *p;
 
 	while (node)
@@ -76,12 +76,12 @@ int _myunsetenv(info_t *info)
  */
 int populate_env_list(info_t *info)
 {
-	list_t *node = NULL;
+	data_l *node = NULL;
 	size_t i;
 
 	for (i = 0; environ[i]; i++)
 		add_node_end(&node, environ[i], 0);
-	info->env = node;
+	info->dt = node;
 	return (0);
 }
 

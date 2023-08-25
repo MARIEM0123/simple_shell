@@ -29,12 +29,12 @@ ssize_t input_buf(info_t *info, char **buf, size_t *len)
 				(*buf)[r - 1] = '\0';
 				r--;
 			}
-			info->linecount_flag = 1;
+			info->numbers = 1;
 			remove_comments(*buf);
-			build_history_list(info, *buf, info->histcount++);
+			build_history_list(info, *buf, info->num_stc++);
 			{
 				*len = r;
-				info->cmd_buf = buf;
+				info->arr_cmd = buf;
 			}
 		}
 	}
@@ -73,7 +73,7 @@ ssize_t get_input(info_t *info)
 		i = j + 1;
 		if (i >= len)		{
 			i = len = 0;
-			info->cmd_buf_type = ZERO_NUM;
+			info->arr_cmdt = ZERO_NUM;
 		}
 
 		*buf_p = p;
@@ -97,7 +97,7 @@ ssize_t read_buf(info_t *info, char *buf, size_t *i)
 
 	if (*i)
 		return (0);
-	r = read(info->readfd, buf, READ_BUF_SIZE);
+	r = read(info->file_rd, buf, READ_BUF_SIZE);
 	if (r >= 0)
 		*i = r;
 	return (r);
