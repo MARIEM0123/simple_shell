@@ -21,9 +21,9 @@ int hsh(info_t *info, char **av)
 		if (r != -1)
 		{
 			set_info(info, av);
-			builtin_ret = blt_fnd(info);
+			builtin_ret = find_builtin(info);
 			if (builtin_ret == -1)
-				cmd_fnd(info);
+				find_cmd(info);
 		}
 		else if (interactive(info))
 			_putchar('\n');
@@ -43,11 +43,11 @@ int hsh(info_t *info, char **av)
 }
 
 /**
- * blt_fnd - the function
+ * find_builtin - the function
  * @info: the parameter
  * Return: there is a return
  */
-int blt_fnd(info_t *info)
+int find_builtin(info_t *info)
 {
 	int i, built_in_ret = -1;
 	tab_bnt builtintbl[] = {
@@ -58,7 +58,7 @@ int blt_fnd(info_t *info)
 		{"setenv", _mysetenv},
 		{"unsetenv", _myunsetenv},
 		{"cd", _cd},
-		{"alias", _alias},
+		{"alias", _myalias},
 		{NULL, NULL}
 	};
 
@@ -73,11 +73,11 @@ int blt_fnd(info_t *info)
 }
 
 /**
- * cmd_fnd - the function
+ * find_cmd - the function
  * @info: the parameter
  * Return: void
  */
-void cmd_fnd(info_t *info)
+void find_cmd(info_t *info)
 {
 	char *path = NULL;
 	int i, k;
@@ -94,17 +94,17 @@ void cmd_fnd(info_t *info)
 	if (!k)
 		return;
 
-	path = path_fnd(info, _getenv(info, "PATH="), info->argv[0]);
+	path = find_path(info, _getenv(info, "PATH="), info->argv[0]);
 	if (path)
 	{
 		info->link = path;
-		cmd_K(info);
+		fork_cmd(info);
 	}
 	else
 	{
 		if ((interactive(info) || _getenv(info, "PATH=")
-					|| info->argv[0][0] == '/') && cmd_check(info, info->argv[0]))
-			cmd_K(info);
+					|| info->argv[0][0] == '/') && is_cmd(info, info->argv[0]))
+			fork_cmd(info);
 		else if (*(info->arg) != '\n')
 		{
 			info->etat = 127;
@@ -114,11 +114,11 @@ void cmd_fnd(info_t *info)
 }
 
 /**
- * cmd_K - function
+ * fork_cmd - function
  * @info: the parameter
  * Return: void
  */
-void cmd_K(info_t *info)
+void fork_cmd(info_t *info)
 {
 	pid_t child_pid;
 

@@ -107,13 +107,13 @@ typedef struct bnt
 } tab_bnt;
 
 
-int blt_fnd(info_t *);
-void cmd_fnd(info_t *);
-void cmd_K(info_t *);
+int find_builtin(info_t *);
+void find_cmd(info_t *);
+void fork_cmd(info_t *);
 int hsh(info_t *, char **);
 void _eputs(char *);
-int cmd_check(info_t *, char *);
-char *path_fnd(info_t *, char *, char *);
+int is_cmd(info_t *, char *);
+char *find_path(info_t *, char *, char *);
 int turn_hsh(char **);
 char *string_duplic(char *, int, int);
 int _eputchar(char);
@@ -152,7 +152,7 @@ int _cd(info_t *);
 int func_hp(info_t *);
 void data_lib(info_t *, int);
 int _hstr(info_t *);
-int _alias(info_t *);
+int _myalias(info_t *);
 ssize_t get_input(info_t *);
 int _getline(info_t *, char **, size_t *);
 void sigintHandler(int);

@@ -1,12 +1,12 @@
 #include "shell.h"
 
 /**
- * cmd_check - the function
+ * is_cmd - the function
  * @info: the parameter
  * @path: the parameter
  * Return: there is a return
  */
-int cmd_check(info_t *info, char *path)
+int is_cmd(info_t *info, char *path)
 {
 	struct stat st;
 
@@ -41,13 +41,13 @@ char *string_duplic(char *pathstr, int start, int stop)
 }
 
 /**
- * path_fnd - the function
+ * find_path - the function
  * @info: the parameter
  * @pathstr: the parameter
  * @cmd: theparameter
  * Return: there is a return
  */
-char *path_fnd(info_t *info, char *pathstr, char *cmd)
+char *find_path(info_t *info, char *pathstr, char *cmd)
 {
 	int i = 0, curr_pos = 0;
 	char *path;
@@ -56,7 +56,7 @@ char *path_fnd(info_t *info, char *pathstr, char *cmd)
 		return (NULL);
 	if ((_strlen(cmd) > 2) && init_func(cmd, "./"))
 	{
-		if (cmd_check(info, cmd))
+		if (is_cmd(info, cmd))
 			return (cmd);
 	}
 	while (1)
@@ -71,7 +71,7 @@ char *path_fnd(info_t *info, char *pathstr, char *cmd)
 				_strcat(path, "/");
 				_strcat(path, cmd);
 			}
-			if (cmd_check(info, path))
+			if (is_cmd(info, path))
 				return (path);
 			if (!pathstr[i])
 				break;
