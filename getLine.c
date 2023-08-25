@@ -17,7 +17,7 @@ ssize_t input_buf(info_t *info, char **buf, size_t *len)
 		free(*buf);
 		*buf = NULL;
 		signal(SIGINT, sigintHandler);
-#if USE_GETLINE
+#if CASE_GLN
 		r = getline(buf, &len_p, stdin);
 #else
 		r = _getline(info, buf, &len_p);
@@ -73,7 +73,7 @@ ssize_t get_input(info_t *info)
 		i = j + 1;
 		if (i >= len)		{
 			i = len = 0;
-			info->cmd_buf_type = CMD_NORM;
+			info->cmd_buf_type = ZERO_NUM;
 		}
 
 		*buf_p = p;

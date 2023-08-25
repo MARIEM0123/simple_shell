@@ -82,3 +82,18 @@ char *find_path(info_t *info, char *pathstr, char *cmd)
 	return (NULL);
 }
 
+/**
+ * bfree - the function
+ * @ptr: the parameter
+ * Return:vthere is a return
+ */
+int bfree(void **ptr)
+{
+        if (ptr && *ptr)
+        {
+                free(*ptr);
+                *ptr = NULL;
+                return (1);
+        }
+        return (0);
+}

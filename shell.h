@@ -8,6 +8,7 @@
 #include <sys/stat.h>
 #include <limits.h>
 #include <fcntl.h>
+
 #include <errno.h>
 #include <stdlib.h>
 #include <sys/wait.h>
@@ -17,21 +18,21 @@
 #define WRITE_BUF_SIZE 1024
 #define BUF_FLUSH -1
 
-#define CMD_NORM	0
-#define CMD_OR		1
-#define CMD_AND		2
-#define CMD_CHAIN	3
+#define ZERO_NUM        0
+#define NUM_ONE		1
+#define NUM_TWO		2
+#define NUM_TREE	3
 
 
-#define CONVERT_LOWERCASE	1
-#define CONVERT_UNSIGNED	2
+#define CASE_CONV	1
+#define CASE_US_CONV	2
 
 
-#define USE_GETLINE 0
-#define USE_STRTOK 0
+#define CASE_GLN 0
+#define CASE_STRING 0
 
-#define HIST_FILE	"its my project"
-#define HIST_MAX	4096
+#define MESS_DEF	"its my project"
+#define NUM_MAXIMUM	4096
 
 extern char **environ;
 
