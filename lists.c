@@ -93,12 +93,12 @@ size_t print_list_str(const data_l *h)
 }
 
 /**
- * delete_node_at_index - the function
+ * nds_dl - the function
  * @x: the function
  * @l: the parameter
  * Return: there is a return
  */
-int delete_node_at_index(data_l **x, unsigned int l)
+int nds_dl(data_l **x, unsigned int l)
 {
 	data_l *nds, *nnds;
 	unsigned int i = 0;

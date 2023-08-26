@@ -176,7 +176,7 @@ int renumber_history(info_t *info);
 data_l *node_starts_with(data_l *, char *, char);
 data_l *add_node(data_l **, const char *, int);
 data_l *add_node_end(data_l **, const char *, int);
-int delete_node_at_index(data_l **, unsigned int);
+int nds_dl(data_l **, unsigned int);
 void ver_ch(info_t *, char *, size_t *, size_t, size_t);
 int string_md(char **, char *);
 size_t list_len(const data_l *);

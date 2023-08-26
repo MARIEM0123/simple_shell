@@ -112,7 +112,7 @@ int read_history(info_t *data)
 	free(arr);
 	data->num_stc = m;
 	while (data->num_stc-- >= NUM_MAXIMUM)
-		delete_node_at_index(&(data->sth), 0);
+		nds_dl(&(data->sth), 0);
 	renumber_history(data);
 	return (data->num_stc);
 }

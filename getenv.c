@@ -78,7 +78,7 @@ int _unsetenv(info_t *data, char *x)
                 p = init_func(nds->rst, x);
                 if (p && *p == '=')
                 {
-                        data->mod= delete_node_at_index(&(data->dt), i);
+                        data->mod= nds_dl(&(data->dt), i);
                         i = 0;
                         nds = data->dt;
                         continue;

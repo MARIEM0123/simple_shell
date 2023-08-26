@@ -16,7 +16,7 @@ int unset_alias(info_t *data, char *ch)
 		return (1);
 	c = *p;
 	*p = 0;
-	x = delete_node_at_index(&(data->alias),
+	x = nds_dl(&(data->alias),
 		get_node_index(data->alias, node_starts_with(data->alias, ch, -1)));
 	*p = c;
 	return (x);
