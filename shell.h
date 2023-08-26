@@ -180,7 +180,7 @@ int nds_dl(data_l **, unsigned int);
 void ver_ch(info_t *, char *, size_t *, size_t, size_t);
 int string_md(char **, char *);
 size_t list_len(const data_l *);
-char **list_to_strings(data_l *);
+char **strings_list(data_l *);
 size_t print_list(const data_l *);
 ssize_t get_node_index(data_l *, data_l *);
 int vars_md(info_t *);

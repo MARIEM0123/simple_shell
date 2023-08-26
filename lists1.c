@@ -36,11 +36,11 @@ size_t list_len(const data_l *x)
 }
 
 /**
- * list_to_strings - the function
+ * strings_list - the function
  * @x: the parameter
  * Return: there is a return
  */
-char **list_to_strings(data_l *x)
+char **strings_list(data_l *x)
 {
 	data_l *nds = x;
 	size_t i = list_len(x), j;

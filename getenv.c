@@ -9,7 +9,7 @@ char **get_environ(info_t *data)
 {
 	if (!data->prb || data->mod)
 	{
-		data->prb = list_to_strings(data->dt);
+		data->prb = strings_list(data->dt);
 		data->mod = 0;
 	}
 
