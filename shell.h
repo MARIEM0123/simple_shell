@@ -184,7 +184,7 @@ char **list_to_strings(data_l *);
 size_t print_list(const data_l *);
 ssize_t get_node_index(data_l *, data_l *);
 int replace_vars(info_t *);
-int is_chain(info_t *, char *, size_t *);
+int is_lchx(info_t *, char *, size_t *);
 int replace_alias(info_t *);
 
 #endif

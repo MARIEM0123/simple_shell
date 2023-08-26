@@ -2,35 +2,35 @@
 
 /**
  * **strtow - the function
- * @str: the parameter
- * @d: the parameter
+ * @c: the parameter
+ * @x: the parameter
  * Return: the parameter
  */
 
-char **t_str(char *str, char *d)
+char **t_str(char *c, char *x)
 {
-        int i, j, k, m, numwords = 0;
+        int i, j, k, m, y = 0;
         char **s;
 
-        if (str == NULL || str[0] == 0)
+        if (c == NULL || c[0] == 0)
                 return (NULL);
-        if (!d)
-                d = " ";
-        for (i = 0; str[i] != '\0'; i++)
-                if (!delimiter(str[i], d) && (delimiter(str[i + 1], d) || !str[i + 1]))
-                        numwords++;
+        if (!x)
+                x = " ";
+        for (i = 0; c[i] != '\0'; i++)
+                if (!delimiter(c[i], x) && (delimiter(c[i + 1], x) || !c[i + 1]))
+                        y++;
 
-        if (numwords == 0)
+        if (y == 0)
                 return (NULL);
-        s = malloc((1 + numwords) * sizeof(char *));
+        s = malloc((1 + y) * sizeof(char *));
         if (!s)
                 return (NULL);
-        for (i = 0, j = 0; j < numwords; j++)
+        for (i = 0, j = 0; j < y; j++)
         {
-                while (delimiter(str[i], d))
+                while (delimiter(c[i], x))
                         i++;
                 k = 0;
-                while (!delimiter(str[i + k], d) && str[i + k])
+                while (!delimiter(c[i + k], x) && c[i + k])
                         k++;
                 s[j] = malloc((k + 1) * sizeof(char));
                 if (!s[j])
@@ -41,7 +41,7 @@ char **t_str(char *str, char *d)
                         return (NULL);
                 }
                 for (m = 0; m < k; m++)
-                        s[j][m] = str[i++];
+                        s[j][m] = c[i++];
                 s[j][m] = 0;
         }
         s[j] = NULL;
@@ -50,32 +50,32 @@ char **t_str(char *str, char *d)
 
 /**
  * **t2_str - the function
- * @str: the parameter
- * @d: the parameter
+ * @c: the parameter
+ * @x: the parameter
  * Return: there is a return
  */
-char **t2_str(char *str, char d)
+char **t2_str(char *c, char x)
 {
-        int i, j, k, m, numwords = 0;
+        int i, j, k, a, y = 0;
         char **s;
 
-        if (str == NULL || str[0] == 0)
+        if (c == NULL || c[0] == 0)
                 return (NULL);
-        for (i = 0; str[i] != '\0'; i++)
-                if ((str[i] != d && str[i + 1] == d) ||
-                                    (str[i] != d && !str[i + 1]) || str[i + 1] == d)
-                        numwords++;
-        if (numwords == 0)
+        for (i = 0; c[i] != '\0'; i++)
+                if ((c[i] != x && c[i + 1] == x) ||
+                                    (c[i] != x && !c[i + 1]) || c[i + 1] == x)
+                        y++;
+        if (y == 0)
                 return (NULL);
-        s = malloc((1 + numwords) * sizeof(char *));
+        s = malloc((1 + y) * sizeof(char *));
         if (!s)
                 return (NULL);
-        for (i = 0, j = 0; j < numwords; j++)
+        for (i = 0, j = 0; j < y; j++)
         {
-                while (str[i] == d && str[i] != d)
+                while (c[i] == x && c[i] != x)
                         i++;
                 k = 0;
-                while (str[i + k] != d && str[i + k] && str[i + k] != d)
+                while (c[i + k] != x && c[i + k] && c[i + k] != x)
                         k++;
                 s[j] = malloc((k + 1) * sizeof(char));
                 if (!s[j])
@@ -85,9 +85,9 @@ char **t2_str(char *str, char d)
                         free(s);
                         return (NULL);
                 }
-                for (m = 0; m < k; m++)
-                        s[j][m] = str[i++];
-                s[j][m] = 0;
+                for (a = 0; a < k; a++)
+                        s[j][a] = c[i++];
+                s[j][a] = 0;
         }
         s[j] = NULL;
         return (s);

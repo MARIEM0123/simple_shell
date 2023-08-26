@@ -1,13 +1,13 @@
 #include "shell.h"
 
 /**
- * is_chain - the function
+ * is_lchx - the function
  * @data: the parameter
  * @arr: the parameter
  * @p: the parameter
  * Return: there is a return
  */
-int is_chain(info_t *data, char *arr, size_t *p)
+int is_lchx(info_t *data, char *arr, size_t *p)
 {
 	size_t j = *p;
 
