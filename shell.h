@@ -178,7 +178,7 @@ data_l *add_node(data_l **, const char *, int);
 data_l *add_node_end(data_l **, const char *, int);
 int delete_node_at_index(data_l **, unsigned int);
 void ver_ch(info_t *, char *, size_t *, size_t, size_t);
-int replace_string(char **, char *);
+int string_md(char **, char *);
 size_t list_len(const data_l *);
 char **list_to_strings(data_l *);
 size_t print_list(const data_l *);

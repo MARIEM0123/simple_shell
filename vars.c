@@ -112,36 +112,36 @@ int vars_md(info_t *data)
 
 		if (!_strcmp(data->argv[i], "$?"))
 		{
-			replace_string(&(data->argv[i]),
+			string_md(&(data->argv[i]),
 					_strdup(n_conv(data->etat, 10, 0)));
 			continue;
 		}
 		if (!_strcmp(data->argv[i], "$$"))
 		{
-			replace_string(&(data->argv[i]),
+			string_md(&(data->argv[i]),
 					_strdup(n_conv(getpid(), 10, 0)));
 			continue;
 		}
 		nds = node_starts_with(data->dt, &data->argv[i][1], '=');
 		if (nds)
 		{
-			replace_string(&(data->argv[i]),
+			string_md(&(data->argv[i]),
 					_strdup(hr_str(nds->rst, '=') + 1));
 			continue;
 		}
-		replace_string(&data->argv[i], _strdup(""));
+		string_md(&data->argv[i], _strdup(""));
 
 	}
 	return (0);
 }
 
 /**
- * replace_string - the function
+ * string_md - the function
  * @P1: parameter
  * @P2: parameter
  * Return: the return is !=0
  */
-int replace_string(char **P1, char *P2)
+int string_md(char **P1, char *P2)
 {
 	free(*P1);
 	*P1 = P2;
