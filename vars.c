@@ -35,15 +35,15 @@ int is_lchx(info_t *data, char *arr, size_t *p)
 }
 
 /**
- * check_chain - the function
- * @info: the parameter
- * @buf: the parameter
+ * ver_ch - the function
+ * @data: the parameter
+ * @arr: the parameter
  * @p: the parameter
  * @i: the parameter
  * @len: the parameter
  * Return: there us a freturn
  */
-void check_chain(info_t *data, char *arr, size_t *p, size_t i, size_t en)
+void ver_ch(info_t *data, char *arr, size_t *p, size_t i, size_t en)
 {
 	size_t j = *p;
 
@@ -68,11 +68,11 @@ void check_chain(info_t *data, char *arr, size_t *p, size_t i, size_t en)
 }
 
 /**
- * replace_alias - the function
- * @info: the parameter
+ * _alias_md - the function
+ * @dta: the parameter
  * Return: the return is != 0
  */
-int replace_alias(info_t *data)
+int alias_md(info_t *data)
 {
 	int i;
 	data_l *nds;
@@ -96,11 +96,11 @@ int replace_alias(info_t *data)
 }
 
 /**
- * replace_vars - the function
+ * vars_md - the function
  * @data: the parameter
  * Return: there is a return
  */
-int replace_vars(info_t *data)
+int vars_md(info_t *data)
 {
 	int i = 0;
 	data_l *nds;

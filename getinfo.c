@@ -65,8 +65,8 @@ void set_info(info_t *data, char **b)
 			;
 		data->argc = i;
 
-		replace_alias(data);
-		replace_vars(data);
+		alias_md(data);
+		vars_md(data);
 	}
 }
 

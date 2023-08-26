@@ -177,15 +177,15 @@ data_l *node_starts_with(data_l *, char *, char);
 data_l *add_node(data_l **, const char *, int);
 data_l *add_node_end(data_l **, const char *, int);
 int delete_node_at_index(data_l **, unsigned int);
-void check_chain(info_t *, char *, size_t *, size_t, size_t);
+void ver_ch(info_t *, char *, size_t *, size_t, size_t);
 int replace_string(char **, char *);
 size_t list_len(const data_l *);
 char **list_to_strings(data_l *);
 size_t print_list(const data_l *);
 ssize_t get_node_index(data_l *, data_l *);
-int replace_vars(info_t *);
+int vars_md(info_t *);
 int is_lchx(info_t *, char *, size_t *);
-int replace_alias(info_t *);
+int alias_md(info_t *);
 
 #endif
 

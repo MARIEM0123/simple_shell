@@ -62,7 +62,7 @@ ssize_t get_input(info_t *data)
 		j = i;
 		p = array + i;
 
-		check_chain(data, array, &j, i, l);
+		ver_ch(data, array, &j, i, l);
 		while (j < l)
 		{
 			if (is_lchx(data, array, &j))
